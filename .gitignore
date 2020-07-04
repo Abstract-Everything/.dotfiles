@@ -1,0 +1,2 @@
+# Ignore itself to avoid recursion issues
+.dotfiles/
