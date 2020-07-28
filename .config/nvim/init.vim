@@ -14,3 +14,6 @@ colorscheme flattened_light
 
 set number
 set relativenumber
+
+" Miscellaneous
+source ~/.config/nvim/wsl.vim
