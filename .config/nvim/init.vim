@@ -12,4 +12,5 @@ colorscheme flattened_light
 
 " Editing
 
+set number
 set relativenumber
