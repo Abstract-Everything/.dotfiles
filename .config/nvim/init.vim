@@ -1,7 +1,7 @@
 " Plugins
 
 call plug#begin()
-Plug 'roxma/nvim-completion-manager'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Colour Scheme

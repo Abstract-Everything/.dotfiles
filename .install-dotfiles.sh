@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+check_installed_program git
+
+dotfiles_name=.dotfiles
+dotfiles_dir=${HOME}/${dotfiles_name}
+dotfiles_backupdir=${HOME}/.dotfiles-backup
+
 function dotfiles {
-	/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
+	git --git-dir=${dotfiles_dir} --work-tree=${HOME} $@
 }
 
 function mkdir_mv {
@@ -13,21 +19,23 @@ function mkdir_mv {
 export -f mkdir_mv
 
 echo "Installing Dotfiles."
-git clone --bare https://github.com/Abstract-Everything/.dotfiles ${HOME}/.dotfiles --quiet
+cd ${HOME}
+git clone --bare https://github.com/Abstract-Everything/.dotfiles ${dotfiles_name} --quiet
 
 dotfiles checkout --quiet &>/dev/null
 if [ ${?} = 0 ]; then
 	echo "Checked out dotfiles.";
 else
-	mkdir -p .dotfiles-backup
+	mkdir -p ${dotfiles_backupdir}
 	echo 'Backing up pre-existing dotfiles.';
-	dotfiles checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} bash -c 'mkdir_mv {} .dotfiles-backup/{}'
+	dotfiles checkout 2>&1	\
+	| egrep "\s+\."		\
+	| awk {'print $1'}	\
+	| xargs -I{} bash -c "mkdir_mv {} ${dotfiles_backupdir}"
+
 	echo 'Backup done.';
 fi;
 
 dotfiles checkout
 dotfiles config status.showUntrackedFiles no
 echo 'Dotfiles installed.';
-
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' &>/dev/null
-echo 'Cloned VimPlug'
