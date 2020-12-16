@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ./.install_helpers.sh
+. ./.install-helpers.sh
 
 echo 'Configuring coc-vim'
 check_installed_program git
