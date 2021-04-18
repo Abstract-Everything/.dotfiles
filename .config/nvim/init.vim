@@ -2,6 +2,7 @@
 
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
 call plug#end()
 
 " Colour Scheme
