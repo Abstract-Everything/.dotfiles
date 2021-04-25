@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-check_installed_program git
+if ! type git >/dev/null
+then
+	echo "Error: git is not installed, aborting."
+	exit
+fi
 
 dotfiles_name=.dotfiles
 dotfiles_dir=${HOME}/${dotfiles_name}

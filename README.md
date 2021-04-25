@@ -8,9 +8,13 @@ chmod +x ./.install-dotfiles.sh
 
 To set up neovim use the setup-neovim script available in the repository, some dependencies are required in order to install it.
 
-If using ubuntu install dependencies with:
+Make sure that the following dependencies are installed
 ```
-sudo apt install -y curl nodejs npm clangd neovim
+curl
+nodejs
+npm
+clangd
+neovim
 ```
 
 Then execute the setup-neovim script.
