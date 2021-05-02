@@ -5,6 +5,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
 call plug#end()
 
+" Coc Extensions
+let g:coc_global_extensions = ['coc-clangd', 'coc-pyright']
+
 " Colour Scheme
 
 set termguicolors
