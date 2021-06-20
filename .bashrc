@@ -9,8 +9,8 @@
 # Helpers
 COLOR_RESET="\[\033[0m\]"
 COLOR_FOREGROUND_RED="\[\033[31;1m\]"
-COLOR_FOREGOURND_GREEN="\[\033[32;1m\]"
-COLOR_FOREBROUND_BLUE="\[\033[34;1m\]"
+COLOR_FOREGROUND_GREEN="\[\033[32;1m\]"
+COLOR_FOREGROUND_BLUE="\[\033[34;1m\]"
 
 current_git_branch()
 {
@@ -57,8 +57,8 @@ PS_path='\w'
 PS_git_branch='$(current_git_branch)'
 
 if [ "$color_prompt" = yes ]; then
-	PS_user_host="$COLOR_FOREGOURND_GREEN$PS_user_host$COLOR_RESET"
-	PS_path="$COLOR_FOREBROUND_BLUE$PS_path$COLOR_RESET"
+	PS_user_host="$COLOR_FOREGROUND_GREEN$PS_user_host$COLOR_RESET"
+	PS_path="$COLOR_FOREGROUND_BLUE$PS_path$COLOR_RESET"
 	PS_git_branch="$COLOR_FOREGROUND_RED$PS_git_branch$COLOR_RESET"
 fi
 
