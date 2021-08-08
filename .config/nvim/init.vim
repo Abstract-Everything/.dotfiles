@@ -57,5 +57,8 @@ nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 
 nmap <silent> <C-f> :GFiles<CR>
 
+" Commands
+command! Configuration :e ~/.config/nvim/init.vim
+
 " Miscellaneous
 source ~/.config/nvim/wsl.vim
