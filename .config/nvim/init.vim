@@ -3,6 +3,8 @@
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Coc Extensions
@@ -47,6 +49,10 @@ nmap <silent> gR <Plug>(coc-rename)
 
 nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
+
+"" Others
+
+nmap <silent> <C-f> :GFiles<CR>
 
 " Miscellaneous
 source ~/.config/nvim/wsl.vim
