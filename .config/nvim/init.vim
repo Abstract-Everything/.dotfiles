@@ -21,6 +21,9 @@ colorscheme flattened_light
 set number
 set relativenumber
 
+" Clear highlight on esc
+nnoremap <esc> :noh<return><esc> 
+
 if has("patch-8.1.1564")
 	set signcolumn=number
 else
