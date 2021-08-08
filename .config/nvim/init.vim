@@ -33,8 +33,15 @@ endif
 "" Editor Window
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Editing
 " Key binding
+"" Editing
+nmap <silent> gR <Plug>(coc-rename)
+
+""" Code Formatting
+xmap <silent> = <Plug>(coc-format-selected)
+nmap <silent> = <Plug>(coc-format-selected)
+
+""" Comprehension
 function! s:show_documentation()
 	if (index(['vim', 'help'], &filetype) >= 0)
 		execute 'h '.expand('<cword>')
@@ -44,12 +51,13 @@ function! s:show_documentation()
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
+""" Jumping
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gR <Plug>(coc-rename)
 
+""" Jump to errors
 nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 
