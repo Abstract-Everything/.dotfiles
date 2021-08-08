@@ -8,7 +8,7 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Coc Extensions
-let g:coc_global_extensions = ['coc-clangd', 'coc-pyright']
+let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-cmake']
 
 " Colour Scheme
 
