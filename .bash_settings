@@ -3,6 +3,10 @@
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
+# Settings
+
+set -o vi
+
 # Directories
 [ -f ~/.bash_directories ] && . ~/.bash_directories
 
