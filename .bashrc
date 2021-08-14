@@ -75,9 +75,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
-[ -f ~/.bash_directories ] && . ~/.bash_directories
-[ -f ~/.bash_environment ] && . ~/.bash_environment
+[ -f ~/.bash_settings ] && . ~/.bash_settings
 
 xhost +local:root > /dev/null 2>&1
 

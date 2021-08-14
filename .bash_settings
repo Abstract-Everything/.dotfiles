@@ -1,3 +1,11 @@
+# Environment
+
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
+# Directories
+[ -f ~/.bash_directories ] && . ~/.bash_directories
+
 # Command Aliases
 
 alias ll='ls -AlF'
@@ -11,6 +19,8 @@ alias df='df -h'	# human-readable sizes
 alias free='free -m'	# show sizes in MB
 
 alias more=less
+
+# Functions
 
 function dotfiles
 {
