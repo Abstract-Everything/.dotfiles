@@ -7,6 +7,9 @@ export EDITOR="$VISUAL"
 
 set -o vi
 
+source /usr/share/fzf/completion.bash
+source /usr/share/fzf/key-bindings.bash
+
 # Directories
 [ -f ~/.bash_directories ] && . ~/.bash_directories
 
