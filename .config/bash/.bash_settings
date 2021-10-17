@@ -11,7 +11,7 @@ source /usr/share/fzf/completion.bash
 source /usr/share/fzf/key-bindings.bash
 
 # Directories
-[ -f ~/.bash_directories ] && . ~/.bash_directories
+[ -f ~/.config/bash/.bash_directories ] && . ~/.config/bash/.bash_directories
 
 # Command Aliases
 
