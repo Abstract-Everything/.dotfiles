@@ -63,6 +63,7 @@ nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 
 "" Others
 
+nmap <silent> <C-A-f> :Files<CR>
 nmap <silent> <C-f> :GFiles<CR>
 
 " Commands
