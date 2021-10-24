@@ -2,4 +2,6 @@
 # ~/.bash_profile
 #
 
-[[ -f ~/.config/bash/.bashrc ]] && . ~/.config/bash/.bashrc
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+export PATH="$PATH:~/.local/bin"
