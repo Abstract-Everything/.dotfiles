@@ -40,6 +40,7 @@ nmap <silent> gR <Plug>(coc-rename)
 """ Code Formatting
 xmap <silent> = <Plug>(coc-format-selected)
 nmap <silent> = <Plug>(coc-format-selected)
+nmap <leader>= <Plug>(coc-format)
 
 """ Comprehension
 function! s:show_documentation()
