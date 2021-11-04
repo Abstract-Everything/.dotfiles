@@ -20,7 +20,7 @@ set $mod Mod4
 font pango:DejaVu Sans Mono 12
 
 # Removes title bars
-default_border pixel
+default_border pixel 5
 
 # Show minimal borders
 hide_edge_borders smart
@@ -74,10 +74,10 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # split in horizontal orientation
-bindsym $mod+x split h
+bindsym $mod+x split v
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
