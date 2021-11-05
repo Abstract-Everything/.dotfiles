@@ -1,0 +1,15 @@
+[user]
+	email = jon.d.cam@gmail.com
+	name = Jonathan Camilleri
+
+[alias]
+	a = add
+	c = commit
+	capp = commit --amend --no-edit
+	co = checkout
+	d = diff
+	ds = diff --stat
+	l = log
+	r = rebase
+	rc = rebase --continue
+	s = status
