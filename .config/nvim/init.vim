@@ -10,19 +10,16 @@ call plug#end()
 " Coc Extensions
 let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-cmake']
 
-" Colour Scheme
+" User interface
+"" Colour Scheme
 
 set termguicolors
 
 colorscheme flattened_light
 
-" User interface
 "" Number Column
 set number
 set relativenumber
-
-" Clear highlight on esc
-nnoremap <esc> :noh<return><esc> 
 
 if has("patch-8.1.1564")
 	set signcolumn=number
@@ -32,6 +29,13 @@ endif
 
 "" Editor Window
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" User Experience
+" Clear highlight on esc
+nnoremap <silent><esc> <esc>:noh<return>
+
+inoremap <silent><esc> <esc>:update<return>
+autocmd TextChanged,FocusLost,BufEnter * silent update
 
 " Key binding
 "" Editing
