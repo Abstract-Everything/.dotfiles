@@ -8,8 +8,13 @@
 	capp = commit --amend --no-edit
 	co = checkout
 	d = diff
+	da = diff --staged
+	das = diff --staged --stat
 	ds = diff --stat
 	l = log
-	r = rebase
-	rc = rebase --continue
+	pcb = push origin HEAD
+	r = reset
+	rb = rebase
+	rbc = rebase --continue
 	s = status
+	st = stash
