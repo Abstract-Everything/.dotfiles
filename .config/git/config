@@ -4,7 +4,9 @@
 
 [alias]
 	a = add
+	ap = add --patch
 	c = commit
+	ca = commit --amend
 	capp = commit --amend --no-edit
 	co = checkout
 	d = diff
