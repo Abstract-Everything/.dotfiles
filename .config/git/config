@@ -3,6 +3,22 @@
 	name = Jonathan Camilleri
 
 [alias]
+	clean-branches = "!f() {					\n\
+			git checkout origin/master			\n\
+									\n\
+			git fetch --prune				\n\
+									\n\
+			# fetch does not update checked out branch	\n\
+			git checkout origin/master			\n\
+									\n\
+			git branch --merged |				\n\
+			grep -vE 'master|main|\\*' |			\n\
+			xargs -I{} git branch -d {};			\n\
+		};							\n\
+									\n\
+		f;							\n\
+		unset f"
+
 	a = add
 	ap = add --patch
 	c = commit
