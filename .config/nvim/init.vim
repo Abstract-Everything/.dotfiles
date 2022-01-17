@@ -92,7 +92,8 @@ nmap <silent> <C-A-f> :Files<CR>
 nmap <silent> <C-f> :GFiles<CR>
 
 " Commands
-command! Configuration :e ~/.config/nvim/init.vim
+command! Configuration :Files ~/.config
+command! Source :source ~/.config/nvim/init.vim
 
 " Miscellaneous
 source ~/.config/nvim/wsl.vim
