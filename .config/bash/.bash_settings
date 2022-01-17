@@ -27,5 +27,6 @@ alias free='free -m'	# show sizes in MB
 
 alias more=less
 
-alias g=git
 alias dg=dotfiles
+alias g=git
+alias gr='git -C $(git rev-parse --show-toplevel)'
