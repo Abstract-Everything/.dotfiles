@@ -21,6 +21,7 @@
 
 	a = add
 	ap = add --patch
+	b = branch
 	c = commit
 	ca = commit --amend
 	capp = commit --amend --no-edit
@@ -30,9 +31,12 @@
 	das = diff --staged --stat
 	ds = diff --stat
 	l = log
+	ll = log origin..HEAD
 	pcb = push origin HEAD
 	r = reset
 	rb = rebase
 	rbc = rebase --continue
 	s = status
 	st = stash
+	stc = stash show -p
+
