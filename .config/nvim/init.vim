@@ -38,7 +38,7 @@ EOF
 
 set termguicolors
 
-colorscheme flattened_light
+colorscheme gruvbox
 
 "" Number Column
 set number
