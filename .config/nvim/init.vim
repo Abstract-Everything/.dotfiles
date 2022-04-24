@@ -11,28 +11,6 @@ call plug#end()
 " Coc Extensions
 let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-cmake']
 
-lua << EOF
-local autosave = require("autosave")
-
-autosave.setup(
-    {
-        enabled = true,
-        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-        events = {"InsertLeave", "TextChanged"},
-        conditions = {
-            exists = true,
-            filename_is_not = {},
-            filetype_is_not = {},
-            modifiable = true
-        },
-        write_all_buffers = false,
-        on_off_commands = true,
-        clean_command_line_interval = 0,
-        debounce_delay = 135
-    }
-)
-EOF
-
 " User interface
 "" Colour Scheme
 
