@@ -1,6 +1,9 @@
 " Plugins
 
 call plug#begin()
+
+Plug 'gruvbox-community/gruvbox'
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -15,8 +18,6 @@ let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-cmake']
 "" Colour Scheme
 
 set termguicolors
-
-colorscheme gruvbox
 
 "" Number Column
 set number
