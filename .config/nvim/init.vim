@@ -34,7 +34,11 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " User Experience
 " Clear highlight on esc
-nnoremap <silent><esc> <esc>:noh<return>
+" To learn using Ctrl + c for changing to normal mode
+inoremap <silent><esc> <nop>
+vnoremap <silent><esc> <nop>
+nnoremap <silent><C-c> <C-c>:noh<return>
+inoremap <silent><C-c> <C-c>
 
 " Key binding
 "" Editing
