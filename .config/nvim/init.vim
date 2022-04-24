@@ -14,21 +14,6 @@ call plug#end()
 " Coc Extensions
 let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-cmake']
 
-" User interface
-"" Colour Scheme
-
-set termguicolors
-
-"" Number Column
-set number
-set relativenumber
-
-if has("patch-8.1.1564")
-	set signcolumn=number
-else
-	set signcolumn=yes
-endif
-
 "" Editor Window
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
