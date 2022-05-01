@@ -1,3 +1,24 @@
+local cmp = require('cmp')
+
+cmp.setup({
+	snippet = {
+	},
+	window = {
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<C-b>'] = cmp.mapping.scroll_docs(-4),
+		['<C-f>'] = cmp.mapping.scroll_docs(4),
+		['<C-Space>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.abort(),
+		['<CR>'] = cmp.mapping.confirm({ select = true }),
+	}),
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+	}, {
+		{ name = 'buffer' },
+	})
+})
+
 local silent_noremap = { noremap = true, silent = true }
 
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', silent_noremap)
@@ -49,9 +70,12 @@ custom_configuration['sumneko_lua'] = {
 }
 
 local servers = { 'clangd', 'cmake', 'sumneko_lua', 'pyright'}
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 for _, lsp in pairs(servers) do
 	require('lspconfig')[lsp].setup(vim.tbl_deep_extend("force", {
 		on_attach = on_attach,
+		capabilities = capabilities,
 		flags = { debounce_text_changes = 150 }
 	}, custom_configuration[lsp] or {}))
 end

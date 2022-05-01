@@ -32,3 +32,5 @@ set foldclose=all
 "" Spelling
 set spell
 set spelllang=en_gb
+
+set completeopt=menu,menuone,noselect

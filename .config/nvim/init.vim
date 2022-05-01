@@ -7,6 +7,9 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'Pocco81/AutoSave.nvim'
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
 
 Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
 
