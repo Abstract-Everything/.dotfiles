@@ -200,5 +200,9 @@ exec i3-msg 'workspace $ws2; append_layout ~/.config/i3/layouts/development-layo
 
 exec firefox
 exec konsole
+exec i3-msg 'workspace $ws1'
 
-exec 'workspace $ws1'
+# class                  border   background  text     indicator  child_border
+client.focused           #000000  #ffffff     #ffffff  #ffffff    #02bedd
+client.focused_inactive  #000000  #333333     #ffffff  #000000    #000000
+
