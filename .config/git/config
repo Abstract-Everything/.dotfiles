@@ -1,42 +1,36 @@
 [user]
 	email = jon.d.cam@gmail.com
-	name = Jonathan Camilleri
+	name  = Jonathan Camilleri
 
 [alias]
-	clean-branches = "!f() {					\n\
-			git checkout origin/master			\n\
-									\n\
-			git fetch --prune				\n\
-									\n\
-			# fetch does not update checked out branch	\n\
-			git checkout origin/master			\n\
-									\n\
-			git branch --merged |				\n\
-			grep -vE 'master|main|\\*' |			\n\
-			xargs -I{} git branch -d {};			\n\
-		};							\n\
-									\n\
-		f;							\n\
-		unset f"
+	clean-branches = "!f() {                                            \n\
+		git fetch --prune                                           \n\
+		                                                            \n\
+		git checkout origin/master                                  \n\
+		                                                            \n\
+		git branch --merged |                                       \n\
+		grep -vE 'master|main|\\*' |                                \n\
+		xargs -I{} git branch -d {};                                \n\
+	}; f; unset f"
 
-	a = add
-	ap = add --patch
-	b = branch
-	c = commit
-	ca = commit --amend
+	a    = add
+	ap   = add --patch
+	b    = branch
+	c    = commit
+	ca   = commit --amend
 	capp = commit --amend --no-edit
-	co = checkout
-	d = diff
-	da = diff --staged
-	das = diff --staged --stat
-	ds = diff --stat
-	l = log
-	ll = log origin..HEAD
-	pcb = push origin HEAD
-	r = reset
-	rb = rebase
-	rbc = rebase --continue
-	s = status
-	st = stash
-	stc = stash show -p
+	co   = checkout
+	d    = diff
+	da   = diff --staged
+	das  = diff --staged --stat
+	ds   = diff --stat
+	l    = log
+	ll   = log origin..HEAD
+	pcb  = push origin HEAD
+	r    = reset
+	rb   = rebase
+	rbc  = rebase --continue
+	s    = status
+	st   = stash
+	stc  = stash show --patch
 
