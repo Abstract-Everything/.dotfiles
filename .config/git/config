@@ -13,24 +13,43 @@
 		xargs -I{} git branch -d {};                                \n\
 	}; f; unset f"
 
+	change-branch = "!f() {                                             \n\
+		local selectedbranch=$(git branch | fzf);                   \n\
+		git checkout "${selectedbranch}";                           \n\
+	}; f; unset f"
+
+	select-commit = "!f() {                                             \n\
+		local logline=$(git log origin..HEAD --oneline | fzf);      \n\
+		echo "${logline}" | cut -d ' ' -f 1;                        \n\
+	}; f; unset f"
+
+	commit-fuzzyfixup = "!f() {                                         \n\
+		git commit --fixup=$(git select-commit)                     \n\
+	}; f; unset f"
+
 	a    = add
 	ap   = add --patch
 	b    = branch
 	c    = commit
 	ca   = commit --amend
 	capp = commit --amend --no-edit
+	cb   = change-branch
+	cf   = commit-fuzzyfixup
 	co   = checkout
 	d    = diff
 	da   = diff --staged
 	das  = diff --staged --stat
+	dc   = diff HEAD^ HEAD
 	ds   = diff --stat
 	l    = log
-	ll   = log origin..HEAD
+	ll   = log origin..HEAD --oneline
 	pcb  = push origin HEAD
 	r    = reset
 	rb   = rebase
 	rbc  = rebase --continue
+	rc   = reset --soft HEAD^
 	s    = status
 	st   = stash
 	stc  = stash show --patch
+	std  = stash drop
 
