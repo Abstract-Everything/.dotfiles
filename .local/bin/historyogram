@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+# We expect history to be passed in as it is disabled from scripts
+# call: history | historyogram
+sed -E 's/^ [[:digit:]]+  //' | sort | uniq -c | sort -n
