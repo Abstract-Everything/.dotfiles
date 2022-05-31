@@ -19,6 +19,10 @@ require('packer').startup(function(use)
 
 	use 'Pocco81/AutoSave.nvim'
 
+	--- Searching tools
+	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
 	--- Tools for writing code
 	use 'neovim/nvim-lspconfig'
 	use 'hrsh7th/nvim-cmp'
@@ -115,6 +119,26 @@ require("autosave").setup(
     }
 )
 
+-- Telescope
+local telescope = require('telescope')
+telescope.setup()
+telescope.load_extension 'fzf'
+
+--Add leader shortcuts
+vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers)
+vim.keymap.set('n', '<leader>sf', function()
+  require('telescope.builtin').find_files { previewer = false }
+end)
+vim.keymap.set('n', '<leader>sb', require('telescope.builtin').current_buffer_fuzzy_find)
+vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags)
+vim.keymap.set('n', '<leader>st', require('telescope.builtin').tags)
+vim.keymap.set('n', '<leader>sd', require('telescope.builtin').grep_string)
+vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep)
+vim.keymap.set('n', '<leader>so', function()
+  require('telescope.builtin').tags { only_current_buffer = true }
+end)
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
+
 --- Language server protocol
 local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -172,7 +196,6 @@ for _, lsp in pairs(servers) do
 		capabilities = capabilities
 	}, custom_configuration[lsp] or {}))
 end
-
 
 --- Snippets
 local luasnip = require('luasnip')
