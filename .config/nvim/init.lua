@@ -207,7 +207,7 @@ custom_configuration['sumneko_lua'] = {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local servers = { 'clangd', 'cmake', 'sumneko_lua', 'pyright'}
+local servers = { 'clangd', 'cmake', 'sumneko_lua', 'pyright', 'texlab' }
 for _, lsp in pairs(servers) do
 	require('lspconfig')[lsp].setup(vim.tbl_deep_extend("force", {
 		on_attach = on_attach,
