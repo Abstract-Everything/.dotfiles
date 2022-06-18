@@ -45,7 +45,7 @@ vim.g.gruvbox_invert_selection = '0'
 vim.o.termguicolors = true
 vim.o.background = 'dark'
 vim.cmd [[colorscheme gruvbox]]
-vim.cmd [[highlight ColorColumn ctermbg=0 guibg=grey]]
+vim.cmd [[highlight ColorColumn ctermbg=0 guibg=Black]]
 vim.cmd [[highlight SignColumn guibg=none]]
 vim.cmd [[highlight LineNr guifg=#5eacd3]]
 
@@ -71,7 +71,7 @@ vim.o.relativenumber = true
 --- Editor
 vim.o.scrolloff = 10
 vim.o.breakindent = true
-vim.o.colorcolumn = '80'
+vim.o.colorcolumn = '81'
 vim.o.updatetime = 250
 vim.o.completeopt = 'menu,menuone,noselect'
 vim.o.foldclose = 'all'
