@@ -2,7 +2,7 @@
 --- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+	vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
@@ -21,7 +21,7 @@ require('packer').startup(function(use)
 
 	--- Searching tools
 	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-	use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
 	--- Tools for writing code
 	use 'neovim/nvim-lspconfig'
@@ -99,11 +99,11 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	group = highlight_group,
+	pattern = '*',
 })
 
 --- Clear highlight on esc
@@ -115,28 +115,28 @@ vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, silent_nore
 vim.keymap.set('n', '<leader>q', function() vim.diagnostic.setloclist() end, silent_noremap)
 
 local initpath = vim.fn.stdpath('config') .. package.config:sub(1, 1) .. 'init.lua'
-vim.api.nvim_create_user_command('Source', 'source ' .. initpath , { nargs = 0 })
+vim.api.nvim_create_user_command('Source', 'source ' .. initpath, { nargs = 0 })
 vim.api.nvim_create_user_command('Configuration', function()
-	require('telescope.builtin').find_files({cwd = '~/.config'})
+	require('telescope.builtin').find_files({ cwd = '~/.config' })
 end, { nargs = 0 })
 
 --- Autosave
 require("autosave").setup(
-    {
-        enabled = true,
-        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-        events = {"InsertLeave", "TextChanged"},
-        conditions = {
-            exists = true,
-            filename_is_not = {},
-            filetype_is_not = {},
-            modifiable = true
-        },
-        write_all_buffers = false,
-        on_off_commands = true,
-        clean_command_line_interval = 0,
-        debounce_delay = 135
-    }
+	{
+		enabled = true,
+		execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+		events = { "InsertLeave", "TextChanged" },
+		conditions = {
+			exists = true,
+			filename_is_not = {},
+			filetype_is_not = {},
+			modifiable = true
+		},
+		write_all_buffers = false,
+		on_off_commands = true,
+		clean_command_line_interval = 0,
+		debounce_delay = 135
+	}
 )
 
 -- Telescope
