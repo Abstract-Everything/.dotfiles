@@ -158,6 +158,20 @@ end)
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
 
 --- Language server protocol
+vim.api.nvim_create_user_command('RangeFormat', function()
+	local start_block_line = vim.fn.line('v')
+	local cursor_line = vim.fn.line('.')
+
+	local start_line = cursor_line
+	local end_line = start_block_line
+	if (cursor_line > start_block_line) then
+		start_line = start_block_line
+		end_line = cursor_line
+	end
+	vim.lsp.buf.range_formatting({}, { start_line, 1 }, { end_line, 1 })
+	vim.api.nvim_input("<esc>")
+end, { nargs = 0 })
+
 local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -173,7 +187,8 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', silent_noremap)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent_noremap)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent_noremap)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', silent_noremap)
+	vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>f', '<cmd>RangeFormat<CR>', silent_noremap)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>RangeFormat<CR>', silent_noremap)
 end
 
 local custom_configuration = {}
