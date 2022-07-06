@@ -212,11 +212,10 @@ mode $mode_system {
     bindsym Escape mode "default"
 }
 
-set $mode_launch "Launch (d) discord, (f) firefox, (return) terminal, (q) qutebrowser"
+set $mode_launch "Launch (d) discord, (return) terminal, (q) qutebrowser"
 bindsym $mod+Return mode $mode_launch
 mode $mode_launch {
     bindsym d exec --no-startup-id exec discord, mode "default"
-    bindsym f exec --no-startup-id exec firefox, mode "default"
     bindsym Return exec --no-startup-id exec i3-sensible-terminal, mode "default"
     bindsym q exec --no-startup-id exec qutebrowser, mode "default"
 
