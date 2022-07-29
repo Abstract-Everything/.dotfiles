@@ -128,7 +128,7 @@ vim.keymap.set('n', '<leader>q', function() vim.diagnostic.setloclist() end, sil
 local initpath = vim.fn.stdpath('config') .. package.config:sub(1, 1) .. 'init.lua'
 vim.api.nvim_create_user_command('Source', 'source ' .. initpath, { nargs = 0 })
 vim.api.nvim_create_user_command('Configuration', function()
-	require('telescope.builtin').find_files({ cwd = '~/.config' })
+	require('telescope.builtin').find_files({ cwd = '~/.config', hidden = true})
 end, { nargs = 0 })
 
 --- Autosave
