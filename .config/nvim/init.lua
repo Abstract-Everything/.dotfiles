@@ -50,14 +50,14 @@ end)
 --- Visuals
 vim.g.gruvbox_italic = '1'
 vim.g.gruvbox_contrast_dark = 'hard'
-vim.g.gruvbox_contrast_light = 'hard'
 vim.g.gruvbox_invert_selection = '0'
+vim.g.gruvbox_color_column = 'dark0_soft'
+vim.g.gruvbox_sign_column = 'bg0'
+vim.g.gruvbox_number_column = 'bg0'
 
 vim.o.termguicolors = true
 vim.o.background = 'dark'
 vim.cmd [[colorscheme gruvbox]]
-vim.cmd [[highlight ColorColumn ctermbg=0 guibg=Black]]
-vim.cmd [[highlight SignColumn guibg=none]]
 vim.cmd [[highlight LineNr guifg=#5eacd3]]
 
 --- Workspace
