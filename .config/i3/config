@@ -163,16 +163,7 @@ client.focused_inactive  #000000  #333333     #ffffff  #000000    #000000
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	output primary
-
         status_command i3status
-	position top
-}
-
-bar {
-	output nonprimary
-
-        status_command i3status --config ~/.config/i3status/config_short
 	position top
 }
 
