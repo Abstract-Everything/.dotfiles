@@ -17,6 +17,16 @@ require('packer').startup(function(use)
 	--- Package manager
 	use 'wbthomason/packer.nvim'
 
+	-- Project management
+	use {
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("project_nvim").setup{
+				detection_methods = { "pattern" }
+			}
+		end
+	}
+
 	-- Theme
 	use 'gruvbox-community/gruvbox'
 
