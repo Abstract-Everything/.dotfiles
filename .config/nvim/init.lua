@@ -20,7 +20,10 @@ require('packer').startup(function(use)
 	-- Theme
 	use 'gruvbox-community/gruvbox'
 
-	use 'Pocco81/AutoSave.nvim'
+	use 'Pocco81/auto-save.nvim'
+
+	-- Scripting
+	use "nvim-lua/plenary.nvim"
 
 	--- Searching tools
 	use {
@@ -128,30 +131,36 @@ vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, silent_nore
 vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, silent_noremap)
 vim.keymap.set('n', '<leader>q', function() vim.diagnostic.setloclist() end, silent_noremap)
 
+vim.keymap.set('n', ']q', ':cnext<return>', silent_noremap)
+vim.keymap.set('n', '[q', ':cprev<return>', silent_noremap)
+
 local initpath = vim.fn.stdpath('config') .. package.config:sub(1, 1) .. 'init.lua'
 vim.api.nvim_create_user_command('Source', 'source ' .. initpath, { nargs = 0 })
 vim.api.nvim_create_user_command('Configuration', function()
 	require('telescope.builtin').find_files({ cwd = '~/.config', hidden = true})
 end, { nargs = 0 })
 
---- Autosave
-require("autosave").setup(
-	{
-		enabled = true,
-		execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-		events = { "InsertLeave", "TextChanged" },
-		conditions = {
-			exists = true,
-			filename_is_not = {},
-			filetype_is_not = {},
-			modifiable = true
-		},
-		write_all_buffers = false,
-		on_off_commands = true,
-		clean_command_line_interval = 0,
-		debounce_delay = 135
-	}
-)
+--- auto-save
+require("auto-save").setup {
+	condition = function(bufnr)
+		local Job = require'plenary.job'
+		local directory = vim.fn.expand('%:h')
+		local filename = vim.fn.expand('%:p')
+
+		if vim.fn.getbufvar(bufnr, "&modifiable") ~= 1
+		   or filename == "" then
+			return false
+		end
+
+		-- Only activate auto-save for files under version control
+		local _, return_code = Job:new({
+			command = 'git',
+			args = { 'ls-files', '--error-unmatch', filename },
+			cwd = directory
+		}):sync()
+		return return_code == 0
+	end
+}
 
 -- Telescope
 local telescope = require('telescope')
