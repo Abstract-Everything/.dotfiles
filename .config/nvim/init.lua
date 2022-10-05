@@ -60,6 +60,9 @@ require('packer').startup(function(use)
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'rafamadriz/friendly-snippets'
 	use 'L3MON4D3/LuaSnip'
+
+	--- Clangd
+	use 'p00f/clangd_extensions.nvim'
 end)
 
 -- Options
@@ -186,7 +189,7 @@ vim.keymap.set('n', '<leader>so', function()
 end)
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
 
---- Language server protocol
+---- Language server protocol
 function format_range_operator(...)
 	local old_func = vim.go.operatorfunc
 	_G.op_func_formatting = function()
@@ -219,9 +222,6 @@ local on_attach = function(client, bufnr)
 end
 
 local custom_configuration = {}
-custom_configuration['clangd'] = {
-	cmd = { 'clangd', '--background-index' }
-}
 
 custom_configuration['sumneko_lua'] = {
 	settings = {
@@ -249,13 +249,68 @@ custom_configuration['sumneko_lua'] = {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local servers = { 'clangd', 'cmake', 'sumneko_lua', 'pyright', 'texlab' }
+local servers = { 'cmake', 'sumneko_lua', 'pyright', 'csharp_ls', 'texlab' }
 for _, lsp in pairs(servers) do
 	require('lspconfig')[lsp].setup(vim.tbl_deep_extend("force", {
 		on_attach = on_attach,
 		capabilities = capabilities
 	}, custom_configuration[lsp] or {}))
 end
+
+require("clangd_extensions").setup {
+	server = {
+		on_attach = on_attach,
+		capabilities = capabilities
+	},
+	extensions = {
+		autoSetHints = true,
+		inlay_hints = {
+			only_current_line = false,
+			only_current_line_autocmd = "CursorHold",
+			show_parameter_hints = true,
+			parameter_hints_prefix = "<- ",
+			other_hints_prefix = "=> ",
+			max_len_align = false,
+			max_len_align_padding = 1,
+			right_align = false,
+			right_align_padding = 81,
+			highlight = "Comment",
+			priority = 100,
+		},
+		ast = {
+			role_icons = {
+				type = "",
+				declaration = "",
+				expression = "",
+				specifier = "",
+				statement = "",
+				["template argument"] = "",
+			},
+
+			kind_icons = {
+				Compound = "",
+				Recovery = "",
+				TranslationUnit = "",
+				PackExpansion = "",
+				TemplateTypeParm = "",
+				TemplateTemplateParm = "",
+				TemplateParamObject = "",
+			},
+
+			highlights = {
+				detail = "Comment",
+			},
+
+			memory_usage = {
+				border = "none",
+			},
+
+			symbol_info = {
+				border = "none",
+			},
+		},
+	}
+}
 
 --- Snippets
 local luasnip = require('luasnip')
@@ -310,7 +365,19 @@ cmp.setup({
 		{ name = 'luasnip' },
 	}, {
 		{ name = 'buffer' },
-	})
+	}),
+	sorting = {
+		comparators = {
+			cmp.config.compare.offset,
+			cmp.config.compare.exact,
+			cmp.config.compare.recently_used,
+			require("clangd_extensions.cmp_scores"),
+			cmp.config.compare.kind,
+			cmp.config.compare.sort_text,
+			cmp.config.compare.length,
+			cmp.config.compare.order,
+		},
+	},
 })
 
 -- wsl settings
