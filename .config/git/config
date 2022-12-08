@@ -3,28 +3,64 @@
 	name  = Jonathan Camilleri
 
 [alias]
-	clean-branches = "!f() {                                            \n\
-		git fetch --prune                                           \n\
-		                                                            \n\
-		git checkout origin/master                                  \n\
-		                                                            \n\
-		git branch --merged |                                       \n\
-		grep -vE 'master|main|\\*' |                                \n\
-		xargs -I{} git branch -d {};                                \n\
+	clean-branches = "!f() {                                             \n\
+		git fetch --prune                                            \n\
+		                                                             \n\
+		git checkout origin/master                                   \n\
+		                                                             \n\
+		git branch --merged |                                        \n\
+			grep -v '*' |                                        \n\
+			xargs git branch -d;                                 \n\
 	}; f; unset f"
 
-	change-branch = "!f() {                                             \n\
-		local selectedbranch=$(git branch | fzf);                   \n\
-		git checkout "${selectedbranch}";                           \n\
+	select-branch = "!f() {                                              \n\
+		echo $(git branch | grep -v '*' | fzf);                      \n\
 	}; f; unset f"
 
-	select-commit = "!f() {                                             \n\
-		local logline=$(git log origin..HEAD --oneline | fzf);      \n\
-		echo "${logline}" | cut -d ' ' -f 1;                        \n\
+	change-branch = "!f() {                                              \n\
+		local selected_branch=$(git select-branch)                   \n\
+		[[ -z $selected_branch ]] &&                                 \n\
+			echo 'Invalid branch selected, aborting.' && return; \n\
+		git checkout ${selected_branch};                             \n\
 	}; f; unset f"
 
-	commit-fuzzyfixup = "!f() {                                         \n\
-		git commit --fixup=$(git select-commit)                     \n\
+	select-commit = "!f() {                                              \n\
+		local first=$(git first-branch-commit);                      \n\
+		local commit=$(git log ${first}~..HEAD --oneline | fzf);     \n\
+		echo ${commit} | cut -d ' ' -f 1;                            \n\
+	}; f; unset f"
+
+	commit-fuzzyfixup = "!f() {                                          \n\
+		local selected_commit=$(git select-commit)                   \n\
+		[[ -z $selected_commit ]] &&                                 \n\
+			echo 'Invalid commit selected, aborting.' && return; \n\
+		git commit --fixup=${selected_commit}                        \n\
+	}; f; unset f"
+
+	rebase-select-branch = "!f() {                                       \n\
+		local selected_branch=$(git select-branch)                   \n\
+		[[ -z $selected_branch ]] &&                                 \n\
+			echo 'Invalid branch selected, aborting.' && return; \n\
+		git rebase --interactive --autostash ${selected_branch};     \n\
+	}; f; unset f"
+
+	first-branch-commit = "!f() {                                        \n\
+		local branch=$(git branch | grep '*' | cut -d ' ' -f 2)      \n\
+		local others=$(git branch | grep -v '*')                     \n\
+		local commits=$(git rev-list ${branch} --not ${others})      \n\
+		echo \"${commits}\" | tail -n 1                              \n\
+	}; f; unset f"
+
+	rebase-squash = "!f() {                                              \n\
+		local commit=$(git first-branch-commit)                      \n\
+		[[ -z $commit ]] &&                                          \n\
+			echo 'Invalid commit returned, aborting.' &&         \n\
+			return;                                              \n\
+		git rebase --interactive --autostash --autosquash $commit~   \n\
+	}; f; unset f"
+
+	template-function = "!f() {                                          \n\
+		echo \"lines go here\"                                       \n\
 	}; f; unset f"
 
 	a    = add
@@ -39,15 +75,18 @@
 	d    = diff
 	da   = diff --staged
 	das  = diff --staged --stat
-	dc   = diff HEAD^ HEAD
+	db   = diff origin...HEAD
+	dc   = diff HEAD~ HEAD
 	ds   = diff --stat
 	l    = log
 	ll   = log origin..HEAD --oneline
 	pcb  = push origin HEAD
 	r    = reset
 	rb   = rebase
+	rbb  = rebase-select-branch
 	rbc  = rebase --continue
-	rc   = reset --soft HEAD^
+	rbs  = rebase-squash
+	rc   = reset --soft HEAD~
 	s    = status
 	st   = stash
 	stc  = stash show --patch
