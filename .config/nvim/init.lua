@@ -279,8 +279,6 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', silent_noremap)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent_noremap)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent_noremap)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f',  '<cmd>lua format_range_operator()<CR>', silent_noremap)
-	vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>f',  '<cmd>lua format_range_operator()<CR>', silent_noremap)
 end
 
 local custom_configuration = {}
@@ -308,8 +306,7 @@ custom_configuration['sumneko_lua'] = {
 	}
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local servers = { 'cmake', 'sumneko_lua', 'pyright', 'csharp_ls', 'texlab' }
 for _, lsp in pairs(servers) do
