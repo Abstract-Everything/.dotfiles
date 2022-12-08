@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 require('packer').startup(function(use)
-	--- Package manager
+	-- Package manager
 	use 'wbthomason/packer.nvim'
 
 	-- Project management
@@ -35,7 +35,7 @@ require('packer').startup(function(use)
 	-- Scripting
 	use "nvim-lua/plenary.nvim"
 
-	--- Searching tools
+	-- Searching tools
 	use {
 		'nvim-telescope/telescope.nvim',
 		requires = { 'nvim-lua/plenary.nvim' }
@@ -54,7 +54,7 @@ require('packer').startup(function(use)
 	use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 	use 'nvim-treesitter/nvim-treesitter-textobjects'
 
-	--- Tools for writing code
+	-- Tools for writing code
 	use 'neovim/nvim-lspconfig'
 	use 'hrsh7th/nvim-cmp'
 	use 'hrsh7th/cmp-nvim-lsp'
@@ -64,7 +64,7 @@ require('packer').startup(function(use)
 	use { "mfussenegger/nvim-dap" }
 	-- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 
-	--- Snippets
+	-- Snippets
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'rafamadriz/friendly-snippets'
 	use 'L3MON4D3/LuaSnip'
