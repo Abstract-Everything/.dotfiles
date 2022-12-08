@@ -24,7 +24,11 @@ font pango:DejaVu Sans Mono 12
 
 # Removes title bars
 default_border pixel 1
-default_floating_border normal
+default_floating_border pixel 1
+
+# There is a bug with default_border pixel 1
+# Refer to: https://github.com/i3/i3/issues/5149
+for_window [all] border pixel 1
 
 # Show minimal borders
 hide_edge_borders none
