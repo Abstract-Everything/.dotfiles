@@ -207,7 +207,7 @@ set $mode_launch "Launch (d) discord, (return) terminal, (q) qutebrowser"
 bindsym $mod+Return mode $mode_launch
 mode $mode_launch {
     bindsym d exec --no-startup-id exec discord, mode "default"
-    bindsym Return exec --no-startup-id exec i3-sensible-terminal, mode "default"
+    bindsym Return exec --no-startup-id exec alacritty, mode "default"
     bindsym q exec --no-startup-id exec qutebrowser, mode "default"
 
     # back to normal: Enter or Escape
