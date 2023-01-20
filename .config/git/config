@@ -5,9 +5,7 @@
 [alias]
 	clean-branches = "!f() {                                             \n\
 		git fetch --prune                                            \n\
-		                                                             \n\
-		git checkout origin/master                                   \n\
-		                                                             \n\
+		git checkout origin/HEAD                                     \n\
 		git branch --merged |                                        \n\
 			grep -v '*' |                                        \n\
 			xargs git branch -d;                                 \n\
