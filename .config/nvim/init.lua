@@ -66,8 +66,12 @@ require('packer').startup(function(use)
 	use 'rafamadriz/friendly-snippets'
 
 	use 'hrsh7th/nvim-cmp'
-	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-calc'
 	use 'hrsh7th/cmp-buffer'
+	use 'hrsh7th/cmp-path'
+	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-nvim-lsp-signature-help'
+	use 'hrsh7th/cmp-nvim-lua'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'p00f/clangd_extensions.nvim'
 
@@ -504,9 +508,13 @@ cmp.setup({
 		end, { 'i', 's' }),
 	}),
 	sources = cmp.config.sources({
+		{ name = 'path' },
 		{ name = 'nvim_lsp' },
+		{ name = 'nvim_lsp_signature_help' },
+		{ name = 'nvim_lua' },
 		{ name = 'buffer' },
 		{ name = 'luasnip' },
+		{ name = 'calc' },
 	}),
 	sorting = {
 		comparators = {
