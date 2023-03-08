@@ -219,8 +219,10 @@ vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
 
 -- Treesitter
 require('nvim-treesitter.configs').setup {
+	auto_install = true,
 	highlight = {
 		enable = true,
+		additional_vim_regex_highlighting = false,
 	},
 	incremental_selection = {
 		enable = true,
@@ -244,26 +246,32 @@ require('nvim-treesitter.configs').setup {
 				['if'] = '@function.inner',
 				['ac'] = '@class.outer',
 				['ic'] = '@class.inner',
+				['ap'] = '@parameter.outer',
+				['ip'] = '@parameter.inner',
 			},
 		},
 		move = {
 			enable = true,
 			set_jumps = true, -- whether to set jumps in the jumplist
 			goto_next_start = {
-				[']m'] = '@function.outer',
-				[']]'] = '@class.outer',
+				[']f'] = '@function.outer',
+				[']['] = '@class.outer',
+				[']p'] = '@parameter.outer',
 			},
 			goto_next_end = {
-				[']M'] = '@function.outer',
-				[']['] = '@class.outer',
+				[']F'] = '@function.outer',
+				[']]'] = '@class.outer',
+				[']P'] = '@parameter.outer',
 			},
 			goto_previous_start = {
-				['[m'] = '@function.outer',
+				['[f'] = '@function.outer',
 				['[['] = '@class.outer',
+				['[p'] = '@parameter.outer',
 			},
 			goto_previous_end = {
-				['[M'] = '@function.outer',
+				['[F'] = '@function.outer',
 				['[]'] = '@class.outer',
+				['[P'] = '@parameter.outer',
 			},
 		},
 	},
