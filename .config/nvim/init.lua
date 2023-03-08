@@ -281,19 +281,6 @@ vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
 ---- Language server protocol
-function format_range_operator(...)
-	local old_func = vim.go.operatorfunc
-	_G.op_func_formatting = function()
-		local start = vim.api.nvim_buf_get_mark(0, '[')
-		local finish = vim.api.nvim_buf_get_mark(0, ']')
-		vim.lsp.buf.range_formatting({}, start, finish)
-		vim.go.operatorfunc = old_func
-		_G.op_func_formatting = nil
-	end
-	vim.go.operatorfunc = 'v:lua.op_func_formatting'
-	vim.api.nvim_feedkeys('g@', 'n', false)
-end
-
 local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
