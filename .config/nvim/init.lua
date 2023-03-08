@@ -81,6 +81,14 @@ require('packer').startup(function(use)
 
 	-- Ecosystem
 	use {
+		"sindrets/diffview.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+	}
+
+	use {
 		'TimUntersberger/neogit',
 		requires = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' }
 	}
