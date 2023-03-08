@@ -304,7 +304,7 @@ end
 
 local custom_configuration = {}
 
-custom_configuration['sumneko_lua'] = {
+custom_configuration['lua_ls'] = {
 	settings = {
 		Lua = {
 			runtime = {
@@ -329,7 +329,7 @@ custom_configuration['sumneko_lua'] = {
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local servers = { 'cmake', 'sumneko_lua', 'pyright', 'csharp_ls', 'texlab' }
+local servers = { 'cmake', 'lua_ls', 'pyright', 'csharp_ls', 'texlab' }
 for _, lsp in pairs(servers) do
 	require('lspconfig')[lsp].setup(vim.tbl_deep_extend("force", {
 		on_attach = on_attach,
