@@ -56,19 +56,24 @@ require('packer').startup(function(use)
 
 	-- Tools for writing code
 	use 'neovim/nvim-lspconfig'
+
+	--- Snippets
+	use ({
+		"L3MON4D3/LuaSnip",
+		-- install jsregexp (optional!:).
+		run = "make install_jsregexp"
+	})
+	use 'rafamadriz/friendly-snippets'
+
 	use 'hrsh7th/nvim-cmp'
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'hrsh7th/cmp-buffer'
+	use 'saadparwaiz1/cmp_luasnip'
 	use 'p00f/clangd_extensions.nvim'
 
 	-- Tools for debugging
 	use { "mfussenegger/nvim-dap" }
 	-- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-
-	-- Snippets
-	use 'saadparwaiz1/cmp_luasnip'
-	use 'rafamadriz/friendly-snippets'
-	use 'L3MON4D3/LuaSnip'
 
 	-- Ecosystem
 	use {
@@ -115,7 +120,7 @@ vim.o.scrolloff = 10
 vim.o.breakindent = true
 vim.o.colorcolumn = '81'
 vim.o.updatetime = 250
-vim.o.completeopt = 'menu,menuone,noselect'
+vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 
 --- Status
 vim.o.signcolumn = 'yes'
@@ -459,40 +464,14 @@ vim.api.nvim_set_keymap('n', '<leader>df', "<cmd>lua require('dap').step_out()<C
 vim.api.nvim_set_keymap('n', '<leader>dt', "<cmd>lua require('dap').repl.open()<CR>", silent_noremap)
 
 --- Snippets
-local luasnip = require('luasnip')
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
+local luasnip = require("luasnip")
 require('luasnip.loaders.from_vscode').lazy_load()
-
--- This causes an error, use the nvim_set_keymap until a fix is issued
--- vim.keymap.set('i', '<Tab>', function()
--- 	luasnip = require('luasnip')
--- 	return luasnip.expand_or_jumpable() and luasnip.expand_or_jump() or '<Tab>'
--- end, silent_expr)
-
-vim.api.nvim_set_keymap('i', '<Tab>', 'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"', silent_expr)
-
-vim.keymap.set('i', '<S-Tab>', function()
-	luasnip = require('luasnip')
-	return luasnip.jumpable(-1) and luasnip.jump(-1) or '<Tab>'
-end, silent_expr)
-
-vim.keymap.set('s', '<Tab>', function()
-	if (require('luasnip').jumpable())
-	then
-		require('luasnip').jump(1)
-	end
-end, silent_noremap)
-
-vim.keymap.set('s', '<S-Tab>', function()
-	if (require('luasnip').jumpable(-1))
-	then
-		require('luasnip').jump(-1)
-	end
-end, silent_noremap)
-
-vim.keymap.set({ 'i', 's' }, '<C-E>', function()
-	return require('luasnip').choice_active() and luasnip.next_choice()
-end, silent_expr)
 
 local cmp = require('cmp')
 cmp.setup({
@@ -505,12 +484,29 @@ cmp.setup({
 		['<C-b>'] = cmp.mapping.scroll_docs(-4),
 		['<C-f>'] = cmp.mapping.scroll_docs(4),
 		['<C-Space>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.abort(),
+		['<CR>'] = cmp.mapping.confirm({ select = true, }),
+		['<Tab>'] = cmp.mapping(function(fallback)
+			if luasnip.expand_or_locally_jumpable() then
+				luasnip.expand_or_jump()
+			elseif has_words_before() then
+				cmp.complete()
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
+		['<S-Tab>'] = cmp.mapping(function(fallback)
+			if luasnip.locally_jumpable( -1) then
+				luasnip.jump( -1)
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
 	}),
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
-		{ name = 'luasnip' },
-	}, {
 		{ name = 'buffer' },
+		{ name = 'luasnip' },
 	}),
 	sorting = {
 		comparators = {
