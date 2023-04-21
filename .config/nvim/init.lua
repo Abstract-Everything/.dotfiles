@@ -57,6 +57,11 @@ require('packer').startup(function(use)
 	-- Tools for writing code
 	use 'neovim/nvim-lspconfig'
 
+	--- Language specific
+	use 'p00f/clangd_extensions.nvim'
+	-- https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/
+	use { 'simrat39/rust-tools.nvim', requires = { 'rust-lang/rust.vim' } }
+
 	--- Snippets
 	use ({
 		"L3MON4D3/LuaSnip",
@@ -73,7 +78,6 @@ require('packer').startup(function(use)
 	use 'hrsh7th/cmp-nvim-lsp-signature-help'
 	use 'hrsh7th/cmp-nvim-lua'
 	use 'saadparwaiz1/cmp_luasnip'
-	use 'p00f/clangd_extensions.nvim'
 
 	-- Tools for debugging
 	use { "mfussenegger/nvim-dap" }
@@ -298,6 +302,11 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent_noremap)
 end
 
+local rust_on_attach = function(client, bufnr)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gq', '<cmd>lua vim.lsp.buf.format({ range = nil })<CR>', silent_noremap)
+	return on_attach(client, bufnr)
+end
+
 local custom_configuration = {}
 
 custom_configuration['lua_ls'] = {
@@ -386,6 +395,13 @@ require("clangd_extensions").setup {
 			},
 		},
 	}
+}
+
+require('rust-tools').setup {
+	server = {
+		on_attach = rust_on_attach,
+		capabilities = capabilities,
+	},
 }
 
 -- Debug Adapter Protocol
