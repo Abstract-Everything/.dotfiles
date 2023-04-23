@@ -29,6 +29,7 @@ vim.o.cursorline = true
 vim.o.updatetime = 250
 vim.opt.wildmode = {"longest", "full" }
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:patience" }
 
 --- Status
 vim.o.signcolumn = 'yes'
