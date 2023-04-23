@@ -25,6 +25,7 @@ vim.o.relativenumber = true
 vim.o.scrolloff = 10
 vim.o.breakindent = true
 vim.o.colorcolumn = '81'
+vim.o.cursorline = true
 vim.o.updatetime = 250
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 
