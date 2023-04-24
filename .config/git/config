@@ -2,6 +2,9 @@
 	email = jon.d.cam@gmail.com
 	name  = Jonathan Camilleri
 
+[core]
+	editor = nvim
+
 [alias]
 	clean-branches = "!f() {                                             \n\
 		git fetch --prune                                            \n\
