@@ -9,9 +9,11 @@
 	clean-branches = "!f() {                                             \n\
 		git fetch --prune                                            \n\
 		git checkout origin/HEAD                                     \n\
-		git branch --merged |                                        \n\
-			grep -v '*' |                                        \n\
-			xargs git branch -d;                                 \n\
+		git branch -vv |                                             \n\
+			grep ' \\[.*gone\\] ' |                              \n\
+			cut -d ' ' -f 3 |                                    \n\
+			# we use '-D' to remove rebased branches             \n\
+			xargs -I{} git branch -D {};                         \n\
 	}; f; unset f"
 
 	select-branch = "!f() {                                              \n\
@@ -81,7 +83,7 @@
 	ds   = diff --stat
 	l    = log
 	ll   = log origin..HEAD --oneline
-	pcb  = push origin HEAD
+	pcb  = push -u origin HEAD
 	r    = reset
 	rb   = rebase
 	rbb  = rebase-select-branch
