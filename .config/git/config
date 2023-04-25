@@ -51,9 +51,11 @@
 	}; f; unset f"
 
 	first-branch-commit = "!f() {                                        \n\
-		local branch=$(git branch | grep '*' | cut -d ' ' -f 2)      \n\
-		local others=$(git branch | grep -v '*')                     \n\
-		local commits=$(git rev-list ${branch} --not ${others})      \n\
+		local current=$(git branch --show-current)                   \n\
+		local others=$(git branch -a       |                         \n\
+				grep -v -e '->'    |                         \n\
+				grep -v ${current})                          \n\
+		local commits=$(git rev-list HEAD --not ${others})           \n\
 		echo \"${commits}\" | tail -n 1                              \n\
 	}; f; unset f"
 
