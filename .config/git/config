@@ -16,38 +16,38 @@
 			grep ' \\[.*gone\\] ' |                              \n\
 			cut -d ' ' -f 3 |                                    \n\
 			# we use '-D' to remove rebased branches             \n\
-			xargs -I{} git branch -D {};                         \n\
+			xargs -I{} git branch -D {}                          \n\
 	}; f; unset f"
 
 	select-branch = "!f() {                                              \n\
-		echo $(git branch | grep -v '*' | fzf);                      \n\
+		echo $(git branch | grep -v '*' | fzf)                       \n\
 	}; f; unset f"
 
 	change-branch = "!f() {                                              \n\
 		local selected_branch=$(git select-branch)                   \n\
 		[[ -z $selected_branch ]] &&                                 \n\
-			echo 'Invalid branch selected, aborting.' && return; \n\
-		git checkout ${selected_branch};                             \n\
+			echo 'Invalid branch selected, aborting.' && return  \n\
+		git checkout ${selected_branch}                              \n\
 	}; f; unset f"
 
 	select-commit = "!f() {                                              \n\
-		local first=$(git first-branch-commit);                      \n\
-		local commit=$(git log ${first}~..HEAD --oneline | fzf);     \n\
-		echo ${commit} | cut -d ' ' -f 1;                            \n\
+		local first=$(git first-branch-commit)                       \n\
+		local commit=$(git log ${first}~..HEAD --oneline | fzf)      \n\
+		echo ${commit} | cut -d ' ' -f 1                             \n\
 	}; f; unset f"
 
 	commit-fuzzyfixup = "!f() {                                          \n\
 		local selected_commit=$(git select-commit)                   \n\
 		[[ -z $selected_commit ]] &&                                 \n\
-			echo 'Invalid commit selected, aborting.' && return; \n\
+			echo 'Invalid commit selected, aborting.' && return  \n\
 		git commit --fixup=${selected_commit}                        \n\
 	}; f; unset f"
 
 	rebase-select-branch = "!f() {                                       \n\
 		local selected_branch=$(git select-branch)                   \n\
 		[[ -z $selected_branch ]] &&                                 \n\
-			echo 'Invalid branch selected, aborting.' && return; \n\
-		git rebase --interactive ${selected_branch};                 \n\
+			echo 'Invalid branch selected, aborting.' && return  \n\
+		git rebase --interactive ${selected_branch}                  \n\
 	}; f; unset f"
 
 	first-branch-commit = "!f() {                                        \n\
@@ -62,8 +62,7 @@
 	rebase-squash = "!f() {                                              \n\
 		local commit=$(git first-branch-commit)                      \n\
 		[[ -z $commit ]] &&                                          \n\
-			echo 'Invalid commit returned, aborting.' &&         \n\
-			return;                                              \n\
+			echo 'Invalid commit returned, aborting.' && return  \n\
 		git rebase --interactive --autosquash $commit~               \n\
 	}; f; unset f"
 
