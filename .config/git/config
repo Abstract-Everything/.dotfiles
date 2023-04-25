@@ -5,6 +5,9 @@
 [core]
 	editor = nvim
 
+[rebase]
+	autostash = true
+
 [alias]
 	clean-branches = "!f() {                                             \n\
 		git fetch --prune                                            \n\
@@ -44,7 +47,7 @@
 		local selected_branch=$(git select-branch)                   \n\
 		[[ -z $selected_branch ]] &&                                 \n\
 			echo 'Invalid branch selected, aborting.' && return; \n\
-		git rebase --interactive --autostash ${selected_branch};     \n\
+		git rebase --interactive ${selected_branch};                 \n\
 	}; f; unset f"
 
 	first-branch-commit = "!f() {                                        \n\
@@ -59,7 +62,7 @@
 		[[ -z $commit ]] &&                                          \n\
 			echo 'Invalid commit returned, aborting.' &&         \n\
 			return;                                              \n\
-		git rebase --interactive --autostash --autosquash $commit~   \n\
+		git rebase --interactive --autosquash $commit~               \n\
 	}; f; unset f"
 
 	template-function = "!f() {                                          \n\
