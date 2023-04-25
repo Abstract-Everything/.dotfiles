@@ -86,7 +86,8 @@
 	dc   = diff HEAD~ HEAD
 	ds   = diff --stat
 	l    = log
-	ll   = log origin..HEAD --oneline
+	lo   = log origin..HEAD
+	los  = log origin..HEAD --oneline
 	pcb  = push -u origin HEAD
 	r    = reset
 	rb   = rebase
