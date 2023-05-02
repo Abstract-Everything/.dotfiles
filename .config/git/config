@@ -94,9 +94,11 @@
 	rbb  = rebase-select-branch
 	rbc  = rebase --continue
 	rbs  = rebase-squash
+	rbm  = rebase --interactive origin/HEAD
 	rc   = reset --soft HEAD~
 	s    = status
 	st   = stash
 	stc  = stash show --patch
 	std  = stash drop
+	stl  = stash list
 
