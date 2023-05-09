@@ -1,4 +1,5 @@
 [Default Applications]
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
 application/x-xpinstall=org.qutebrowser.qutebrowser.desktop
 application/xhtml+xml=org.qutebrowser.qutebrowser.desktop
 x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
