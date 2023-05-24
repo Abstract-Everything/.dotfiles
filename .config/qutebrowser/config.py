@@ -189,7 +189,7 @@ c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
 # `colors.webpage.darkmode.algorithm` is set to `lightness-hsl` or
 # `brightness-rgb`.
 # Type: Float
-c.colors.webpage.darkmode.contrast = -0.22
+# c.colors.webpage.darkmode.contrast = -0.22
 
 # Which images to apply dark mode to. With QtWebEngine 5.15.0, this
 # setting can cause frequent renderer process crashes due to a
@@ -200,7 +200,7 @@ c.colors.webpage.darkmode.contrast = -0.22
 #   - always: Apply dark mode filter to all images.
 #   - never: Never apply dark mode filter to any images.
 #   - smart: Apply dark mode based on image content. Not available with Qt 5.15.0.
-c.colors.webpage.darkmode.policy.images = 'always'
+c.colors.webpage.darkmode.policy.images = 'smart'
 
 # Desaturation factor for images in dark mode. If set to 0, images are
 # left as-is. If set to 1, images are completely grayscale. Values
