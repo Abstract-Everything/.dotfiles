@@ -89,5 +89,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Allows fuzzy matching of completions in the presence of typos
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+
+# Do not suggest the ./ and ../$(current-directory)
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
 alias g="git"
 alias dg="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
