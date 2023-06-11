@@ -100,3 +100,5 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
 alias g="git"
 alias dg="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+bindkey -v
