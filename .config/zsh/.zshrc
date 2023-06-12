@@ -69,6 +69,7 @@ HIST_STAMPS="dd/mm/yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(fzf zoxide)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -102,3 +103,4 @@ alias g="git"
 alias dg="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 bindkey -v
+bindkey '^ ' autosuggest-accept
