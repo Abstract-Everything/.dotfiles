@@ -192,7 +192,7 @@ mode $mode_resize {
         bindsym $mod+r mode "default"
 }
 
-set $mode_system "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown"
+set $mode_system "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (p) poweroff"
 bindsym $mod+Shift+e mode $mode_system
 mode $mode_system {
     bindsym l exec --no-startup-id i3exit lock, mode "default"
@@ -200,7 +200,7 @@ mode $mode_system {
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym p exec --no-startup-id i3exit poweroff, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
