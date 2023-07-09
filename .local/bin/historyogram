@@ -1,5 +1,78 @@
-#! /usr/bin/env bash
+#! /usr/bin/env python
 
-# We expect history to be passed in as it is disabled from scripts
-# call: history | historyogram
-sed -E 's/^ [[:digit:]]+  //' | sort | uniq -c | sort -n
+import sys
+import re
+
+
+# Only the following history format is supported
+# | id  date time  command
+# | id  date time  multiline_command start
+# |multiline_command_line2
+# |multiline_command_end
+def parse_history():
+    commands = []
+    # We first concatenate lines which belong to the same command
+    for raw_line in sys.stdin:
+        id = r'^\s*\d+(\* |  )'
+        date = r'\d\d?\.\d\d?\.\d{4} \d{2}:\d{2}  '
+        line = re.sub(f'{id}{date}', '', raw_line)
+        commands.append(line)
+    return commands
+
+
+# We should probably ignore sudo
+# Split commands by ||, &&, ; when the occur
+# a; b should be taken as 2 commands, not a single one
+# Run the process recursively:
+#   command subcommand subsubcommand -arg1 arg2
+# should be parsed to
+# command
+#   subcommand
+#       subsubcommand
+#           -arg1 arg2
+#
+# Getting this exactly is quite hard to do but maybe we can get something
+# better than the current
+def reduce_commands(commands):
+    occurences = {}
+    for command in commands:
+        if command.__contains__(' '):
+            program, arguments = command.split(' ', 1)
+            arguments = arguments.strip().replace('\n', '\\n')
+        else:
+            program = command
+            arguments = ''
+
+        occurences.setdefault(program, {})
+        occurences[program].setdefault('', 0)
+        occurences[program].setdefault(arguments, 0)
+        occurences[program][''] += 1
+
+        if len(arguments) != 0:
+            occurences[program][arguments] += 1
+
+    return occurences
+
+
+# Do not print commands that were used only once
+def print_occurences(occurences):
+    for command in sorted(occurences.items(), key=lambda pair: pair[1]['']):
+        program = command[0]
+        count = command[1]['']
+        print(f'{count:05d} {program}')
+
+        has_children = False
+        for arguments_pair in sorted(command[1].items(), key=lambda pair: pair[1], reverse=True):
+            arguments = arguments_pair[0]
+            count = arguments_pair[1]
+            if len(arguments) != 0:
+                has_children = True
+                print(f'{count:05d}  {arguments}')
+
+        if has_children:
+            print('')
+
+
+commands = parse_history()
+occurences = reduce_commands(commands)
+print_occurences(occurences)
