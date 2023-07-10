@@ -67,7 +67,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(fzf zoxide)
+plugins=(vi-mode fzf zoxide command-not-found)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH/oh-my-zsh.sh
@@ -81,6 +81,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+
+bindkey '^ ' autosuggest-accept
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -102,5 +104,4 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 alias g="git"
 alias dg="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
-bindkey -v
-bindkey '^ ' autosuggest-accept
+
