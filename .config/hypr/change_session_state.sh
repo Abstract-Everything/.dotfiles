@@ -14,14 +14,17 @@ function lock_session {
 		--line-color 00000000 \
 		--inside-color 00000088 \
 		--separator-color 00000000 \
-		--grace 3 \
+		--grace $1 \
 		--fade-in 0.2 \
 		-f
 }
 
 case "$1" in
 	lock)
-		lock_session
+		lock_session 0
+		;;
+	lock-graceful)
+		lock_session 10
 		;;
 	logout)
 		hyprctl dispatch exit
@@ -39,7 +42,7 @@ case "$1" in
 		systemctl poweroff
 		;;
 	*)
-		echo "Usage: $0 {lock|logout|suspend|hibernate|reboot|poweroff}"
+		echo "Usage: $0 {lock|lock-graceful|logout|suspend|hibernate|reboot|poweroff}"
 		exit 2
 esac
 

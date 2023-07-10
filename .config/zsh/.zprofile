@@ -7,6 +7,8 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 export VISUAL=nvim
+export PAGER='nvim -R'
+export MANPAGER='nvim -R +Man!'
 export EDITOR="$VISUAL"
 export BROWSER=qutebrowser
 

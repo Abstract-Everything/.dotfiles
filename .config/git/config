@@ -4,6 +4,10 @@
 
 [core]
 	editor = nvim
+	pager = nvim -R
+
+[color]
+	pager = no
 
 [rebase]
 	autostash = true
@@ -101,4 +105,3 @@
 	stc  = stash show --patch
 	std  = stash drop
 	stl  = stash list
-
