@@ -17,40 +17,62 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function ()
+
+			local rust_tools = require('rust-tools')
+
+			vim.api.nvim_create_autocmd('LspAttach', {
+				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+				callback = function(ev)
+					-- Enable completion triggered by <c-x><c-o>
+					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+					-- Buffer local mappings.
+					-- See `:help vim.lsp.*` for documentation on any of the below functions
+
+					local opts = { buffer = ev.buf }
+
+					local hover_callback = vim.lsp.buf.hover
+					local code_actions_callback = vim.lsp.buf.code_action
+
+					local client = vim.lsp.get_client_by_id(ev.data.client_id)
+					if client.name == "rust_analyzer" then
+						hover_callback = rust_tools.hover_actions.hover_actions
+						code_actions_callback = rust_tools.code_action_group.code_action_group
+					end
+
+					vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+					vim.keymap.set('n', 'gD', vim.lsp.buf.type_definition, opts)
+					vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+					vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+					vim.keymap.set('n', 'K', hover_callback, opts)
+					vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+					vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+					vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+					vim.keymap.set('n', '<leader>wl', function()
+						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+					end, opts)
+					vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+					vim.keymap.set({ 'n', 'v' }, '<leader>ca', code_actions_callback, opts)
+					vim.keymap.set('n', '<leader>f', function()
+						vim.lsp.buf.format { async = true }
+					end, opts)
+				end,
+			})
+
 			require("mason-lspconfig").setup {
 				ensure_installed = { 'lua_ls' }
 			}
 
 			local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-			local on_attach = function(client, bufnr)
-				local silent_noremap = { silent = true, noremap = true }
-
-				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd',         '<cmd>lua vim.lsp.buf.definition()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD',         '<cmd>lua vim.lsp.buf.type_definition()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',          '<cmd>lua vim.lsp.buf.hover()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>',      '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent_noremap)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent_noremap)
-			end
-
 			require("mason-lspconfig").setup_handlers {
 				function (server_name) -- default handler
 					require("lspconfig")[server_name].setup {
-						on_attach = on_attach,
 						capabilities = capabilities,
 					}
 				end,
 				["lua_ls"] = function()
 					require("lspconfig")["lua_ls"].setup {
-						on_attach = on_attach,
 						capabilities = capabilities,
 						settings = {
 							Lua = {
@@ -77,7 +99,6 @@ return {
 				["clangd"] = function()
 					require("clangd_extensions").setup {
 						server = {
-							on_attach = on_attach,
 							capabilities = capabilities,
 						},
 						extensions = {
@@ -127,15 +148,8 @@ return {
 					}
 				end,
 				["rust_analyzer"] = function()
-					local rust_on_attach = function(client, bufnr)
-						local silent_noremap = { silent = true, noremap = true }
-						vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gq', '<cmd>lua vim.lsp.buf.format({ range = nil })<CR>', silent_noremap)
-						on_attach(client, bufnr)
-					end
-
-					require('rust-tools').setup {
+					rust_tools.setup {
 						server = {
-							on_attach = rust_on_attach,
 							capabilities = capabilities,
 						},
 					}
