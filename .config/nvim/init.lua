@@ -27,6 +27,9 @@ vim.opt.rtp:prepend(lazypath)
 -- 	Easy commenting
 -- 	https://github.com/numToStr/Comment.nvim
 --
+-- 	Note taking and organization
+-- 	https://github.com/nvim-neorg/neorg
+--
 -- Debugging
 -- 	https://github.com/rcarriga/nvim-dap-ui
 -- 	https://github.com/theHamsta/nvim-dap-virtual-text
