@@ -11,9 +11,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
---- Clear highlight on esc
-vim.keymap.set("n", "<esc>", ":noh<return>", silent_noremap)
-
 vim.keymap.set("n", "<leader>e", function()
   vim.diagnostic.open_float()
 end, silent_noremap)
