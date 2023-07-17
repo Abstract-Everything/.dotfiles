@@ -173,4 +173,16 @@ return {
       }
     end,
   },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      local nls = require "null-ls"
+      nls.setup {
+        sources = {
+          nls.builtins.formatting.black,
+          nls.builtins.formatting.stylua,
+        },
+      }
+    end,
+  },
 }
