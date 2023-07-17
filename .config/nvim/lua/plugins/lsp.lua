@@ -6,6 +6,27 @@ return {
       require("mason").setup()
     end,
   },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    config = function()
+      require("mason-tool-installer").setup {
+        auto_update = true,
+        debounce_hours = 24,
+        ensure_installed = {
+          "lua_ls",
+          "stylua",
+
+          "clangd",
+          "clang-format",
+
+          "rust_analyzer",
+
+          "pylsp",
+          "black",
+        },
+      }
+    end,
+  },
   "neovim/nvim-lspconfig",
   -- Specific language server extensions
   "p00f/clangd_extensions.nvim",
@@ -57,10 +78,6 @@ return {
           end, opts)
         end,
       })
-
-      require("mason-lspconfig").setup {
-        ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "gopls", "pylsp" },
-      }
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
