@@ -6,6 +6,7 @@ return {
       require("mason").setup()
     end,
   },
+  { "b0o/schemastore.nvim" },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
@@ -23,6 +24,8 @@ return {
 
           "pylsp",
           "black",
+
+          "yaml-language-server",
         },
       }
     end,
@@ -170,6 +173,16 @@ return {
             },
           }
         end,
+      }
+
+      require("lspconfig").jsonls.setup {
+        capabilities = capabilities,
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
+        },
       }
     end,
   },
