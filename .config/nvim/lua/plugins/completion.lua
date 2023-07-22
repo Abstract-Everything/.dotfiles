@@ -3,6 +3,7 @@ return {
   "hrsh7th/cmp-calc",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-nvim-lsp-signature-help",
   "hrsh7th/cmp-nvim-lua",
@@ -70,6 +71,21 @@ return {
           },
         },
       }
+
+      cmp.setup.cmdline({ "/", "?" }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources {
+          { name = "buffer" },
+        },
+      })
+
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources {
+          { name = "path" },
+          { name = "cmdline" },
+        },
+      })
     end,
   },
 }
