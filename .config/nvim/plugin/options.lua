@@ -17,9 +17,15 @@ vim.o.incsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
---- Line numbers
+--- Lines
+vim.opt.wrap = true
 vim.o.number = true
 vim.o.relativenumber = true
+
+-- Inserting
+vim.opt.showmatch = true
+vim.opt.autoindent = true
+vim.opt.cindent = true
 
 --- Editor
 vim.o.scrolloff = 10
