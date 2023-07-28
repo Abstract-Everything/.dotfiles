@@ -57,8 +57,8 @@ return {
           local hover_callback = vim.lsp.buf.hover
           local code_actions_callback = vim.lsp.buf.code_action
 
-          local client = vim.lsp.get_client_by_id(ev.data.client_id)
-          if client.name == "rust_analyzer" then
+          local active_client = vim.lsp.get_client_by_id(ev.data.client_id)
+          if active_client.name == "rust_analyzer" then
             hover_callback = rust_tools.hover_actions.hover_actions
             code_actions_callback = rust_tools.code_action_group.code_action_group
           end
@@ -77,7 +77,19 @@ return {
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
           vim.keymap.set({ "n", "v" }, "<leader>ca", code_actions_callback, opts)
           vim.keymap.set("n", "<leader>f", function()
-            vim.lsp.buf.format { async = true }
+            vim.lsp.buf.format {
+              async = true,
+              -- Use the null-ls formatter if it has one
+              filter = function(filter_client)
+                for _, client in ipairs(vim.lsp.get_active_clients()) do
+                  if client.name == "null-ls" and client.supports_method "textDocument/formatting" then
+                    return filter_client.name == "null-ls"
+                  end
+                end
+
+                return true
+              end,
+            }
           end, opts)
         end,
       })
