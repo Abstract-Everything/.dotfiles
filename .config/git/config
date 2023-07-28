@@ -70,6 +70,10 @@
 		git rebase --interactive --autosquash $commit~               \n\
 	}; f; unset f"
 
+	fetch-and-checkout-master = "!f() {                                  \n\
+		git fetch && git checkout origin/HEAD                        \n\
+	}; f; unset f"
+
 	template-function = "!f() {                                          \n\
 		echo \"lines go here\"                                       \n\
 	}; f; unset f"
@@ -83,6 +87,7 @@
 	cb   = change-branch
 	cf   = commit-fuzzyfixup
 	co   = checkout
+	com  = fetch-and-checkout-master
 	d    = diff
 	da   = diff --staged
 	das  = diff --staged --stat
