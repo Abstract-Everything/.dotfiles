@@ -61,6 +61,9 @@ return {
           if active_client.name == "rust_analyzer" then
             hover_callback = rust_tools.hover_actions.hover_actions
             code_actions_callback = rust_tools.code_action_group.code_action_group
+          elseif active_client.name == "clangd" then
+            require("clangd_extensions.inlay_hints").setup_autocmd()
+            require("clangd_extensions.inlay_hints").set_inlay_hints()
           end
 
           vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -122,57 +125,6 @@ return {
                 },
                 telemetry = {
                   enable = false,
-                },
-              },
-            },
-          }
-        end,
-        ["clangd"] = function()
-          require("clangd_extensions").setup {
-            server = {
-              capabilities = capabilities,
-            },
-            extensions = {
-              autoSetHints = true,
-              inlay_hints = {
-                only_current_line = false,
-                only_current_line_autocmd = "CursorHold",
-                show_parameter_hints = true,
-                parameter_hints_prefix = "<- ",
-                other_hints_prefix = "=> ",
-                max_len_align = false,
-                max_len_align_padding = 1,
-                right_align = false,
-                right_align_padding = 81,
-                highlight = "Comment",
-                priority = 100,
-              },
-              ast = {
-                role_icons = {
-                  type = "",
-                  declaration = "",
-                  expression = "",
-                  specifier = "",
-                  statement = "",
-                  ["template argument"] = "",
-                },
-                kind_icons = {
-                  Compound = "",
-                  Recovery = "",
-                  TranslationUnit = "",
-                  PackExpansion = "",
-                  TemplateTypeParm = "",
-                  TemplateTemplateParm = "",
-                  TemplateParamObject = "",
-                },
-                highlights = {
-                  detail = "Comment",
-                },
-                memory_usage = {
-                  border = "none",
-                },
-                symbol_info = {
-                  border = "none",
                 },
               },
             },
