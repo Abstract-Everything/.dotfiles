@@ -24,7 +24,7 @@
 	}; f; unset f"
 
 	select-branch = "!f() {                                              \n\
-		echo $(git branch | grep -v '*' | fzf)                       \n\
+		echo $(git branch --all | grep -v '*' | fzf)                 \n\
 	}; f; unset f"
 
 	change-branch = "!f() {                                              \n\
