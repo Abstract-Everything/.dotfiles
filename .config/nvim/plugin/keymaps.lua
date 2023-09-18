@@ -27,6 +27,8 @@ end, silent_noremap)
 vim.keymap.set("n", "<Tab>", ":cnext<return>", silent_noremap)
 vim.keymap.set("n", "<S-Tab>", ":cprev<return>", silent_noremap)
 
+vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-N>", silent_noremap)
+
 vim.api.nvim_create_user_command("Configuration", function()
   require("telescope.builtin").find_files { cwd = "~/.config", hidden = true }
 end, { nargs = 0 })
