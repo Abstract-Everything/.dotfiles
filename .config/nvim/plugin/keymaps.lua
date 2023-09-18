@@ -27,8 +27,6 @@ end, silent_noremap)
 vim.keymap.set("n", "<Tab>", ":cnext<return>", silent_noremap)
 vim.keymap.set("n", "<S-Tab>", ":cprev<return>", silent_noremap)
 
-local initpath = vim.fn.stdpath "config" .. package.config:sub(1, 1) .. "init.lua"
-vim.api.nvim_create_user_command("Source", "source " .. initpath, { nargs = 0 })
 vim.api.nvim_create_user_command("Configuration", function()
   require("telescope.builtin").find_files { cwd = "~/.config", hidden = true }
 end, { nargs = 0 })
