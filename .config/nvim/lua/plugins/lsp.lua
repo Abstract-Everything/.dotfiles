@@ -20,6 +20,9 @@ return {
           "clangd",
           "clang-format",
 
+          "csharp-language-server",
+          "csharpier",
+
           "rust_analyzer",
 
           "pylsp",
@@ -158,6 +161,7 @@ return {
         sources = {
           nls.builtins.formatting.black,
           nls.builtins.formatting.stylua,
+          nls.builtins.formatting.csharpier,
         },
       }
     end,
