@@ -44,3 +44,5 @@ vim.o.ruler = true
 --- Spelling
 vim.o.spell = true
 vim.o.spelllang = "en_gb"
+
+vim.filetype.add { extension = { uproject = "json" } }
