@@ -48,8 +48,6 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      local rust_tools = require "rust-tools"
-
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
@@ -66,6 +64,7 @@ return {
 
           local active_client = vim.lsp.get_client_by_id(ev.data.client_id)
           if active_client.name == "rust_analyzer" then
+            local rust_tools = require "rust-tools"
             hover_callback = rust_tools.hover_actions.hover_actions
             code_actions_callback = rust_tools.code_action_group.code_action_group
           elseif active_client.name == "clangd" then
@@ -138,7 +137,7 @@ return {
           }
         end,
         ["rust_analyzer"] = function()
-          rust_tools.setup {
+          require("rust-tools").setup {
             server = {
               capabilities = capabilities,
             },
