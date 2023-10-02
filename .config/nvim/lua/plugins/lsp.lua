@@ -25,6 +25,10 @@ return {
 
           "rust_analyzer",
 
+          "bash-language-server",
+          "shellcheck",
+          "shfmt",
+
           "pylsp",
           "black",
 
@@ -159,9 +163,18 @@ return {
       local nls = require "null-ls"
       nls.setup {
         sources = {
-          nls.builtins.formatting.black,
+          -- lua
           nls.builtins.formatting.stylua,
+
+          -- python
+          nls.builtins.formatting.black,
+
+          -- csharp
           nls.builtins.formatting.csharpier,
+
+          -- shell
+          nls.builtins.code_actions.shellcheck,
+          nls.builtins.formatting.shfmt,
         },
       }
     end,
