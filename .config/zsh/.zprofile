@@ -1,5 +1,5 @@
-# In order to source this file, define 'export ZDOTDIR=$HOME/.config'
-#   /etc/profile.d/<file>
+# In order to source this file, define 'export ZDOTDIR="$HOME/.config/zsh"' in one of the following:
+#   /etc/profile.d/configure-zsh.sh
 #   $HOME/.zshenv
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
