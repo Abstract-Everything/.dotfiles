@@ -15,3 +15,7 @@ export BROWSER=qutebrowser
 typeset -U path PATH
 path=(~/.cargo/bin ~/sources/arcanist/bin ~/.dotnet/tools ~/.local/bin /usr/local/bin $path)
 export PATH
+
+if [ -z "${WAYLAND_DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+	exec sway
+fi

@@ -3,29 +3,16 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "spacing": 4, // Gaps between modules (4px)
     // Modules configuration
-    "modules-left": ["sway/workspaces", "sway/scratchpad", "sway/mode"],
-    "modules-center": ["sway/window"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap" ],
+    "modules-center": ["hyprland/window"],
     "modules-right": ["cpu", "memory#ram", "memory#swap", "disk#root", "disk#home", "custom/dunst", "tray", "clock#time", "clock#date"],
-    "sway/workspaces": {
-        "numeric-first": true,
-        "disable-scroll": true,
-        "format": "{icon} {name}",
+    "wlr/workspaces": {
+        "format": "{icon}{name}",
+        "sort-by-number": true,
         "format-icons": {
-            "urgent": "",
-            "focused": "",
-            "default": ""
-        }
-    },
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
-    },
-    "sway/window": {
-        "icon": true,
-        "icon-size": 16,
+          "urgent": "  ",
+          "default": ""
+        },
     },
     "cpu": {
         "format": "  {usage}%",
@@ -62,6 +49,21 @@
         "spacing": 10,
         "show-passive-items": true,
     },
+    // "sway/workspaces": {
+    //     "disable-scroll": true,
+    //     "all-outputs": true,
+    //     "format": "{name}: {icon}",
+    //     "format-icons": {
+    //         "1": "",
+    //         "2": "",
+    //         "3": "",
+    //         "4": "",
+    //         "5": "",
+    //         "urgent": "",
+    //         "focused": "",
+    //         "default": ""
+    //     }
+    // },
     // "keyboard-state": {
     //     "numlock": true,
     //     "capslock": true,
@@ -70,6 +72,16 @@
     //         "locked": "",
     //         "unlocked": ""
     //     }
+    // },
+    // "sway/mode": {
+    //     "format": "<span style=\"italic\">{}</span>"
+    // },
+    // "sway/scratchpad": {
+    //     "format": "{icon} {count}",
+    //     "show-empty": false,
+    //     "format-icons": ["", ""],
+    //     "tooltip": true,
+    //     "tooltip-format": "{app}: {title}"
     // },
     // "mpd": {
     //     "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
