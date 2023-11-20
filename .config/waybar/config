@@ -5,11 +5,11 @@
     // Modules configuration
     "modules-left": ["sway/workspaces", "sway/scratchpad", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["cpu", "memory#ram", "memory#swap", "disk#root", "disk#home", "custom/dunst", "tray", "clock#time", "clock#date"],
+    "modules-right": ["temperature", "cpu", "memory", "disk#root", "disk#home", "custom/dunst", "tray", "clock"],
     "sway/workspaces": {
         "numeric-first": true,
         "disable-scroll": true,
-        "format": "{icon} {name}",
+        "format": "{icon}  {name}",
         "format-icons": {
             "urgent": "",
             "focused": "",
@@ -17,7 +17,7 @@
         }
     },
     "sway/scratchpad": {
-        "format": "{icon} {count}",
+        "format": "{icon}   {count}",
         "show-empty": false,
         "format-icons": ["", ""],
         "tooltip": true,
@@ -27,29 +27,29 @@
         "icon": true,
         "icon-size": 16,
     },
+    // TODO: Merge the temperature and CPU sections
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+        "format": "  {temperatureC}°C",
+        "format-critical": "  󰈸  {temperatureC}°C",
+        "critical-threshold": 80,
+    },
     "cpu": {
         "format": "  {usage}%",
     },
-    "memory#ram": {
-        "format": "  {used:0.1f}G / {total:0.1f}G"
-    },
-    "memory#swap": {
-        "tooltip": false,
-        "format": "↹  {swapUsed:0.1f}G / {swapTotal:0.1f}G"
+    "memory": {
+        "format": "  {avail}GiB 󰾴  {swapAvail}GiB"
     },
     "disk#root": {
-        "format": "{path}: {used} / {total}",
+        "format": "󰣇  {used} / {total}",
         "path": "/"
     },
     "disk#home": {
-        "format": "{path}: {used} / {total}",
+        "format": "  {used} / {total}",
         "path": "/home/jon"
     },
-    "clock#time": {
-        "format": "  {:%H:%M}"
-    },
-    "clock#date": {
-        "format": "  {:%Y-%m-%d}"
+    "clock": {
+        "format": "  {:%H:%M    %d-%m-%Y}"
     },
     "custom/dunst": {
         "exec": "~/.config/waybar/scripts/dunst.sh",
@@ -107,14 +107,6 @@
     // "tray": {
     //     // "icon-size": 21,
     //     "spacing": 10
-    // },
-    // "temperature": {
-    //     // "thermal-zone": 2,
-    //     // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    //     "critical-threshold": 80,
-    //     // "format-critical": "{temperatureC}°C {icon}",
-    //     "format": "{temperatureC}°C {icon}",
-    //     "format-icons": ["", "", ""]
     // },
     // "backlight": {
     //     // "device": "acpi_video1",
