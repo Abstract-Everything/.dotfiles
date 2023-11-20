@@ -104,4 +104,5 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 alias g="git"
 alias dg="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
-
+alias updatedb="updatedb --require-visibility 0 -o $HOME/.cache/locate.db"
+alias locate="locate --database=$HOME/.cache/locate.db"
