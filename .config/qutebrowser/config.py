@@ -150,6 +150,8 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 # Enable JavaScript to copy to clipboard
 config.set('content.javascript.clipboard', "access")
 
+c.scrolling.smooth = True
+
 # List of user stylesheet filenames to use.
 # Type: List of File, or File
 c.content.user_stylesheets = 'darkmode.css'
