@@ -34,6 +34,7 @@ return {
           "black",
 
           "yaml-language-server",
+          "json-lsp",
         },
       }
     end,
@@ -148,15 +149,6 @@ return {
         ["luau_lsp"] = function()
           require("luau-lsp").setup {}
         end,
-      }
-      require("lspconfig").jsonls.setup {
-        capabilities = capabilities,
-        settings = {
-          json = {
-            schemas = require("schemastore").json.schemas(),
-            validate = { enable = true },
-          },
-        },
       }
     end,
   },
