@@ -92,7 +92,7 @@
 	da   = diff --staged
 	das  = diff --staged --stat
 	db   = diff origin...HEAD
-	dc   = diff HEAD~ HEAD
+	dc   = show
 	ds   = diff --stat
 	l    = log
 	lo   = log origin..HEAD
