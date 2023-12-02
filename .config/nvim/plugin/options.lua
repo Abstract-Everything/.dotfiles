@@ -45,4 +45,4 @@ vim.o.ruler = true
 vim.o.spell = true
 vim.o.spelllang = "en_gb"
 
-vim.filetype.add { extension = { uproject = "json" } }
+vim.filetype.add { extension = { uproject = "json", luau = "luau" } }

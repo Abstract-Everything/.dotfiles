@@ -16,6 +16,7 @@ return {
         ensure_installed = {
           "lua_ls",
           "stylua",
+          "luau-lsp",
 
           "clangd",
           "clang-format",
@@ -40,6 +41,7 @@ return {
   "neovim/nvim-lspconfig",
   -- Specific language server extensions
   "p00f/clangd_extensions.nvim",
+  "lopi-py/luau-lsp.nvim",
   {
     -- https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/
     "simrat39/rust-tools.nvim",
@@ -143,8 +145,10 @@ return {
             },
           }
         end,
+        ["luau_lsp"] = function()
+          require("luau-lsp").setup {}
+        end,
       }
-
       require("lspconfig").jsonls.setup {
         capabilities = capabilities,
         settings = {
