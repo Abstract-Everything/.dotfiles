@@ -24,6 +24,8 @@ return {
           "csharp-language-server",
           "csharpier",
 
+          "haskell-language-server",
+
           "rust_analyzer",
 
           "bash-language-server",
