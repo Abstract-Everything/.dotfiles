@@ -235,6 +235,10 @@
 	bindsym $commandMod+p exec --no-startup-id exec grim -g "$(slurp)" - | swappy -f -
 	bindsym $commandMod+Shift+p exec --no-startup-id exec wm-capture-window
 
+	# Handy zoom in for screen sharing
+	bindsym $commandMod+s output DP-3 scale 1.25
+	bindsym $commandMod+Shift+s output DP-3 scale 2.25
+
 	set $mode_system "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (p) poweroff"
 	bindsym $commandMod+e mode $mode_system
 	mode $mode_system {
