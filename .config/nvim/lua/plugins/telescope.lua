@@ -14,7 +14,8 @@ return {
       end, { nargs = 0 })
 
       vim.keymap.set("n", "<leader><space>", builtin.buffers)
-      vim.keymap.set("n", "<leader>ss", builtin.lsp_dynamic_workspace_symbols)
+      vim.keymap.set("n", "<leader>ss", builtin.lsp_workspace_symbols)
+      vim.keymap.set("n", "<leader>sS", builtin.lsp_dynamic_workspace_symbols)
       vim.keymap.set("n", "<leader>sg", builtin.git_files)
       vim.keymap.set("n", "<leader>sf", builtin.find_files)
       vim.keymap.set("n", "<leader>sd", builtin.grep_string)
