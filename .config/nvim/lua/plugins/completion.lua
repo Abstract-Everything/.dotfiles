@@ -55,18 +55,18 @@ return {
         },
         sources = cmp.config.sources {
           { name = "path" },
+          { name = "luasnip" },
           { name = "nvim_lsp" },
           { name = "nvim_lsp_signature_help" },
           { name = "nvim_lua" },
-          { name = "buffer" },
-          { name = "luasnip" },
           { name = "calc" },
+          { name = "buffer" },
         },
         sorting = {
+          priority_weight = 2,
           comparators = {
             cmp.config.compare.offset,
             cmp.config.compare.exact,
-            cmp.config.compare.recently_used,
             require "clangd_extensions.cmp_scores",
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
