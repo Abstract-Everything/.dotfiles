@@ -88,6 +88,7 @@
 	cf   = commit-fuzzyfixup
 	co   = checkout
 	com  = fetch-and-checkout-master
+	cop  = checkout --patch
 	d    = diff
 	da   = diff --staged
 	das  = diff --staged --stat
@@ -105,6 +106,7 @@
 	rbs  = rebase-squash
 	rbm  = rebase --interactive origin/HEAD
 	rc   = reset --soft HEAD~
+	rp   = reset --patch
 	s    = status
 	st   = stash
 	stc  = stash show --patch
