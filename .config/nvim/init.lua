@@ -40,4 +40,4 @@ vim.opt.runtimepath:prepend(lazypath)
 -- 	https://github.com/rhysd/committia.vim
 --
 -- A command to write into a diary/ Todo/ thoughts notebook
-require("lazy").setup "plugins"
+require("lazy").setup { dev = { path = "~/sources" }, spec = "plugins" }
