@@ -26,9 +26,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- 	Show colours when typing them out
 -- 	https://github.com/norcalli/nvim-colorizer.lua
 --
--- 	Easy commenting
--- 	https://github.com/numToStr/Comment.nvim
---
 -- 	Note taking and organization
 -- 	https://github.com/nvim-neorg/neorg
 --
