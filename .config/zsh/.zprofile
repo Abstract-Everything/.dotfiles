@@ -12,6 +12,8 @@ export MANPAGER='nvim -R +Man!'
 export EDITOR="$VISUAL"
 export BROWSER=qutebrowser
 
+export DOTNET_CLI_TELEMETRY_OPTOUT=true
+
 typeset -U path PATH
 path=(~/.cargo/bin ~/sources/arcanist/bin ~/.dotnet/tools ~/.local/bin /usr/local/bin $path)
 export PATH
