@@ -21,6 +21,10 @@ return {
           "clangd",
           "clang-format",
 
+          "neocmakelsp",
+          "cmakelint",
+          "gersemi",
+
           "csharp-language-server",
           "csharpier",
 
@@ -191,6 +195,10 @@ return {
           -- shell
           nls.builtins.code_actions.shellcheck,
           nls.builtins.formatting.shfmt,
+
+          -- cmake
+          nls.builtins.diagnostics.cmake_lint,
+          nls.builtins.formatting.gersemi,
         },
       }
     end,
