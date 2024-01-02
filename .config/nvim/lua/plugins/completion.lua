@@ -74,6 +74,12 @@ return {
             cmp.config.compare.order,
           },
         },
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.menu = string.format("[%s]", entry.source.name)
+            return vim_item
+          end,
+        },
       }
 
       cmp.setup.cmdline({ "/", "?" }, {
