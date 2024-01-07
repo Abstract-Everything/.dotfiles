@@ -1,18 +1,31 @@
 return {
-  -- Completion
-  "hrsh7th/cmp-calc",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-cmdline",
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-nvim-lsp-signature-help",
-  "hrsh7th/cmp-nvim-lua",
-  "saadparwaiz1/cmp_luasnip",
+  {
+    "L3MON4D3/LuaSnip",
+    build = "make install_jsregexp",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      config = function()
+        require("luasnip.loaders.from_vscode").lazy_load()
+      end,
+    },
+  },
   {
     "hrsh7th/nvim-cmp",
-    config = function()
-      local luasnip = require "luasnip"
+    dependencies = {
+      "hrsh7th/cmp-calc",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lua",
+      "saadparwaiz1/cmp_luasnip",
+    },
+    opts = function()
       local cmp = require "cmp"
+      local luasnip = require "luasnip"
+
+      vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
       local has_words_before = function()
         unpack = unpack or table.unpack
@@ -20,7 +33,7 @@ return {
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
       end
 
-      cmp.setup {
+      return {
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -35,7 +48,7 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm(),
+          ["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -75,12 +88,23 @@ return {
           },
         },
         formatting = {
-          format = function(entry, vim_item)
-            vim_item.menu = string.format("[%s]", entry.source.name)
-            return vim_item
+          format = function(entry, item)
+            item.menu = string.format("[%s]", entry.source.name)
+            return item
           end,
         },
+        experimental = {
+          ghost_text = {
+            hl_group = "CmpGhostText",
+          },
+        },
       }
+    end,
+    ---@param opts cmp.ConfigSchema
+    config = function(_, opts)
+      local cmp = require "cmp"
+
+      cmp.setup(opts)
 
       cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
