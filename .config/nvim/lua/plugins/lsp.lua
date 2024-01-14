@@ -47,6 +47,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = { "folke/neodev.nvim", opts = {} },
     config = function()
       local _border = "rounded"
 

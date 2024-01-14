@@ -1,3 +1,5 @@
+local Util = require "config.util"
+
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -10,26 +12,34 @@ return {
       },
     },
     keys = {
-      { "<leader><space>", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>" },
+      { "<leader>,", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>" },
+      { "<leader><", "<cmd>Telescope oldfiles<cr>" },
+
+      { "<leader>:", "<cmd>Telescope command_history<cr>" },
+      { "<leader>/", Util.telescope "live_grep" },
+
+      { "<leader>ff", Util.telescope "files" },
+      { "<leader>fg", Util.telescope "git_files" },
+      { "<leader>fc", Util.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config" }) },
+
+      { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>" },
+      { "<leader>sD", "<cmd>Telescope diagnostics<cr>" },
+
+      { "<leader>sk", "<cmd>Telescope keymaps<cr>" },
+      { "<leader>sm", "<cmd>Telescope man_pages<cr>" },
+      { "<leader>sr", "<cmd>Telescope resume<cr>" },
+
+      { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }) },
+      { "<leader>sw", Util.telescope "grep_string", mode = "v" },
+
       { "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>" },
       { "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>" },
-      { "<leader>sg", "<cmd>Telescope git_files<cr>" },
-      { "<leader>sf", "<cmd>Telescope find_files<cr>" },
-      { "<leader>sd", "<cmd>Telescope grep_string<cr>" },
-      { "<leader>sp", "<cmd>Telescope live_grep<cr>" },
-      { "<leader>so", "<cmd>Telescope tags<cr>" },
-      { "<leader>?", "<cmd>Telescope oldfiles<cr>" },
     },
-    config = function()
+    config = function(_, opts)
       local telescope = require "telescope"
-      local builtin = require "telescope.builtin"
 
-      telescope.setup()
+      telescope.setup(opts)
       telescope.load_extension "fzf"
-
-      vim.api.nvim_create_user_command("Configuration", function()
-        builtin.find_files { cwd = "~/.config", hidden = true }
-      end, { nargs = 0 })
     end,
   },
 }
