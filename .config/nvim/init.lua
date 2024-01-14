@@ -62,6 +62,18 @@ require("config").setup {}
 --	nicer quickfix/ location lists
 --	folke/trouble.nvim
 --
+--	To persist buffers when closing neovim
+--	folke/persistence.nvim
+--
+--	Notifications
+--	rcarriga/nvim-notify
+--
+--	nicer ui
+--	stevearc/dressing.nvim
+--
+--	indent guides
+--	lukas-reineke/indent-blankline.nvim
+--
 -- Debugging
 --	https://github.com/rcarriga/nvim-dap-ui
 --	https://github.com/theHamsta/nvim-dap-virtual-text
