@@ -1,0 +1,81 @@
+local Keys = require "lazy.core.handler.keys"
+local Util = require "config.util"
+
+local M = {}
+
+M._keys = {
+  {
+    "gd",
+    function()
+      require("telescope.builtin").lsp_definitions { reuse_win = true }
+    end,
+  },
+  {
+    "gD",
+    function()
+      require("telescope.builtin").lsp_type_definitions { reuse_win = true }
+    end,
+  },
+  {
+    "gi",
+    function()
+      require("telescope.builtin").lsp_implementations { reuse_win = true }
+    end,
+  },
+  {
+    "gr",
+    function()
+      require("telescope.builtin").lsp_references()
+    end,
+  },
+  { "K", vim.lsp.buf.hover },
+  { "<C-k>", vim.lsp.buf.signature_help, mode = { "n", "i" } },
+  { "<leader>rn", vim.lsp.buf.rename },
+  { "<leader>ca", vim.lsp.buf.code_action, mode = { "n", "v" } },
+  {
+    "<leader>f",
+    function()
+      vim.lsp.buf.format {
+        async = true,
+        -- Use the null-ls formatter if it has one
+        filter = function(filter_client)
+          for _, client in ipairs(vim.lsp.get_active_clients()) do
+            if client.name == "null-ls" and client.supports_method "textDocument/formatting" then
+              return filter_client.name == "null-ls"
+            end
+          end
+
+          return true
+        end,
+      }
+    end,
+  },
+}
+
+---@param buffer number
+function M.resolve(buffer)
+  if not Keys.resolve then
+    return {}
+  end
+
+  local keys = M._keys
+  local language_specific = Util.plugins.options "nvim-lspconfig"
+  for _, client in ipairs(vim.lsp.get_active_clients { bufnr = buffer }) do
+    local config = language_specific.servers and language_specific.servers[client.name] or {}
+    local mappings = config and config.keys or {}
+    vim.list_extend(keys, mappings)
+  end
+  return Keys.resolve(keys)
+end
+
+function M.setup(buffer)
+  local keymaps = M.resolve(buffer)
+
+  for _, keys in pairs(keymaps) do
+    local options = Keys.opts(keys)
+    options.buffer = buffer
+    vim.keymap.set(keys.mode or "n", keys.lhs, keys.rhs, options)
+  end
+end
+
+return M

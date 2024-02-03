@@ -11,6 +11,7 @@ return {
         config = function() end,
       },
     },
+    -- Add more keys - such as quickfix history
     keys = {
       { "<leader>,", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>" },
       { "<leader><", "<cmd>Telescope oldfiles<cr>" },
@@ -20,7 +21,10 @@ return {
 
       { "<leader>ff", Util.telescope "files" },
       { "<leader>fg", Util.telescope "git_files" },
-      { "<leader>fc", Util.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config" }) },
+      {
+        "<leader>fc",
+        Util.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config" }),
+      },
 
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>" },
       { "<leader>sD", "<cmd>Telescope diagnostics<cr>" },

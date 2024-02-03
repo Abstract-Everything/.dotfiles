@@ -30,9 +30,12 @@ return {
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+        return col ~= 0
+          and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s"
+            == nil
       end
 
+      local defaults = require "cmp.config.default"()
       return {
         snippet = {
           expand = function(args)
@@ -75,18 +78,7 @@ return {
           { name = "calc" },
           { name = "buffer" },
         },
-        sorting = {
-          priority_weight = 2,
-          comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            require "clangd_extensions.cmp_scores",
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-          },
-        },
+        sorting = defaults.sorting,
         formatting = {
           format = function(entry, item)
             item.menu = string.format("[%s]", entry.source.name)

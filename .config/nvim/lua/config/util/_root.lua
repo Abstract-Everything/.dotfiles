@@ -4,8 +4,8 @@ local LazyUtil = require "lazy.core.util"
 ---@overload fun(): string
 local M = setmetatable({}, {
   ---@param m config.util.root
-  __call = function(m)
-    return m.get({ first = true })[1]
+  __call = function(m, options)
+    return m.get(options or { first = true })[1]
   end,
 })
 
@@ -20,14 +20,20 @@ function M.setup()
   end, { desc = "Get the root directory for the current buffer" })
 end
 
----@param opts? { first?: boolean }
+---@param opts? { lsp_client_id?: number, first?: boolean }
 ---@return table<integer, string>
 function M.get(opts)
+  opts = vim.tbl_extend("keep", opts or {}, { first = false })
+
   local result = {}
-  for _, root_fn in pairs { M.lsp_roots, M.git_root, M.cwd } do
-    local roots = root_fn()
+  local sources = { M.lsp_roots, M.git_root, M.cwd }
+  if opts.lsp_root then
+    sources = { M.lsp_roots }
+  end
+  for _, root_fn in pairs(sources) do
+    local roots = root_fn(opts)
     if vim.tbl_count(roots) > 0 then
-      if opts and opts.first then
+      if opts.first then
         return roots
       end
 
@@ -42,18 +48,19 @@ function M.get(opts)
 end
 
 ---@private
-M.sources = { "lsp", ".git", "cwd" }
-
----@private
-function M.lsp_roots()
+---@param opts { lsp_client_id?: number }
+function M.lsp_roots(opts)
   local buffer = vim.api.nvim_get_current_buf()
   local buffer_path = M.buffer_path(buffer)
   if not buffer_path then
     return {}
   end
 
+  local clients = opts.lsp_client_id and { vim.lsp.get_client_by_id(opts.lsp_client_id) }
+    or vim.lsp.get_active_clients()
+
   local roots = {} ---@type string[]
-  for _, client in pairs(vim.lsp.get_active_clients { bufnr = buffer }) do
+  for _, client in pairs(clients) do
     local workspace = client.config.workspace_folders
     for _, ws in pairs(workspace or {}) do
       table.insert(roots, vim.uri_to_fname(ws.uri))
