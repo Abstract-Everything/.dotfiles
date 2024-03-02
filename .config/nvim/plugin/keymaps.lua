@@ -1,4 +1,5 @@
 -- Configuration
+local expr = { expr = true }
 local silent_noremap = { silent = true, noremap = true }
 
 ---@param name string
@@ -33,6 +34,14 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
     vim.cmd("tabnext " .. current_tab)
   end,
 })
+
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+vim.keymap.set("n", "n", "'Nn'[v:searchforward].'zv'", expr)
+vim.keymap.set("x", "n", "'Nn'[v:searchforward]", expr)
+vim.keymap.set("o", "n", "'Nn'[v:searchforward]", expr)
+vim.keymap.set("n", "N", "'nN'[v:searchforward].'zv'", expr)
+vim.keymap.set("x", "N", "'nN'[v:searchforward]", expr)
+vim.keymap.set("o", "N", "'nN'[v:searchforward]", expr)
 
 vim.keymap.set("n", "<leader>e", function()
   vim.diagnostic.open_float()
