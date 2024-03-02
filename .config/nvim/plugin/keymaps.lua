@@ -24,8 +24,8 @@ vim.keymap.set("n", "<leader>q", function()
   vim.diagnostic.setloclist()
 end, silent_noremap)
 
-vim.keymap.set("n", "<Tab>", ":cnext<return>", silent_noremap)
-vim.keymap.set("n", "<S-Tab>", ":cprev<return>", silent_noremap)
+vim.keymap.set("n", "<C-n>", ":cnext<return>", silent_noremap)
+vim.keymap.set("n", "<C-p>", ":cprev<return>", silent_noremap)
 
 vim.keymap.set({"n", "x"}, "<leader>y", [["+y]], silent_noremap)
 vim.keymap.set({"n", "x"}, "<leader>p", [["+p]], silent_noremap)
