@@ -16,10 +16,11 @@ function M.setup() end
 ---@param command string
 ---@param opts? config.util.telescope.opts
 function M.telescope(command, opts)
+  local parameters = { command = command, opts = opts }
   return function()
     opts = vim.tbl_deep_extend("force", {
       cwd = require "config.util._root"(),
-    }, opts or {}) --[[@as config.util.telescope.opts]]
+    }, parameters.opts or {}) --[[@as config.util.telescope.opts]]
 
     if command == "files" then
       if opts.cwd and vim.loop.fs_stat(opts.cwd .. "/.git") then
