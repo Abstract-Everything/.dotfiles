@@ -1,14 +1,27 @@
 -- Configuration
 local silent_noremap = { silent = true, noremap = true }
 
+---@param name string
+local function create_augroup(name)
+  return vim.api.nvim_create_augroup("custom_autocommands_" .. name, { clear = true })
+end
+
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = create_augroup "checktime",
+  callback = function()
+    if vim.o.buftype ~= "nofile" then
+      vim.cmd "checktime"
+    end
+  end,
+})
+
 -- Highlight on yank
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
+  group = create_augroup "highlight_yank",
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = highlight_group,
-  pattern = "*",
 })
 
 vim.keymap.set("n", "<leader>e", function()
