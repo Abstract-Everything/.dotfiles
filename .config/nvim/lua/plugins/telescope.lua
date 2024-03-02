@@ -18,6 +18,10 @@ return {
 
       { "<leader>:", "<cmd>Telescope command_history<cr>" },
       { "<leader>/", Util.telescope "live_grep" },
+      {
+        "<leader>?",
+        Util.telescope("live_grep", { cwd = require "config.util._root" { only_git_root = true } }),
+      },
 
       { "<leader>ff", Util.telescope "files" },
       { "<leader>fg", Util.telescope "git_files" },

@@ -1,16 +1,23 @@
 local LazyUtil = require "lazy.core.util"
 
+---@class config.util.root.options
+---@field first? boolean
+---@field only_git_root? boolean
+---@field only_lsp_root? boolean
+---@field lsp_client_id? boolean
+
 ---@class config.util.root
 ---@overload fun(): string
 local M = setmetatable({}, {
   ---@param m config.util.root
+  ---@param options? config.util.root.options
   __call = function(m, options)
-    return m.get(options or { first = true })[1]
+    return m.get(options)[1]
   end,
 })
 
 function M.info()
-  local lines = { "Buffer Root Path: " .. table.concat(M.get(), ", ") } ---@type string[]
+  local lines = { "Buffer Root Path: " .. table.concat(M.get { first = false }, ", ") } ---@type string[]
   LazyUtil.info(lines, { title = "Buffer Root Path" })
 end
 
@@ -20,21 +27,38 @@ function M.setup()
   end, { desc = "Get the root directory for the current buffer" })
 end
 
----@param opts? { lsp_client_id?: number, first?: boolean }
+---@param opts? config.util.root.options
 ---@return table<integer, string>
 function M.get(opts)
-  opts = vim.tbl_extend("keep", opts or {}, { first = false })
+  opts = opts or {}
+  opts = vim.tbl_extend("keep", opts, {
+    first = true,
+    only_git_root = false,
+    only_lsp_root = opts.only_lsp_root or opts.lsp_client_id ~= nil,
+  })
+  assert(
+    vim.tbl_count(vim.tbl_filter(function(value)
+      return value
+    end, { opts.only_lsp_root, opts.only_git_root })) < 2,
+    "only_<root> parameters are mutually exclusive"
+  )
+
+  local sources = {}
+  if opts.only_git_root then
+    sources = { M.git_root }
+  elseif opts.only_lsp_root then
+    sources = { M.lsp_roots }
+  else
+    sources = { M.lsp_roots, M.git_root, M.cwd }
+  end
 
   local result = {}
-  local sources = { M.lsp_roots, M.git_root, M.cwd }
-  if opts.lsp_root then
-    sources = { M.lsp_roots }
-  end
   for _, root_fn in pairs(sources) do
     local roots = root_fn(opts)
     if vim.tbl_count(roots) > 0 then
       if opts.first then
-        return roots
+        result = roots
+        break
       end
 
       roots = vim.tbl_filter(function(path)
