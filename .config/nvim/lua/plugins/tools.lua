@@ -11,7 +11,11 @@ return {
   },
   {
     "EthanJWright/vs-tasks.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim", "nvim-telescope/telescope.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-lua/popup.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
     config = function()
       require("vstask").setup {
         telescope_keys = {

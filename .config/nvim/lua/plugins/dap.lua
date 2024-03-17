@@ -79,14 +79,61 @@ return {
         end)
       end, { nargs = 0 })
 
-      vim.api.nvim_set_keymap("n", "<leader>dr", "<cmd>lua require('dap').run_last()<CR>", silent_noremap)
-      vim.api.nvim_set_keymap("n", "<leader>db", "<cmd>lua require('dap').toggle_breakpoint()<CR>", silent_noremap)
-      vim.api.nvim_set_keymap("n", "<leader>dh", "<cmd>lua require('dap').run_to_cursor()<CR>", silent_noremap)
-      vim.api.nvim_set_keymap("n", "<leader>dc", "<cmd>lua require('dap').continue()<CR>", silent_noremap)
-      vim.api.nvim_set_keymap("n", "<leader>ds", "<cmd>lua require('dap').step_into()<CR>", silent_noremap)
-      vim.api.nvim_set_keymap("n", "<leader>dn", "<cmd>lua require('dap').step_over()<CR>", silent_noremap)
-      vim.api.nvim_set_keymap("n", "<leader>df", "<cmd>lua require('dap').step_out()<CR>", silent_noremap)
-      vim.api.nvim_set_keymap("n", "<leader>dt", "<cmd>lua require('dap').repl.open()<CR>", silent_noremap)
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>dr",
+        "<cmd>lua require('dap').run_last()<CR>",
+        silent_noremap
+      )
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>db",
+        "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+        silent_noremap
+      )
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>dh",
+        "<cmd>lua require('dap').run_to_cursor()<CR>",
+        silent_noremap
+      )
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>dc",
+        "<cmd>lua require('dap').continue()<CR>",
+        silent_noremap
+      )
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>ds",
+        "<cmd>lua require('dap').step_into()<CR>",
+        silent_noremap
+      )
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>dn",
+        "<cmd>lua require('dap').step_over()<CR>",
+        silent_noremap
+      )
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>df",
+        "<cmd>lua require('dap').step_out()<CR>",
+        silent_noremap
+      )
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>dt",
+        "<cmd>lua require('dap').repl.open()<CR>",
+        silent_noremap
+      )
     end,
   },
 }

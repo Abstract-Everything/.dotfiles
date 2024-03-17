@@ -59,9 +59,9 @@ end, silent_noremap)
 vim.keymap.set("n", "<C-n>", ":cnext<return>", silent_noremap)
 vim.keymap.set("n", "<C-p>", ":cprev<return>", silent_noremap)
 
-vim.keymap.set({"n", "x"}, "<leader>y", [["+y]], silent_noremap)
-vim.keymap.set({"n", "x"}, "<leader>p", [["+p]], silent_noremap)
-vim.keymap.set({"n", "x"}, "<leader>d", [["_d]], silent_noremap)
+vim.keymap.set({ "n", "x" }, "<leader>y", [["+y]], silent_noremap)
+vim.keymap.set({ "n", "x" }, "<leader>p", [["+p]], silent_noremap)
+vim.keymap.set({ "n", "x" }, "<leader>d", [["_d]], silent_noremap)
 vim.keymap.set("x", "<leader>d", [["_dP]])
 
 vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-N>", silent_noremap)
@@ -69,4 +69,3 @@ vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-N>", silent_noremap)
 vim.api.nvim_create_user_command("Configuration", function()
   require("telescope.builtin").find_files { cwd = "~/.config", hidden = true }
 end, { nargs = 0 })
-
