@@ -82,7 +82,7 @@
 	output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 	# Set a bit of scaling for 4k monitor
-	output DP-3 scale 1.25
+	output DP-1 scale 1.25
 
 #
 # Inputs
@@ -236,8 +236,14 @@
 	bindsym $commandMod+Shift+p exec --no-startup-id exec wm-capture-window
 
 	# Handy zoom in for screen sharing
-	bindsym $commandMod+s output DP-3 scale 1.25
-	bindsym $commandMod+Shift+s output DP-3 scale 2.25
+	bindsym $commandMod+s output DP-1 scale 1.25
+	bindsym $commandMod+Shift+s output DP-1 scale 2.25
+
+	bindsym $commandMod+Plus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+	bindsym $commandMod+Minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+	bindsym $commandMod+Equal exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 100%
+	bindsym $commandMod+Underscore exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+	bindsym $commandMod+0 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 	set $mode_system "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (p) poweroff"
 	bindsym $commandMod+e mode $mode_system
