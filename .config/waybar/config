@@ -2,10 +2,9 @@
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "spacing": 4, // Gaps between modules (4px)
-    // Modules configuration
     "modules-left": ["sway/workspaces", "sway/scratchpad", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["temperature", "cpu", "memory", "disk#root", "disk#home", "custom/dunst", "tray", "clock"],
+    "modules-right": ["temperature", "cpu", "memory", "disk#root", "disk#home", "custom/dunst", "pulseaudio", "tray", "clock"],
     "sway/workspaces": {
         "numeric-first": true,
         "disable-scroll": true,
@@ -56,6 +55,25 @@
         "on-click": "dunstctl set-paused toggle",
         "restart-interval": 15,
         "return-type": "json",
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon}  {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
     },
     "tray": {
         "icon-size": 21,
@@ -138,25 +156,6 @@
     //     "format-linked": "{ifname} (No IP) ",
     //     "format-disconnected": "Disconnected ⚠",
     //     "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    // },
-    // "pulseaudio": {
-    //     // "scroll-step": 1, // %, can be a float
-    //     "format": "{volume}% {icon} {format_source}",
-    //     "format-bluetooth": "{volume}% {icon} {format_source}",
-    //     "format-bluetooth-muted": " {icon} {format_source}",
-    //     "format-muted": " {format_source}",
-    //     "format-source": "{volume}% ",
-    //     "format-source-muted": "",
-    //     "format-icons": {
-    //         "headphone": "",
-    //         "hands-free": "",
-    //         "headset": "",
-    //         "phone": "",
-    //         "portable": "",
-    //         "car": "",
-    //         "default": ["", "", ""]
-    //     },
-    //     "on-click": "pavucontrol"
     // },
     // "custom/media": {
     //     "format": "{icon} {}",
