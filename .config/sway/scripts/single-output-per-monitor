@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+outputs=$(swaymsg -t get_outputs)
+filtered=$(echo "${outputs}" | jq 'group_by(.model)[] | .[1:] | .[].name')
+echo "${filtered}" | xargs -I{} sh -c "notify-send \"disabling output '{}'\"; swaymsg output \"{}\" disable"

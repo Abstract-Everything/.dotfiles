@@ -73,6 +73,9 @@
 	# Watch the waybar config and relaunch when changed
 	exec $HOME/.config/waybar/scripts/waybar-launcher
 
+	# Only allow a single output per monitor
+	exec_always $HOME/.config/sway/scripts/single-output-per-monitor
+
 	exec /usr/lib/polkit-kde-authentication-agent-1
 
 #
