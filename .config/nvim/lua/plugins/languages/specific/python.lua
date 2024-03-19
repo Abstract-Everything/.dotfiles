@@ -2,23 +2,18 @@ local Util = require "config.util"
 
 local last_root_directory = ""
 
-local function find_python_client()
+local function find_python_client_ids()
+  local ids = {}
   for _, client in ipairs(vim.lsp.get_active_clients()) do
     if client.name == "pyright" then
-      return client.id
+      table.insert(ids, client.id)
     end
   end
-
-  return nil
+  return ids
 end
 
 local function automatically_set_parent_venv()
-  local python_client_id = find_python_client()
-  if not python_client_id then
-    return
-  end
-
-  local root_directory = Util.root { lsp_client_id = python_client_id }
+  local root_directory = Util.root { lsp_client_ids = find_python_client_ids() }
   if not root_directory then
     vim.notify("Did not manage to retrieve python root directory", vim.log.levels.INFO)
     return

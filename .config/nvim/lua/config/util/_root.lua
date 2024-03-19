@@ -4,7 +4,7 @@ local LazyUtil = require "lazy.core.util"
 ---@field first? boolean
 ---@field only_git_root? boolean
 ---@field only_lsp_root? boolean
----@field lsp_client_id? boolean
+---@field lsp_client_ids? number[]
 
 ---@class config.util.root
 ---@overload fun(): string
@@ -34,7 +34,7 @@ function M.get(opts)
   opts = vim.tbl_extend("keep", opts, {
     first = true,
     only_git_root = false,
-    only_lsp_root = opts.only_lsp_root or opts.lsp_client_id ~= nil,
+    only_lsp_root = opts.only_lsp_root or opts.lsp_client_ids ~= nil,
   })
   assert(
     vim.tbl_count(vim.tbl_filter(function(value)
@@ -72,7 +72,7 @@ function M.get(opts)
 end
 
 ---@private
----@param opts { lsp_client_id?: number }
+---@param opts { lsp_client_ids?: number[] }
 function M.lsp_roots(opts)
   local buffer = vim.api.nvim_get_current_buf()
   local buffer_path = M.buffer_path(buffer)
@@ -80,8 +80,14 @@ function M.lsp_roots(opts)
     return {}
   end
 
-  local clients = opts.lsp_client_id and { vim.lsp.get_client_by_id(opts.lsp_client_id) }
-    or vim.lsp.get_active_clients()
+  local clients = {}
+  if opts.lsp_client_ids then
+    for _, id in ipairs(opts.lsp_client_ids) do
+      table.insert(clients, vim.lsp.get_client_by_id(id))
+    end
+  else
+    clients = vim.lsp.get_active_clients()
+  end
 
   local roots = {} ---@type string[]
   for _, client in pairs(clients) do
