@@ -15,7 +15,6 @@ end
 local function automatically_set_parent_venv()
   local root_directory = Util.root { lsp_client_ids = find_python_client_ids() }
   if not root_directory then
-    vim.notify("Did not manage to retrieve python root directory", vim.log.levels.INFO)
     return
   end
 
