@@ -1,3 +1,5 @@
+local Util = require "config.util"
+
 return {
   {
     "L3MON4D3/LuaSnip",
@@ -5,7 +7,17 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
+        local git_root = Util.root { only_git_root = true }
+
+        local vs_code_loader = require "luasnip.loaders.from_vscode"
+
+        vs_code_loader.lazy_load()
+        vs_code_loader.lazy_load { paths = { "./lua/plugins/languages/specific" } }
+        if git_root ~= nil then
+          vs_code_loader.load_standalone {
+            path = string.format("%s/.vscode/luau.code-snippets", git_root),
+          }
+        end
       end,
     },
   },
