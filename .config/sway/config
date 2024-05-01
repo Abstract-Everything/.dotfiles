@@ -236,7 +236,7 @@
 	bindsym $commandMod+Shift+r restart
 
 	bindsym $commandMod+p exec --no-startup-id exec grim -g "$(slurp)" - | swappy -f -
-	bindsym $commandMod+Shift+p exec --no-startup-id exec wm-capture-window
+	bindsym $commandMod+Shift+p exec --no-startup-id exec wm-screenshot-window
 
 	# Handy zoom in for screen sharing
 	bindsym $commandMod+s output DP-1 scale 1.25
