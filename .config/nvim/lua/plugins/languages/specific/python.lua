@@ -95,7 +95,6 @@ return {
         require("dap-python").setup(path .. "/venv/bin/python")
         require("dap-python").test_runner = "pytest"
         require("dap-python").resolve_python = function()
-          vim.notify "CALLED"
           return require("venv-selector").get_active_path()
         end
       end,
