@@ -4,7 +4,7 @@
     "spacing": 4, // Gaps between modules (4px)
     "modules-left": ["sway/workspaces", "sway/scratchpad", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["temperature", "cpu", "memory", "disk#root", "disk#home", "custom/dunst", "pulseaudio", "tray", "clock"],
+    "modules-right": [ "temperature#gpu", "temperature#cpu", "cpu", "memory", "disk#root", "disk#home", "custom/dunst", "pulseaudio", "tray", "clock"],
     "sway/workspaces": {
         "numeric-first": true,
         "disable-scroll": true,
@@ -26,9 +26,15 @@
         "icon": true,
         "icon-size": 16,
     },
-    // TODO: Merge the temperature and CPU sections
-    "temperature": {
+    "temperature#gpu": {
         "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+        "format": "GPU  {temperatureC}°C",
+        "format-critical": "GPU  󰈸  {temperatureC}°C",
+        "critical-threshold": 80,
+    },
+    // TODO: Merge the temperature and CPU sections
+    "temperature#cpu": {
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "format": "  {temperatureC}°C",
         "format-critical": "  󰈸  {temperatureC}°C",
         "critical-threshold": 80,
