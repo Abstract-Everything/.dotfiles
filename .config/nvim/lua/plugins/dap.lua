@@ -83,7 +83,7 @@ return {
       {
         "<leader>du",
         function()
-          require("dapui").open {}
+          require("dapui").toggle {}
         end,
         desc = "Dap UI",
       },
