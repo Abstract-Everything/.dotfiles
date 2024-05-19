@@ -5,7 +5,6 @@ return {
       local nls = require "null-ls"
       options.sources = vim.list_extend(options.sources or {}, {
         nls.builtins.diagnostics.cmake_lint,
-        nls.builtins.formatting.gersemi,
       })
     end,
   },
