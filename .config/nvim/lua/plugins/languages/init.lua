@@ -59,6 +59,11 @@ return {
         require("cmp_nvim_lsp").default_capabilities()
       )
 
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
+
       ---@param server string
       local function setup(server)
         local server_options = vim.tbl_deep_extend(
