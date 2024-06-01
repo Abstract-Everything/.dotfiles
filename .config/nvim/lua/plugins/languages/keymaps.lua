@@ -34,21 +34,7 @@ M._keys = {
   { "<leader>ca", vim.lsp.buf.code_action, mode = { "n", "v" } },
   {
     "<leader>f",
-    function()
-      vim.lsp.buf.format {
-        async = true,
-        -- Use the null-ls formatter if it has one
-        filter = function(filter_client)
-          for _, client in ipairs(vim.lsp.get_active_clients()) do
-            if client.name == "null-ls" and client.supports_method "textDocument/formatting" then
-              return filter_client.name == "null-ls"
-            end
-          end
-
-          return true
-        end,
-      }
-    end,
+    Util.formatting.format_file,
   },
 }
 

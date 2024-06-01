@@ -1,3 +1,5 @@
+local Util = require "config.util"
+
 return {
   {
     "williamboman/mason.nvim",
@@ -47,7 +49,8 @@ return {
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
-          require("plugins.languages.keymaps").setup(args.buffer)
+          require("plugins.languages.keymaps").setup(args.buf)
+          Util.formatting.setup_auto_format()
         end,
       })
 
