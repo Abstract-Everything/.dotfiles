@@ -1,3 +1,5 @@
+local Util = require "config.util"
+
 -- Configuration
 local expr = { expr = true }
 local silent_noremap = { silent = true, noremap = true }
@@ -67,5 +69,7 @@ vim.keymap.set("x", "<leader>d", [["_dP]])
 vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-N>", silent_noremap)
 
 vim.api.nvim_create_user_command("Configuration", function()
-  require("telescope.builtin").find_files { cwd = "~/.config", hidden = true }
+  local command =
+    Util.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config", hidden = true })
+  command()
 end, { nargs = 0 })

@@ -25,10 +25,7 @@ return {
 
       { "<leader>ff", Util.telescope "files" },
       { "<leader>fg", Util.telescope "git_files" },
-      {
-        "<leader>fc",
-        Util.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config" }),
-      },
+      { "<leader>fc", "<cmd>Configuration<cr>" },
 
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>" },
       { "<leader>sD", "<cmd>Telescope diagnostics<cr>" },
