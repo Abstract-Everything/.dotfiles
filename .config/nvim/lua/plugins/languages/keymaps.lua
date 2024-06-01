@@ -46,7 +46,7 @@ function M.resolve(buffer)
 
   local keys = M._keys
   local language_specific = Util.plugins.options "nvim-lspconfig"
-  for _, client in ipairs(vim.lsp.get_active_clients { bufnr = buffer }) do
+  for _, client in ipairs(vim.lsp.get_clients { bufnr = buffer }) do
     local config = language_specific.servers and language_specific.servers[client.name] or {}
     local mappings = config and config.keys or {}
     vim.list_extend(keys, mappings)
