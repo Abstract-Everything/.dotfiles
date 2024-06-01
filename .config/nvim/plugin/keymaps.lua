@@ -62,7 +62,9 @@ vim.keymap.set("n", "<C-n>", ":cnext<return>zv", silent_noremap)
 vim.keymap.set("n", "<C-p>", ":cprev<return>zv", silent_noremap)
 
 vim.keymap.set({ "n", "x" }, "<leader>y", [["+y]], silent_noremap)
+vim.keymap.set({ "n", "x" }, "<leader>Y", [["*y]], silent_noremap)
 vim.keymap.set({ "n", "x" }, "<leader>p", [["+p]], silent_noremap)
+vim.keymap.set({ "n", "x" }, "<leader>P", [["*p]], silent_noremap)
 vim.keymap.set({ "n", "x" }, "<leader>d", [["_d]], silent_noremap)
 vim.keymap.set("x", "<leader>d", [["_dP]])
 
