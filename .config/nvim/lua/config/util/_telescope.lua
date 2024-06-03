@@ -1,6 +1,7 @@
 ---@class config.util.telescope.opts
 ---@field cwd? string
 ---@field show_untracked? boolean
+---@field hidden? boolean
 
 ---@class config.util.telescope
 ---@overload fun(builtin:string, opts?:config.util.telescope.opts)
@@ -27,6 +28,7 @@ function M.telescope(command, opts)
         opts.show_untracked = true
         command = "git_files"
       else
+        opts.hidden = true
         command = "find_files"
       end
     end
