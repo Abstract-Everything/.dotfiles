@@ -19,7 +19,7 @@ local function automatically_set_parent_venv()
   end
 
   if root_directory == last_root_directory then
-    vim.notify("LspRoot is the same, not changing venv: " .. root_directory, vim.log.levels.INFO)
+    vim.notify("LspRoot is the same, not changing venv: " .. root_directory, vim.log.levels.TRACE)
     return
   end
   last_root_directory = root_directory
@@ -68,37 +68,38 @@ return {
     },
   },
   {
-    "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-dap-python",
     dependencies = {
-      "mfussenegger/nvim-dap-python",
-      dev = true,
-      keys = {
-        {
-          "<leader>dT",
-          function()
-            require("dap-python").test_method()
-          end,
-          desc = "Debug Method",
-          ft = "python",
-        },
-        {
-          "<leader>dC",
-          function()
-            require("dap-python").test_class()
-          end,
-          desc = "Debug Class",
-          ft = "python",
-        },
-      },
-      config = function()
-        local path = require("mason-registry").get_package("debugpy"):get_install_path()
-        require("dap-python").setup(path .. "/venv/bin/python")
-        require("dap-python").test_runner = "pytest"
-        require("dap-python").resolve_python = function()
-          return require("venv-selector").get_active_path()
-        end
-      end,
+      "mfussenegger/nvim-dap",
+      "jay-babu/mason-nvim-dap.nvim",
     },
+    dev = true,
+    keys = {
+      {
+        "<leader>dT",
+        function()
+          require("dap-python").test_method()
+        end,
+        desc = "Debug Method",
+        ft = "python",
+      },
+      {
+        "<leader>dC",
+        function()
+          require("dap-python").test_class()
+        end,
+        desc = "Debug Class",
+        ft = "python",
+      },
+    },
+    config = function()
+      local path = require("mason-registry").get_package("debugpy"):get_install_path()
+      require("dap-python").setup(path .. "/venv/bin/python")
+      require("dap-python").test_runner = "pytest"
+      require("dap-python").resolve_python = function()
+        return require("venv-selector").get_active_path()
+      end
+    end,
   },
   {
     "linux-cultist/venv-selector.nvim",
