@@ -75,38 +75,27 @@ end
 ---@param opts { lsp_client_ids?: number[] }
 function M.lsp_roots(opts)
   local buffer = vim.api.nvim_get_current_buf()
-  local buffer_path = M.buffer_path(buffer)
-  if not buffer_path then
-    return {}
-  end
 
   local clients = {}
   if opts.lsp_client_ids then
     for _, id in ipairs(opts.lsp_client_ids) do
-      table.insert(clients, vim.lsp.get_client_by_id(id))
+      table.insert(clients, vim.lsp.get_client { id = id, bufnr = buffer })
     end
   else
-    clients = vim.lsp.get_active_clients()
+    clients = vim.lsp.get_clients { bufnr = buffer }
   end
 
   local roots = {} ---@type string[]
   for _, client in pairs(clients) do
-    local workspace = client.config.workspace_folders
-    for _, ws in pairs(workspace or {}) do
-      table.insert(roots, vim.uri_to_fname(ws.uri))
+    if client.name ~= "null-ls" then
+      local workspace = client.config.workspace_folders
+      for _, ws in pairs(workspace or {}) do
+        table.insert(roots, vim.uri_to_fname(ws.uri))
+      end
     end
   end
 
-  return vim.tbl_filter(function(path)
-    path = LazyUtil.norm(path)
-    return path and buffer_path:find(path, 1, true) == 1
-  end, roots)
-end
-
----@private
-function M.buffer_path(buffer)
-  local path = vim.api.nvim_buf_get_name(assert(buffer))
-  return M.real_path(path)
+  return roots
 end
 
 ---@private
