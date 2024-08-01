@@ -72,3 +72,5 @@ vim.api.nvim_create_user_command("Configuration", function()
     Util.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config", hidden = true })
   command()
 end, { nargs = 0 })
+
+vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>", silent_noremap)
