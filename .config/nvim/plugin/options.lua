@@ -11,6 +11,9 @@ vim.o.swapfile = false
 --- Buffers
 vim.o.hidden = true
 
+--- Commands
+vim.o.inccommand = "split"
+
 --- Searching
 vim.o.hlsearch = true
 vim.o.incsearch = true
