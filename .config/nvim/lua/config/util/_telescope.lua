@@ -23,6 +23,7 @@ function M.telescope(command, opts)
       cwd = require "config.util._root"(),
     }, parameters.opts or {}) --[[@as config.util.telescope.opts]]
 
+    command = parameters.command
     if command == "files" then
       if opts.cwd and vim.loop.fs_stat(opts.cwd .. "/.git") then
         opts.show_untracked = true
