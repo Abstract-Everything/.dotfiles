@@ -20,7 +20,7 @@ return {
       { "<leader>/", Util.telescope "live_grep" },
       {
         "<leader>?",
-        Util.telescope("live_grep", { cwd = require "config.util._root" { only_git_root = true } }),
+        Util.telescope("live_grep", { cwd = Util.root { only_git_root = true } }),
       },
 
       { "<leader>ff", Util.telescope "files" },
