@@ -24,6 +24,7 @@ return {
       },
 
       { "<leader>ff", Util.telescope "files" },
+      { "<leader>fF", Util.telescope("files", { no_ignore = true, no_ignore_parent = true }) },
       { "<leader>fg", Util.telescope "git_files" },
       { "<leader>fc", "<cmd>Configuration<cr>" },
 
