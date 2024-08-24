@@ -56,7 +56,7 @@
 
 	first-branch-commit = "!f() {                                        \n\
 		local current=$(git branch --show-current)                   \n\
-		local others=$(git branch -a       |                         \n\
+		local others=$(git branch --all --no-contains ${current} |   \n\
 				grep -v -e '->'    |                         \n\
 				grep -v ${current})                          \n\
 		local commits=$(git rev-list HEAD --not ${others})           \n\
