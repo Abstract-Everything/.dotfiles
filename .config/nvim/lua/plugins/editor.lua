@@ -6,8 +6,11 @@ return {
         condition = function(bufnr)
           local Job = require "plenary.job"
           local directory = vim.fn.expand "%:h"
-          local filename = vim.fn.expand "%:p"
+          if vim.fn.isdirectory(directory) == 0 then
+            return false
+          end
 
+          local filename = vim.fn.expand "%:p"
           if vim.fn.getbufvar(bufnr, "&modifiable") ~= 1 or filename == "" then
             return false
           end
