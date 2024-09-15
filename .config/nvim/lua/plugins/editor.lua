@@ -1,13 +1,5 @@
 return {
   {
-    "ahmedkhalf/project.nvim",
-    config = function()
-      require("project_nvim").setup {
-        detection_methods = { "pattern" },
-      }
-    end,
-  },
-  {
     "Pocco81/auto-save.nvim",
     config = function()
       require("auto-save").setup {
