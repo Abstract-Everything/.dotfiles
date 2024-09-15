@@ -79,7 +79,7 @@ function M.lsp_roots(opts)
   local clients = {}
   if opts.lsp_client_ids then
     for _, id in ipairs(opts.lsp_client_ids) do
-      table.insert(clients, vim.lsp.get_client { id = id, bufnr = buffer })
+      table.insert(clients, vim.lsp.get_client_by_id(id))
     end
   else
     clients = vim.lsp.get_clients { bufnr = buffer }
