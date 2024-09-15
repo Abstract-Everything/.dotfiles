@@ -1,5 +1,3 @@
-local Util = require "config.util"
-
 return {
   {
     "nvimtools/none-ls.nvim",
@@ -16,16 +14,19 @@ return {
       "lopi-py/luau-lsp.nvim",
     },
     opts = {
-      servers = { luau_lsp = {} },
+      servers = {
+        luau_lsp = {
+          completion = {
+            imports = {
+              enabled = true,
+            },
+          },
+        },
+      },
       setup = {
         luau_lsp = function(options)
-          local luau_plugin_options = Util.plugins.options "luau-lsp"
           require("luau-lsp").setup {
-            vim.tbl_deep_extend(
-              "force",
-              luau_plugin_options or {},
-              { server = { ["luau-lsp"] = { options } } }
-            ),
+            server = { settings = { ["luau-lsp"] = options } },
           }
         end,
       },
