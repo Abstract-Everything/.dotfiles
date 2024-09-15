@@ -54,6 +54,7 @@ return {
       })
 
       local servers = options.servers
+      ---@class lsp.ClientCapabilities
       local capabilities = vim.tbl_deep_extend(
         "force",
         {},
