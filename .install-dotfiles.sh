@@ -41,7 +41,7 @@ if [ -d "${dotfiles_name}" ]; then
 	exit 1
 fi
 
-git clone --bare https://github.com/Abstract-Everything/.dotfiles ${dotfiles_name} --quiet
+git clone --bare git@github.com:Abstract-Everything/.dotfiles.git ${dotfiles_name} --quiet
 
 dotfiles ls-tree --full-tree -r HEAD                                           \
 | cut -f 2                                                                     \
