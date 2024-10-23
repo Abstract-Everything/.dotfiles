@@ -29,6 +29,8 @@ return {
       { "<leader>fg", Util.telescope "git_files" },
       { "<leader>fc", "<cmd>Configuration<cr>" },
 
+      { "<leader>sl", "<cmd>Telescope spell_suggest<cr>" },
+
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>" },
       { "<leader>sD", "<cmd>Telescope diagnostics<cr>" },
 
