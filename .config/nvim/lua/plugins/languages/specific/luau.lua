@@ -19,6 +19,7 @@ return {
           completion = {
             imports = {
               enabled = true,
+              requireStyle = "alwaysAbsolute",
             },
           },
         },
