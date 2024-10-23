@@ -6,20 +6,4 @@ chmod +x ./.install-dotfiles.sh
 ./.install-dotfiles.sh
 ```
 
-To set up neovim use the setup-neovim script available in the repository, some dependencies are required in order to install it.
-
-Make sure that the following dependencies are installed
-```
-curl
-nodejs
-npm
-clangd
-neovim
-```
-
-Then execute the setup-neovim script.
-```
-cd ~
-chmod +x ./.setup-neovim.sh
-./.setup-neovim.sh
-```
+For zsh config to get picked up defined the ZDOTDIR as specified in .config/zsh/.zprofile
