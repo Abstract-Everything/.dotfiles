@@ -26,6 +26,7 @@ return {
     },
     opts = {
       servers = {},
+      servers_not_in_mason = {},
       setup = {},
     },
     config = function(_, options)
@@ -53,7 +54,6 @@ return {
         end,
       })
 
-      local servers = options.servers
       ---@class lsp.ClientCapabilities
       local capabilities = vim.tbl_deep_extend(
         "force",
@@ -69,11 +69,13 @@ return {
 
       ---@param server string
       local function setup(server)
+        local servers = vim.tbl_deep_extend("error", options.servers, options.servers_not_in_mason)
         local server_options = vim.tbl_deep_extend(
           "force",
           { capabilities = vim.deepcopy(capabilities) },
           servers[server] or {}
         )
+
         if options.setup[server] then
           options.setup[server](server_options)
           return
@@ -83,7 +85,7 @@ return {
       end
 
       local mason_servers = {} ---@type string[]
-      for server, _ in pairs(servers) do
+      for server, _ in pairs(options.servers) do
         mason_servers[#mason_servers + 1] = server
       end
 
@@ -91,6 +93,10 @@ return {
       -- loaded before the setup function is called
       require "lspconfig"
       require("mason-lspconfig").setup { ensure_installed = mason_servers, handlers = { setup } }
+
+      for server, _ in pairs(options.servers_not_in_mason) do
+        setup(server)
+      end
     end,
   },
   { import = "plugins.languages.specific" },
