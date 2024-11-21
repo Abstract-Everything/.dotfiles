@@ -10,6 +10,7 @@ export VISUAL=nvim
 export PAGER='nvim -R'
 export MANPAGER='nvim -R +Man!'
 export EDITOR="$VISUAL"
+export SUDO_EDITOR='rvim'
 export BROWSER=qutebrowser
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
