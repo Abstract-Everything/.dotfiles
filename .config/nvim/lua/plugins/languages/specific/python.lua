@@ -47,7 +47,7 @@ return {
       servers = {
         -- TODO: Check configuration
         pyright = {},
-        ruff_lsp = {},
+        ruff = {},
       },
       setup = {
         pyright = function(options)
