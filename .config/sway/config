@@ -270,6 +270,7 @@
 	bindsym $launchMod+Space exec --no-startup-id exec wofi --show=drun --insensitive --allow-images
 
 	bindsym $launchMod+d exec --no-startup-id exec discord
+	bindsym $launchMod+s exec --no-startup-id exec spotify-launcher
 	bindsym $launchMod+q exec --no-startup-id exec qutebrowser
 	bindsym $launchMod+i exec --no-startup-id exec qutebrowser --temp-basedir
 	bindsym $launchMod+Return exec --no-startup-id exec $term
