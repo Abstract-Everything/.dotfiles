@@ -12,6 +12,9 @@
 [rebase]
 	autostash = true
 
+[advice]
+	detatchedHead = false
+
 [alias]
 	clean-branches = "!f() {                                             \n\
 		git fetch --prune                                            \n\
