@@ -24,6 +24,15 @@ require("config").setup()
 -- Setup lsp document highlighting
 -- Checkout what codelens is
 --
+-- Add test runner
+-- Way to manage open buffers
+-- Fix luau snippets
+-- Add Debug SyncAssert to lua snippets
+-- Create command to fit text inside of a certain number of columns
+-- Why does tab change nvim completion item? Just let CTRL N/P do the job
+--
+-- Add notify to custom scripts
+--
 -- TODO plugins to consider:
 --
 -- LazyVim as a reference
@@ -73,6 +82,13 @@ require("config").setup()
 --
 --	indent guides
 --	lukas-reineke/indent-blankline.nvim
+--
+--	automatic completion of pairs
+--	nvim-autopairs
+--	nvim-ts-autopairs
+--
+--	mini.pairs
+--	mini.surround
 --
 -- Debugging
 --	https://github.com/rcarriga/nvim-dap-ui
