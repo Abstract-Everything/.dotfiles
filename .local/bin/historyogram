@@ -13,9 +13,9 @@ def parse_history():
     commands = []
     # We first concatenate lines which belong to the same command
     for raw_line in sys.stdin:
-        id = r'^\s*\d+(\* |  )'
-        date = r'\d\d?\.\d\d?\.\d{4} \d{2}:\d{2}  '
-        line = re.sub(f'{id}{date}', '', raw_line)
+        id = r"^\s*\d+(\* |  )"
+        date = r"\d\d?\.\d\d?\.\d{4} \d{2}:\d{2}  "
+        line = re.sub(f"{id}{date}", "", raw_line)
         commands.append(line)
     return commands
 
@@ -36,17 +36,17 @@ def parse_history():
 def reduce_commands(commands):
     occurences = {}
     for command in commands:
-        if command.__contains__(' '):
-            program, arguments = command.split(' ', 1)
-            arguments = arguments.strip().replace('\n', '\\n')
+        if command.__contains__(" "):
+            program, arguments = command.split(" ", 1)
+            arguments = arguments.strip().replace("\n", "\\n")
         else:
             program = command
-            arguments = ''
+            arguments = ""
 
         occurences.setdefault(program, {})
-        occurences[program].setdefault('', 0)
+        occurences[program].setdefault("", 0)
         occurences[program].setdefault(arguments, 0)
-        occurences[program][''] += 1
+        occurences[program][""] += 1
 
         if len(arguments) != 0:
             occurences[program][arguments] += 1
@@ -56,21 +56,25 @@ def reduce_commands(commands):
 
 # Do not print commands that were used only once
 def print_occurences(occurences):
-    for command in sorted(occurences.items(), key=lambda pair: pair[1]['']):
+    for command in sorted(
+        occurences.items(), reverse=True, key=lambda pair: pair[1][""]
+    ):
         program = command[0]
-        count = command[1]['']
-        print(f'{count:05d} {program}')
+        count = command[1][""]
+        print(f"{count:05d} {program}")
 
         has_children = False
-        for arguments_pair in sorted(command[1].items(), key=lambda pair: pair[1], reverse=True):
+        for arguments_pair in sorted(
+            command[1].items(), key=lambda pair: pair[1], reverse=True
+        ):
             arguments = arguments_pair[0]
-            count = arguments_pair[1]
+            argument_count = arguments_pair[1]
             if len(arguments) != 0:
                 has_children = True
-                print(f'{count:05d}  {arguments}')
+                print(f"{argument_count:05d}  {arguments}")
 
         if has_children:
-            print('')
+            print("")
 
 
 commands = parse_history()

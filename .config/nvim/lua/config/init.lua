@@ -9,5 +9,8 @@ M.root = require "config.root"
 M.telescope = require "config.telescope"
 M.plugins = require "config.plugins"
 M.formatting = require "config.formatting"
+M.keymaps = require "config.keymaps"
+
+M.debug_logs = false
 
 return M
