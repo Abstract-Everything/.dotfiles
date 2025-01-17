@@ -23,7 +23,7 @@ function M.telescope(command, opts)
 
     command = parameters.command
     if command == "files" then
-      if opts.cwd and vim.loop.fs_stat(opts.cwd .. "/.git") then
+      if opts.cwd and vim.uv.fs_stat(opts.cwd .. "/.git") then
         opts.show_untracked = true
         command = "git_files"
       else

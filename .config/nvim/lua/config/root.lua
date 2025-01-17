@@ -97,7 +97,7 @@ function M.real_path(path)
   if path == "" or path == nil then
     return nil
   end
-  path = vim.loop.fs_realpath(path) or path
+  path = vim.uv.fs_realpath(path) or path
   return LazyUtil.norm(path)
 end
 
@@ -114,7 +114,7 @@ end
 
 ---@private
 function M.cwd()
-  return { M.real_path(vim.loop.cwd()) }
+  return { M.real_path(vim.uv.cwd()) }
 end
 
 return M
