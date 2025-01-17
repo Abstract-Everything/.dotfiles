@@ -13,13 +13,13 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   }
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require("config").setup {}
+require("config").setup()
 
 -- Setup lsp document highlighting
 -- Checkout what codelens is
@@ -85,4 +85,7 @@ require("config").setup {}
 --	https://github.com/rhysd/committia.vim
 --
 -- A command to write into a diary/ Todo/ thoughts notebook
-require("lazy").setup { dev = { path = "~/sources" }, spec = "plugins" }
+require("lazy").setup {
+  dev = { path = "~/sources" },
+  spec = "plugins",
+}
