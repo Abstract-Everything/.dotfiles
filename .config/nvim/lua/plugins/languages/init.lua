@@ -67,6 +67,8 @@ return {
         lineFoldingOnly = true,
       }
 
+      capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+
       ---@param server string
       local function setup(server)
         local servers = vim.tbl_deep_extend("error", options.servers, options.servers_not_in_mason)
