@@ -1,4 +1,4 @@
-local Util = require "config.util"
+local Config = require "config"
 
 -- Configuration
 local expr = { expr = true }
@@ -69,12 +69,12 @@ vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-N>", silent_noremap)
 
 vim.api.nvim_create_user_command("Configuration", function()
   local command =
-    Util.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config", hidden = true })
+    Config.telescope("files", { cwd = os.getenv "XDG_CONFIG_HOME" or "~/.config", hidden = true })
   command()
 end, { nargs = 0 })
 
 vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>", silent_noremap)
 
 vim.api.nvim_create_user_command("BufferRootPath", function()
-  require("config.util._root").info()
+  Config.root.info()
 end, { desc = "Get the root directory for the current buffer" })

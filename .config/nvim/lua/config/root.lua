@@ -1,16 +1,16 @@
 local LazyUtil = require "lazy.core.util"
 
----@class config.util.root.options
+---@class config.root.Options
 ---@field first? boolean
 ---@field only_git_root? boolean
 ---@field only_lsp_root? boolean
 ---@field lsp_client_ids? number[]
 
----@class config.util.root
+---@class config.Root
 ---@overload fun(): string
 local M = setmetatable({}, {
-  ---@param m config.util.root
-  ---@param options? config.util.root.options
+  ---@param m config.Root
+  ---@param options? config.root.Options
   __call = function(m, options)
     return m.get(options)[1]
   end,
@@ -21,7 +21,7 @@ function M.info()
   LazyUtil.info(lines, { title = "Buffer Root Path" })
 end
 
----@param opts? config.util.root.options
+---@param opts? config.root.Options
 ---@return table<integer, string>
 function M.get(opts)
   opts = opts or {}

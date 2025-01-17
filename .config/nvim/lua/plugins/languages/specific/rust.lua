@@ -1,4 +1,4 @@
-local Util = require "config.util"
+local Config = require "config"
 
 return {
   {
@@ -29,7 +29,7 @@ return {
       },
       setup = {
         rust_analyzer = function(options)
-          local rust_plugin_options = Util.plugins.options "rust-tools"
+          local rust_plugin_options = Config.plugins.options "rust-tools"
           require("rust-tools").setup {
             vim.tbl_deep_extend("force", rust_plugin_options or {}, { server = options }),
           }

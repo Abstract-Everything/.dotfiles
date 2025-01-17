@@ -1,5 +1,5 @@
 local Keys = require "lazy.core.handler.keys"
-local Util = require "config.util"
+local Config = require "config"
 
 local M = {}
 
@@ -34,7 +34,7 @@ M._keys = {
   { "<leader>ca", vim.lsp.buf.code_action, mode = { "n", "v" } },
   {
     "<leader>f",
-    Util.formatting.format_file,
+    Config.formatting.format_file,
   },
 }
 
@@ -45,7 +45,7 @@ function M.resolve(buffer)
   end
 
   local keys = M._keys
-  local language_specific = Util.plugins.options "nvim-lspconfig"
+  local language_specific = Config.plugins.options "nvim-lspconfig"
   for _, client in ipairs(vim.lsp.get_clients { bufnr = buffer }) do
     local config = language_specific.servers and language_specific.servers[client.name] or {}
     local mappings = config and config.keys or {}

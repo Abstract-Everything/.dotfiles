@@ -1,4 +1,4 @@
-local Util = require "config.util"
+local Config = require "config"
 
 local last_root_directory = ""
 
@@ -13,7 +13,7 @@ local function find_python_client_ids()
 end
 
 local function automatically_set_parent_venv()
-  local root_directory = Util.root { lsp_client_ids = find_python_client_ids() }
+  local root_directory = Config.root { lsp_client_ids = find_python_client_ids() }
   if not root_directory then
     return
   end

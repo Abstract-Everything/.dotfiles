@@ -1,6 +1,6 @@
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
----@class config.util.formatting
+---@class config.Formatting
 local M = setmetatable({}, {})
 
 ---@param async boolean?

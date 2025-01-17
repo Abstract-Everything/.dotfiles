@@ -1,4 +1,4 @@
-local Util = require "config.util"
+local Config = require "config"
 
 return {
   {
@@ -18,15 +18,15 @@ return {
       { "<leader><", "<cmd>Telescope oldfiles<cr>" },
 
       { "<leader>:", "<cmd>Telescope command_history<cr>" },
-      { "<leader>/", Util.telescope "live_grep" },
+      { "<leader>/", Config.telescope "live_grep" },
       {
         "<leader>?",
-        Util.telescope("live_grep", { cwd = Util.root { only_git_root = true } }),
+        Config.telescope("live_grep", { cwd = Config.root { only_git_root = true } }),
       },
 
-      { "<leader>ff", Util.telescope "files" },
-      { "<leader>fF", Util.telescope("files", { no_ignore = true, no_ignore_parent = true }) },
-      { "<leader>fg", Util.telescope "git_files" },
+      { "<leader>ff", Config.telescope "files" },
+      { "<leader>fF", Config.telescope("files", { no_ignore = true, no_ignore_parent = true }) },
+      { "<leader>fg", Config.telescope "git_files" },
       { "<leader>fc", "<cmd>Configuration<cr>" },
 
       { "<leader>sl", "<cmd>Telescope spell_suggest<cr>" },
@@ -38,8 +38,8 @@ return {
       { "<leader>sm", "<cmd>Telescope man_pages<cr>" },
       { "<leader>sr", "<cmd>Telescope resume<cr>" },
 
-      { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }) },
-      { "<leader>sw", Util.telescope "grep_string", mode = "v" },
+      { "<leader>sw", Config.telescope("grep_string", { word_match = "-w" }) },
+      { "<leader>sw", Config.telescope "grep_string", mode = "v" },
 
       { "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>" },
       { "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>" },

@@ -1,4 +1,4 @@
-local Util = require "config.util"
+local Config = require "config"
 
 return {
   {
@@ -7,7 +7,7 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
-        local git_root = Util.root { only_git_root = true }
+        local git_root = Config.root { only_git_root = true }
 
         local vs_code_loader = require "luasnip.loaders.from_vscode"
 

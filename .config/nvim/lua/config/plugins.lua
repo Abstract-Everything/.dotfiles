@@ -1,7 +1,7 @@
 local LazyConfig = require "lazy.core.config"
 local LazyPlugin = require "lazy.core.plugin"
 
----@class config.util.plugins
+---@class config.Plugins
 local M = {}
 
 ---@param name string
