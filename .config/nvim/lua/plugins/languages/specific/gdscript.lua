@@ -12,8 +12,16 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      servers_not_in_mason = {
+      servers = {
         gdscript = {},
+      },
+    },
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    opts = {
+      ensure_installed = {
+        "gdtoolkit",
       },
     },
   },
