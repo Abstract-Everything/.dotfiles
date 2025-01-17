@@ -21,12 +21,6 @@ function M.info()
   LazyUtil.info(lines, { title = "Buffer Root Path" })
 end
 
-function M.setup()
-  vim.api.nvim_create_user_command("BufferRootPath", function()
-    require("config.util._root").info()
-  end, { desc = "Get the root directory for the current buffer" })
-end
-
 ---@param opts? config.util.root.options
 ---@return table<integer, string>
 function M.get(opts)

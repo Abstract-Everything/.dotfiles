@@ -10,10 +10,4 @@ M.telescope = require "config.util._telescope"
 M.plugins = require "config.util._plugins"
 M.formatting = require "config.util._formatting"
 
-function M.setup()
-  M.root.setup()
-  M.telescope.setup()
-  M.formatting.setup()
-end
-
 return M

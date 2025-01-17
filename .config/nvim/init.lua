@@ -19,8 +19,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require("config").setup()
-
 -- Setup lsp document highlighting
 -- Checkout what codelens is
 --

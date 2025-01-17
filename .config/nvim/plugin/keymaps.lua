@@ -74,3 +74,7 @@ vim.api.nvim_create_user_command("Configuration", function()
 end, { nargs = 0 })
 
 vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>", silent_noremap)
+
+vim.api.nvim_create_user_command("BufferRootPath", function()
+  require("config.util._root").info()
+end, { desc = "Get the root directory for the current buffer" })

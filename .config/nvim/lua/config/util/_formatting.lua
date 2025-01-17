@@ -3,8 +3,6 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 ---@class config.util.formatting
 local M = setmetatable({}, {})
 
-function M.setup() end
-
 ---@param async boolean?
 function M.format_file(async)
   if async == nil then

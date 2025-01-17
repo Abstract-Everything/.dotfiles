@@ -12,8 +12,6 @@ local M = setmetatable({}, {
   end,
 })
 
-function M.setup() end
-
 ---@param command string
 ---@param opts? config.util.telescope.opts
 function M.telescope(command, opts)
