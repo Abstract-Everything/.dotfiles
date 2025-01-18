@@ -17,19 +17,34 @@ return {
     opts = {
       servers = {
         luau_lsp = {
-          completion = {
-            imports = {
-              enabled = true,
-              requireStyle = "alwaysAbsolute",
+          fflags = {
+            -- enable_by_default = true,
+            -- enable_new_solver = true,
+          },
+          server = {
+            settings = {
+              ["luau-lsp"] = {
+                completion = {
+                  imports = {
+                    enabled = true,
+                    requireStyle = "alwaysAbsolute",
+                  },
+                },
+              },
             },
           },
         },
       },
       setup = {
-        luau_lsp = function(options)
-          require("luau-lsp").setup {
-            server = { settings = { ["luau-lsp"] = options } },
-          }
+        luau_lsp = function(capabilities, options)
+          local opts = vim.tbl_deep_extend("error", options, {
+            server = {
+              capabilities = capabilities,
+            },
+          })
+
+          require("luau-lsp").setup(opts)
+          return true
         end,
       },
     },
