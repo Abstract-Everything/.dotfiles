@@ -1,58 +1,5 @@
 return {
   {
-    "mfussenegger/nvim-dap",
-    keys = {
-      {
-        "<leader>dr",
-        function()
-          require("dap").run_last()
-        end,
-      },
-      {
-        "<leader>db",
-        function()
-          require("dap").toggle_breakpoint()
-        end,
-      },
-      {
-        "<leader>dh",
-        function()
-          require("dap").run_to_cursor()
-        end,
-      },
-      {
-        "<leader>dc",
-        function()
-          require("dap").continue()
-        end,
-      },
-      {
-        "<leader>ds",
-        function()
-          require("dap").step_into()
-        end,
-      },
-      {
-        "<leader>dn",
-        function()
-          require("dap").step_over()
-        end,
-      },
-      {
-        "<leader>df",
-        function()
-          require("dap").step_out()
-        end,
-      },
-      {
-        "<leader>dt",
-        function()
-          require("dap").repl.open()
-        end,
-      },
-    },
-  },
-  {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = "mason.nvim",
     cmd = { "DapInstall", "DapUninstall" },
@@ -81,23 +28,6 @@ return {
     dependencies = {
       "nvim-neotest/nvim-nio",
       "mfussenegger/nvim-dap",
-    },
-    keys = {
-      {
-        "<leader>du",
-        function()
-          require("dapui").toggle {}
-        end,
-        desc = "Dap UI",
-      },
-      {
-        "<leader>de",
-        function()
-          require("dapui").eval()
-        end,
-        desc = "Eval",
-        mode = { "n", "v" },
-      },
     },
     -- Without this line, config is not called by lazy automatically
     opts = {},
