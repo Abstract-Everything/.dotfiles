@@ -1,40 +1,46 @@
-local Config = require "config"
-
 return {
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      -- https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/
-      "simrat39/rust-tools.nvim",
-      dependencies = { "rust-lang/rust.vim" },
-    },
     opts = {
       servers = {
-        rust_analyzer = {
-          keys = {
-            {
-              "K",
-              function()
-                require("rust-tools").hover_actions.hover_actions()
-              end,
+        rust_analyzer = {},
+      },
+      setup = {
+        rust_analyzer = function()
+          return true
+        end,
+      },
+    },
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5",
+    ft = { "rust" },
+    lazy = false,
+    opts = {
+      server = {
+        -- on_attach = function(_, buffer) end,
+        default_settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+              runBuildScripts = true,
             },
-            {
-              "<leader>cA",
-              function()
-                require("rust-tools").code_action_group.code_action_group()
-              end,
+            checkOnSave = {
+              allFeatures = true,
+              command = "clippy",
+              extraArgs = { "--no-deps" },
+            },
+            procMacro = {
+              enable = true,
             },
           },
         },
       },
-      setup = {
-        rust_analyzer = function(options)
-          local rust_plugin_options = Config.plugins.options "rust-tools"
-          require("rust-tools").setup {
-            vim.tbl_deep_extend("force", rust_plugin_options or {}, { server = options }),
-          }
-        end,
-      },
     },
+    config = function(_, options)
+      vim.g.rustaceanvim = options or {}
+    end,
   },
 }
