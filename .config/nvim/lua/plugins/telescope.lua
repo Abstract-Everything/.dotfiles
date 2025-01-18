@@ -1,5 +1,3 @@
-local Config = require "config"
-
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -12,41 +10,8 @@ return {
       },
       { "nvim-telescope/telescope-ui-select.nvim" },
     },
-    -- Add more keys - such as quickfix history
-    keys = {
-      { "<leader>,", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>" },
-      { "<leader><", "<cmd>Telescope oldfiles<cr>" },
-
-      { "<leader>:", "<cmd>Telescope command_history<cr>" },
-      { "<leader>/", Config.telescope "live_grep" },
-      {
-        "<leader>?",
-        Config.telescope("live_grep", { cwd = Config.root { only_git_root = true } }),
-      },
-
-      { "<leader>ff", Config.telescope "files" },
-      { "<leader>fF", Config.telescope("files", { no_ignore = true, no_ignore_parent = true }) },
-      { "<leader>fg", Config.telescope "git_files" },
-      { "<leader>fc", "<cmd>Configuration<cr>" },
-
-      { "<leader>sl", "<cmd>Telescope spell_suggest<cr>" },
-
-      { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>" },
-      { "<leader>sD", "<cmd>Telescope diagnostics<cr>" },
-
-      { "<leader>sk", "<cmd>Telescope keymaps<cr>" },
-      { "<leader>sm", "<cmd>Telescope man_pages<cr>" },
-      { "<leader>sr", "<cmd>Telescope resume<cr>" },
-
-      { "<leader>sw", Config.telescope("grep_string", { word_match = "-w" }) },
-      { "<leader>sw", Config.telescope "grep_string", mode = "v" },
-
-      { "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>" },
-      { "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>" },
-    },
     config = function(_, opts)
       local telescope = require "telescope"
-
       telescope.setup(opts)
       telescope.load_extension "fzf"
       telescope.load_extension "ui-select"
