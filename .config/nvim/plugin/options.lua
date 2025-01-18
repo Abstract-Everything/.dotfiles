@@ -3,7 +3,7 @@
 vim.cmd [[highlight LineNr guifg=#5eacd3]]
 
 --- Workspace
-vim.o.exrc = true
+vim.o.exrc = false
 vim.o.undofile = true
 vim.o.backup = false
 vim.o.swapfile = false
