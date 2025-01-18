@@ -100,6 +100,7 @@ vim.opt.runtimepath:prepend(lazypath)
 --
 -- A command to write into a diary/ Todo/ thoughts notebook
 require("lazy").setup {
-  dev = { path = "~/sources" },
   spec = "plugins",
+  dev = { path = "~/sources" },
+  change_detection = { notify = false },
 }
