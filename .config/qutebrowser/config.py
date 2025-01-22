@@ -53,3 +53,10 @@ c.new_instance_open_target_window = "last-visible"
 c.qt.highdpi = True
 
 c.tabs.mousewheel_switching = False
+
+c.url.searchengines = {
+    "DEFAULT": "https://duckduckgo.com/?q={}",
+    "g": "https://google.com/search?q={}",
+    "p": "https://docs.python.org/3/search.html?q={}",
+    "z": "https://ziglang.org/documentation/master/std/#{}",
+}
