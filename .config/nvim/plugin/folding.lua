@@ -16,6 +16,7 @@ end)
 vim.keymap.set("n", "<leader>z", "zCzO")
 
 vim.api.nvim_create_autocmd("BufRead", {
+  group = vim.api.nvim_create_augroup("folding", { clear = true }),
   callback = function()
     vim.cmd [[ silent! foldclose! ]]
     local bufnr = vim.api.nvim_get_current_buf()
