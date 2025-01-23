@@ -22,6 +22,9 @@ return {
             -- enable_new_solver = true,
           },
           server = {
+            root_dir = function(path)
+              return vim.fs.root(path, ".git")
+            end,
             settings = {
               ["luau-lsp"] = {
                 completion = {
