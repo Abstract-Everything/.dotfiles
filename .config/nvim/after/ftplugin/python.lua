@@ -78,6 +78,7 @@ end
 
 local buffer = vim.api.nvim_get_current_buf()
 vim.api.nvim_create_autocmd({ "BufEnter", "LspAttach" }, {
+  group = vim.api.nvim_create_augroup("python_set_venv", { clear = true }),
   buffer = buffer,
   callback = update_venv,
 })
