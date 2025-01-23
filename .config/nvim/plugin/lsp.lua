@@ -19,7 +19,7 @@ require("lspconfig.ui.windows").default_options = {
 
 -- Autoformat
 local augroup_name = "LspFormatting"
-local augroup = vim.api.nvim_create_augroup(augroup_name, {})
+local augroup = vim.api.nvim_create_augroup(augroup_name, { clear = true })
 
 vim.api.nvim_create_user_command(augroup_name, function()
   Config.formatting.format_file(false)
@@ -35,6 +35,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Keymaps
 
 vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp_attach", { clear = true }),
   callback = function()
     vim.keymap.set("n", "gd", function()
       require("telescope.builtin").lsp_definitions { reuse_win = true }
