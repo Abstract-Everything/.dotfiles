@@ -16,8 +16,14 @@
     homeDirectory = "/home/jon";
 
     packages = with pkgs; [
-      zsh
+      tree-sitter
     ];
+  };
+
+  xdg.configFile.nvim = {
+    enable = true;
+    recursive = true;
+    source = ./config/nvim;
   };
 
   programs = {
@@ -61,6 +67,11 @@
           DISABLE_UNTRACKED_FILES_DIRTY="true"
         '';
       };
+    };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
     };
   };
 }
