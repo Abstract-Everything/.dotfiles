@@ -1,10 +1,6 @@
-{ config, pkgs, nixgl, ... }:
+{ config, pkgs, ... }:
 
 {
-  nixGL.packages = nixgl.packages;
-  nixGL.defaultWrapper = "mesa";
-  nixGL.installScripts = [ "mesa" ];
-
   home = {
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -20,9 +16,6 @@
     homeDirectory = "/home/jon";
 
     packages = with pkgs; [
-      # terminal
-      (config.lib.nixGL.wrapOffload ghostty)
-
       # terminal tools
       ripgrep
       fd
@@ -34,6 +27,13 @@
       # other tools
       inotify-tools
       vim # for rvim
+
+      # graphical tools
+      (config.lib.nixGL.wrap ghostty)
+      (config.lib.nixGL.wrap waybar)
+      (config.lib.nixGL.wrap qutebrowser)
+      dunst
+      wl-clipboard
     ];
   };
 
@@ -47,6 +47,24 @@
     enable = true;
     recursive = true;
     source = ./config/ghostty;
+  };
+
+  xdg.configFile.sway = {
+    enable = true;
+    recursive = true;
+    source = ./config/sway;
+  };
+
+  xdg.configFile.waybar = {
+    enable = true;
+    recursive = true;
+    source = ./config/waybar;
+  };
+
+  xdg.configFile.dunst = {
+    enable = true;
+    recursive = true;
+    source = ./config/dunst;
   };
 
   programs = {
@@ -102,11 +120,13 @@
       enableZshIntegration = true;
     };
 
+    # IDE
     neovim = {
       enable = true;
       defaultEditor = true;
     };
 
+    # PDF viewer
     zathura = {
       enable = true;
       options = {
@@ -114,5 +134,35 @@
         recolor-keephue = true;
       };
     };
+
+    wofi = {
+      enable = true;
+      package = (config.lib.nixGL.wrap pkgs.wofi);
+    };
+  };
+
+  xdg.portal = {
+    enable = true;
+    config = {
+      common = {
+        default = [
+          "wlr"
+          "gtk"
+        ];
+      };
+    };
+    extraPortals = [
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
+
+  # window manager
+  wayland.windowManager.sway = {
+    package = (config.lib.nixGL.wrap pkgs.sway);
+    enable = true;
+    systemd.enable = true;
+    systemd.xdgAutostart = true;
   };
 }
