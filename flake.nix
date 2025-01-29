@@ -1,52 +1,11 @@
 {
-  description = "Jonathan dotfiles";
+  description = "Jonathan's dotfiles";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixgl.url = "github:nix-community/nixGL";
-  };
+  inputs = { };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixgl, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
+  outputs = { self }:
     {
-
-      nixosConfigurations.jon =
-        nixpkgs.lib.nixosSystem
-          {
-            system = " x86_64-linux ";
-            modules = [
-              ./configuration.nix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                };
-                home-manager.users.jon = import ./home.nix;
-              }
-            ];
-          };
-
-      homeConfigurations.jon = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [
-          (import ./nixgl.nix)
-          (import ./home.nix)
-        ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-        extraSpecialArgs = { inherit nixgl; };
-      };
+      home = import ./home.nix;
+      nixgl = import ./nixgl.nix;
     };
 }
