@@ -1,6 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixgl, ... }:
 
 {
+  nixGL.packages = nixgl.packages;
+  nixGL.defaultWrapper = "mesa";
+  nixGL.installScripts = [ "mesa" ];
+
   home = {
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -16,6 +20,10 @@
     homeDirectory = "/home/jon";
 
     packages = with pkgs; [
+      # terminal
+      (config.lib.nixGL.wrapOffload ghostty)
+
+      # neovim tools
       tree-sitter
     ];
   };
@@ -24,6 +32,12 @@
     enable = true;
     recursive = true;
     source = ./config/nvim;
+  };
+
+  xdg.configFile.ghostty = {
+    enable = true;
+    recursive = true;
+    source = ./config/ghostty;
   };
 
   programs = {
