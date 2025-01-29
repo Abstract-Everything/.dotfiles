@@ -85,7 +85,7 @@
 	output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 	# Set a bit of scaling for 4k monitor
-	output DP-1 scale 1.25
+	output DP-1 scale 1.20
 
 #
 # Inputs
@@ -239,7 +239,7 @@
 	bindsym $commandMod+Shift+p exec --no-startup-id exec wm-screenshot-window
 
 	# Handy zoom in for screen sharing
-	bindsym $commandMod+s output DP-1 scale 1.25
+	bindsym $commandMod+s output DP-1 scale 1.20
 	bindsym $commandMod+Shift+s output DP-1 scale 2.25
 
 	bindsym $commandMod+Plus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
