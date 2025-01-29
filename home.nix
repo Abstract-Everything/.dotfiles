@@ -23,8 +23,17 @@
       # terminal
       (config.lib.nixGL.wrapOffload ghostty)
 
+      # terminal tools
+      ripgrep
+      fd
+      unzip
+
       # neovim tools
       tree-sitter
+
+      # other tools
+      inotify-tools
+      vim # for rvim
     ];
   };
 
@@ -83,9 +92,27 @@
       };
     };
 
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     neovim = {
       enable = true;
       defaultEditor = true;
+    };
+
+    zathura = {
+      enable = true;
+      options = {
+        recolor = true;
+        recolor-keephue = true;
+      };
     };
   };
 }
