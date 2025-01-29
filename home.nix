@@ -21,8 +21,55 @@
       fd
       unzip
 
-      # neovim tools
+      # region neovim tools
       tree-sitter
+
+      ## bash
+      bash-language-server
+      shfmt
+
+      ## c/ cpp
+      clang-tools
+      cmake-lint
+      neocmakelsp
+
+      ## c/ cpp/ rust/ zig
+      vscode-extensions.vadimcn.vscode-lldb
+
+      ## rust
+      rust-analyzer
+
+      ## zig
+      zls
+
+      ## gdscript
+      gdtoolkit_4
+
+      ## json
+      nodePackages.vscode-json-languageserver
+
+      ## yaml
+      yaml-language-server
+
+      ## lua
+      lua-language-server
+      selene
+      stylua
+
+      ## python
+      mypy
+      pyright
+      ruff
+      python313Packages.debugpy
+
+      ## nix
+      nil
+      nixpkgs-fmt
+
+      ## javascript
+      typescript-language-server
+      prettierd
+      # endregion
 
       # other tools
       inotify-tools

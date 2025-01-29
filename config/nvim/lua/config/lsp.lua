@@ -26,30 +26,21 @@ function M.setup(options)
 
   capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
-  ---@param server string
-  local function setup(server)
+  for server, server_options in pairs(options.servers) do
     capabilities = vim.deepcopy(capabilities)
 
-    if options.setup[server] then
-      local setup_handled = options.setup[server](capabilities, options.servers[server])
+    local setup_function = options.setup[server]
+    if setup_function then
+      local setup_handled = setup_function(capabilities, server_options)
       if setup_handled then
         return
       end
     end
 
-    local server_options =
-      vim.tbl_deep_extend("force", { capabilities = capabilities }, options.servers[server] or {})
-    require("lspconfig")[server].setup(server_options)
+    local setup_options =
+      vim.tbl_deep_extend("force", { capabilities = capabilities }, server_options or {})
+    require("lspconfig")[server].setup(setup_options)
   end
-
-  -- For mason-lspconfig to enable PyLspInstall, it requires lspconfig to be
-  -- loaded before the setup function is called
-  require "lspconfig"
-  require("mason-lspconfig").setup {
-    ensure_installed = {},
-    automatic_installation = true,
-    handlers = { setup },
-  }
 end
 
 return M

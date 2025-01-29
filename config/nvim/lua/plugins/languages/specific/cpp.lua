@@ -16,12 +16,4 @@ return {
       table.insert(opts.sorting.comparators, 1, require "clangd_extensions.cmp_scores")
     end,
   },
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    opts = {
-      ensure_installed = {
-        "codelldb",
-      },
-    },
-  },
 }
