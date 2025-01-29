@@ -24,7 +24,7 @@
 	set $up k
 	set $right l
 
-	set $term alacritty
+	set $term ghostty
 
 	set $ws1 "1"
 	set $ws2 "2"
