@@ -149,6 +149,9 @@ in
             wl-clipboard
             # browser
             (config.lib.nixGL.wrap pkgs.qutebrowser)
+            # fonts
+            noto-fonts
+            noto-fonts-color-emoji
           ]
           ++ optionals cfg.gui."3d" [
             (config.lib.nixGL.wrap blender-hip)
@@ -301,6 +304,8 @@ in
         pkgs.xdg-desktop-portal-gtk
       ];
     };
+
+    fonts.fontconfig.enable = cfg.gui.enable;
 
     # window manager
     wayland.windowManager.sway = {
