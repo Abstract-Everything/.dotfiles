@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+git fetch --prune
+git checkout origin/HEAD
+git branch -vv |
+	grep ' \\[.*gone\\] ' |
+	cut -d ' ' -f 3 |
+	# we use '-D' to remove rebased branches
+	xargs -I{} git branch -D {}

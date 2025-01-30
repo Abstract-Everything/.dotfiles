@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+current=$(git branch --show-current)
+others=$(git branch --all --no-contains "${current}" |
+	grep -v -e '->' |
+	grep -v "${current}")
+commits=$(git rev-list HEAD --not ${others})
+echo "${commits}" | tail -n 1

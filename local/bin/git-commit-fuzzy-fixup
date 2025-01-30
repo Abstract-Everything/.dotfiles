@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+selected_commit=$(git-select-commit)
+[[ -z $selected_commit ]] && echo 'Invalid commit selected, aborting.' && exit
+git commit --fixup="${selected_commit}" $@

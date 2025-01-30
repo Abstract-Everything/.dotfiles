@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+commit=$(git first-branch-commit)
+[[ -z $commit ]] && echo 'Invalid commit returned, aborting.' && exit
+git rebase --interactive --autosquash "$commit~"

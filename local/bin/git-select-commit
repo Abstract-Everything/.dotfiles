@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+first=$(git-first-branch-commit)
+commit=$(git log "${first}~"..HEAD --oneline | fzf)
+echo "${commit}" | cut -d ' ' -f 1

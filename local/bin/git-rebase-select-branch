@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+selected_branch=$(git-select-branch)
+[[ -z $selected_branch ]] && echo 'Invalid branch selected, aborting.' && exit
+git rebase --interactive "${selected_branch}"
