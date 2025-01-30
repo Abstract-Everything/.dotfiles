@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-git branch --all | grep -v '\*' | fzf
+git branch --all |
+	grep -Ev '\* | ->' |
+	sed 's/^[[:space:]]*//' |
+	sed 's/[[:space:]]$//' |
+	fzf

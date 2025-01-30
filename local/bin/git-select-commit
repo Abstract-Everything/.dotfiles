@@ -2,4 +2,4 @@
 
 first=$(git-first-branch-commit)
 commit=$(git log "${first}~"..HEAD --oneline | fzf)
-echo "${commit}" | cut -d ' ' -f 1
+echo "${commit}" | cut -d' ' -f1
