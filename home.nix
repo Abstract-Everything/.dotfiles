@@ -173,7 +173,12 @@ in
             (config.lib.nixGL.wrap pkgs.qutebrowser)
             # fonts
             noto-fonts
+            noto-fonts-lgc-plus
+            noto-fonts-cjk-sans
+            noto-fonts-cjk-serif
             noto-fonts-color-emoji
+            noto-fonts-monochrome-emoji
+            nerd-fonts.noto
           ]
           ++ optionals cfg.gui."3d" [
             (config.lib.nixGL.wrap blender-hip)
