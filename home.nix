@@ -25,6 +25,7 @@ let
       // mkToolsOption "json"
       // mkToolsOption "yaml"
       // mkToolsOption "lua"
+      // mkToolsOption "luau"
       // mkToolsOption "python"
       // mkToolsOption "nix"
       // mkToolsOption "javascript_typescript";
@@ -134,8 +135,13 @@ in
           ]
           ++ optionals cfg.neovim.lua [
             lua-language-server
+          ]
+          ++ optionals (cfg.neovim.lua || cfg.neovim.luau) [
             selene
             stylua
+          ]
+          ++ optionals cfg.neovim.luau [
+            rojo
           ]
           ++ optionals cfg.neovim.python [
             mypy
