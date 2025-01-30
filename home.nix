@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.dotfiles;
 
-  mkLanguageOption = language: {
+  mkToolsOption = language: {
     ${language} = mkOption {
       default = false;
       description = "Include ${language} tools";
@@ -13,32 +13,38 @@ let
     };
   };
 
-  neovimModule = types.submodule
-    ({ config, ... }: {
-      options =
-        {
-          enable = mkEnableOption "Add neovim and its chosen dependencies";
-        }
-        // mkLanguageOption "bash"
-        // mkLanguageOption "cmake"
-        // mkLanguageOption "c_cpp"
-        // mkLanguageOption "rust"
-        // mkLanguageOption "zig"
-        // mkLanguageOption "gdscript"
-        // mkLanguageOption "json"
-        // mkLanguageOption "yaml"
-        // mkLanguageOption "lua"
-        // mkLanguageOption "python"
-        // mkLanguageOption "nix"
-        // mkLanguageOption "javascript_typescript";
-    });
+  neovimModule = types.submodule ({ config, ... }: {
+    options =
+      { enable = mkEnableOption "Add neovim and its chosen dependencies"; }
+      // mkToolsOption "bash"
+      // mkToolsOption "cmake"
+      // mkToolsOption "c_cpp"
+      // mkToolsOption "rust"
+      // mkToolsOption "zig"
+      // mkToolsOption "gdscript"
+      // mkToolsOption "json"
+      // mkToolsOption "yaml"
+      // mkToolsOption "lua"
+      // mkToolsOption "python"
+      // mkToolsOption "nix"
+      // mkToolsOption "javascript_typescript";
+  });
+
+  guiModule = types.submodule ({ config, ... }: {
+    options = {
+      enable = mkEnableOption "Add tools which require graphics backend";
+    }
+    // mkToolsOption "3d"
+    // mkToolsOption "2d";
+  });
+
 in
 {
   options = {
     dotfiles = {
       enable = mkEnableOption "Jonathan's dotfiles";
 
-      terminal-tools = mkOption {
+      shell-tools = mkOption {
         default = false;
         description = "Include tools mostly used from the terminal";
         type = types.bool;
@@ -51,9 +57,9 @@ in
       };
 
       gui = mkOption {
-        default = false;
-        description = "Include tools used from graphical contexts";
-        type = types.bool;
+        default = { };
+        description = "Options related to applications requiring graphics backend";
+        type = guiModule;
       };
     };
   };
@@ -61,7 +67,21 @@ in
   config = mkIf cfg.enable {
     home = {
       packages = with pkgs;
-        optionals cfg.terminal-tools [ ripgrep fd unzip ]
+        optionals cfg.shell-tools [
+          # modern grep
+          ripgrep
+          # modern find
+          fd
+          unzip
+          # help about various commands and linux concepts
+          man
+          man-pages
+          # locate directories and files around the file system
+          plocate
+          # view images in terminal, good quality if kitty graphics protocol
+          # is supported by the terminal
+          viu
+        ]
         ++ optionals cfg.neovim.enable (
           [ tree-sitter ]
           ++ optionals cfg.neovim.bash [
@@ -115,13 +135,36 @@ in
           inotify-tools
           vim # for rvim
         ]
-        ++ optionals cfg.gui [
-          (config.lib.nixGL.wrap ghostty)
-          (config.lib.nixGL.wrap waybar)
-          (config.lib.nixGL.wrap qutebrowser)
-          dunst
-          wl-clipboard
-        ];
+        ++ optionals cfg.gui.enable (
+          [
+            # taskbar
+            (config.lib.nixGL.wrap waybar)
+            # screenshot
+            (config.lib.nixGL.wrap grim)
+            (config.lib.nixGL.wrap slurp)
+            (config.lib.nixGL.wrap swappy)
+            # notification
+            dunst
+            # clipboard
+            wl-clipboard
+            # browser
+            (config.lib.nixGL.wrap pkgs.qutebrowser)
+          ]
+          ++ optionals cfg.gui."3d" [
+            (config.lib.nixGL.wrap blender-hip)
+          ]
+          ++ optionals cfg.gui."2d" [
+            (config.lib.nixGL.wrap krita)
+          ]
+        );
+
+      sessionVariables = {
+        VISUAL = mkIf cfg.neovim.enable "nvim";
+        PAGER = mkIf cfg.neovim.enable "nvim -R";
+        MANPAGER = mkIf cfg.neovim.enable "nvim -R +Man!";
+        SUDO_EDITOR = "rvim";
+        BROWSER = mkIf cfg.gui.enable "qutebrowser";
+      };
     };
 
     xdg.configFile.nvim = {
@@ -130,34 +173,40 @@ in
       source = ./config/nvim;
     };
 
-    xdg.configFile.ghostty = {
-      enable = cfg.gui;
-      recursive = true;
-      source = ./config/ghostty;
-    };
-
     xdg.configFile.sway = {
-      enable = cfg.gui;
+      enable = cfg.gui.enable;
       recursive = true;
       source = ./config/sway;
     };
 
+    xdg.configFile.swappy = {
+      enable = cfg.gui.enable;
+      recursive = true;
+      source = ./config/swappy;
+    };
+
     xdg.configFile.waybar = {
-      enable = cfg.gui;
+      enable = cfg.gui.enable;
       recursive = true;
       source = ./config/waybar;
     };
 
     xdg.configFile.dunst = {
-      enable = cfg.gui;
+      enable = cfg.gui.enable;
       recursive = true;
       source = ./config/dunst;
+    };
+
+    xdg.configFile.qutebrowser = {
+      enable = cfg.gui.enable;
+      recursive = true;
+      source = ./config/qutebrowser;
     };
 
     programs = {
       # shell
       zsh = {
-        enable = cfg.terminal-tools;
+        enable = cfg.shell-tools;
         dotDir = ".config/zsh";
         syntaxHighlighting.enable = true;
         autosuggestion.enable = true;
@@ -195,12 +244,12 @@ in
       };
 
       fzf = {
-        enable = cfg.terminal-tools;
+        enable = cfg.shell-tools;
         enableZshIntegration = true;
       };
 
       zoxide = {
-        enable = cfg.terminal-tools;
+        enable = cfg.shell-tools;
         enableZshIntegration = true;
       };
 
@@ -212,7 +261,7 @@ in
 
       # PDF viewer
       zathura = {
-        enable = cfg.gui;
+        enable = cfg.gui.enable;
         options = {
           recolor = true;
           recolor-keephue = true;
@@ -220,13 +269,24 @@ in
       };
 
       wofi = {
-        enable = cfg.gui;
+        enable = cfg.gui.enable;
         package = (config.lib.nixGL.wrap pkgs.wofi);
+      };
+
+      ghostty = {
+        package = (config.lib.nixGL.wrap pkgs.ghostty);
+        enable = cfg.gui.enable;
+        settings = { window-decoration = false; };
+      };
+
+      mpv = {
+        package = (config.lib.nixGL.wrap pkgs.mpv);
+        enable = cfg.gui.enable;
       };
     };
 
     xdg.portal = {
-      enable = cfg.gui;
+      enable = cfg.gui.enable;
       config = {
         common = {
           default = [
@@ -245,7 +305,7 @@ in
     # window manager
     wayland.windowManager.sway = {
       package = (config.lib.nixGL.wrap pkgs.sway);
-      enable = cfg.gui;
+      enable = cfg.gui.enable;
       systemd.enable = true;
       systemd.xdgAutostart = true;
     };
