@@ -1,3 +1,7 @@
+-- TODO:
+-- better solution for autoformatting - one which does not touch undo
+-- telescope quickfix keymap
+
 -- Leader key -> ","
 --
 -- In general, it's a good idea to set this early in your config, because otherwise
@@ -36,67 +40,81 @@ vim.opt.runtimepath:prepend(lazypath)
 -- LazyVim as a reference
 --
 -- File traversal
---	nvim-neo-tree/neo-tree.nvim
+--  oil.nvim
+--  nvim-neo-tree/neo-tree.nvim
 --
 -- Editor
---	Show colours when typing them out
---	https://github.com/norcalli/nvim-colorizer.lua
+--  Show colours when typing them out
+--  https://github.com/norcalli/nvim-colorizer.lua
 --
---	Note taking and organization
---	https://github.com/nvim-neorg/neorg
+--  Note taking and organization
+--  https://github.com/nvim-neorg/neorg
 --
---	Spelling
---	https://github.com/uga-rosa/cmp-dictionary
+--  Spelling
+--  https://github.com/uga-rosa/cmp-dictionary
 --
---	status line
---	https://github.com/nvim-lualine/lualine.nvim
+--  status line
+--  https://github.com/nvim-lualine/lualine.nvim
 --
---	interactive search and replace
---	nvim-pack/nvim-spectre
+--  interactive search and replace
+--  nvim-pack/nvim-spectre
 --
---	jump to text
---	folke/flash.nvim
+--  jump to text
+--  folke/flash.nvim
 --
---	interactively show keybindings
---	folke/which-key.nvim
+--  interactively show keybindings
+--  folke/which-key.nvim
 --
---	show uncommited hunks
---	lewis6991/gitsigns.nvim
+--  show uncommited hunks
+--  lewis6991/gitsigns.nvim
 --
---	highlight word under cursor
---	RRethy/vim-illuminate
+--  highlight word under cursor
+--  RRethy/vim-illuminate
 --
---	nicer quickfix/ location lists
---	folke/trouble.nvim
+--  nicer quickfix/ location lists
+--  folke/trouble.nvim
 --
---	To persist buffers when closing neovim
---	folke/persistence.nvim
+--  To persist buffers when closing neovim
+--  folke/persistence.nvim
 --
---	Notifications
---	rcarriga/nvim-notify
+--  Notifications
+--  rcarriga/nvim-notify
 --
---	nicer ui
---	stevearc/dressing.nvim
+--  nicer ui
+--  stevearc/dressing.nvim
 --
---	indent guides
---	lukas-reineke/indent-blankline.nvim
+--  indent guides
+--  lukas-reineke/indent-blankline.nvim
 --
---	automatic completion of pairs
---	nvim-autopairs
---	nvim-ts-autopairs
+--  automatic completion of pairs
+--    nvim-autopairs
+--    nvim-ts-autopairs
+--    mini.pairs
 --
---	mini.pairs
---	mini.surround
+--  mini.pairs
+--  mini.surround
+--
+--  dadbod / dbee
+--
+--  AI
+--   avante.nvim
+--
+--  LSP Errors
+--    lsp_lines https://git.sr.ht/~whynothugo/lsp_lines.nvim
+--
+--  Auto formatting
+--    comform.nvim
 --
 -- Debugging
---	https://github.com/rcarriga/nvim-dap-ui
---	https://github.com/theHamsta/nvim-dap-virtual-text
+--  Create good shortcuts for debugging
+--  https://github.com/rcarriga/nvim-dap-ui
+--  https://github.com/theHamsta/nvim-dap-virtual-text
 --
 -- Git
---	https://github.com/lewis6991/gitsigns.nvim
---	https://github.com/tpope/vim-fugitive
---	https://github.com/rhysd/git-messenger.vim
---	https://github.com/rhysd/committia.vim
+--  https://github.com/lewis6991/gitsigns.nvim
+--  https://github.com/tpope/vim-fugitive
+--  https://github.com/rhysd/git-messenger.vim
+--  https://github.com/rhysd/committia.vim
 --
 -- A command to write into a diary/ Todo/ thoughts notebook
 require("lazy").setup {
