@@ -30,16 +30,16 @@ function M.setup(options)
     capabilities = vim.deepcopy(capabilities)
 
     local setup_function = options.setup[server]
+    local setup_handled = false
     if setup_function then
-      local setup_handled = setup_function(capabilities, server_options)
-      if setup_handled then
-        return
-      end
+      setup_handled = setup_function(capabilities, server_options)
     end
 
-    local setup_options =
-      vim.tbl_deep_extend("force", { capabilities = capabilities }, server_options or {})
-    require("lspconfig")[server].setup(setup_options)
+    if not setup_handled then
+      local setup_options =
+        vim.tbl_deep_extend("force", { capabilities = capabilities }, server_options or {})
+      require("lspconfig")[server].setup(setup_options)
+    end
   end
 end
 
