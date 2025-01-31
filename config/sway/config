@@ -208,8 +208,8 @@
 	bindsym $windowMod+e layout toggle split
 
 	# split orientation
-	bindsym $windowMod+x split v;exec notify-send 'tile vertically'
-	bindsym $windowMod+v split h;exec notify-send 'tile horizontally'
+	bindsym $windowMod+x split v;exec dunstify 'tile vertically'
+	bindsym $windowMod+v split h;exec dunstify 'tile horizontally'
 
 	set $mode_resize "Resize (h) Grow Width, (j) Shrink Height, (k) Grow Height, (l) Shrink Width"
 	bindsym $windowMod+r mode $mode_resize
