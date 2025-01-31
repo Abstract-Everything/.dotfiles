@@ -172,7 +172,6 @@ in
             (config.lib.nixGL.wrap slurp)
             (config.lib.nixGL.wrap swappy)
             # notification
-            dunst
             # clipboard
             wl-clipboard
             # browser
@@ -225,12 +224,6 @@ in
       enable = cfg.gui.enable;
       recursive = true;
       source = ./config/waybar;
-    };
-
-    xdg.configFile.dunst = {
-      enable = cfg.gui.enable;
-      recursive = true;
-      source = ./config/dunst;
     };
 
     xdg.configFile.qutebrowser = {
@@ -381,6 +374,20 @@ in
       mpv = {
         package = (config.lib.nixGL.wrap pkgs.mpv);
         enable = cfg.gui.enable;
+      };
+
+    };
+
+    services = {
+      dunst = {
+        enable = cfg.gui.enable;
+        settings = {
+          global = {
+            markup = true;
+            dmenu = "wofi -d menu -p dunst";
+            word_wrap = true;
+          };
+        };
       };
     };
 
