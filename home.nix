@@ -54,7 +54,7 @@ in
       email = mkOption {
         default = "jon.d.cam@gmail.com";
         description = "Email address for the user";
-        type = types.string;
+        type = types.str;
       };
 
       shell-tools = mkOption {
