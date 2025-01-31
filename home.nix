@@ -351,13 +351,11 @@ in
         defaultEditor = true;
       };
 
-      # PDF viewer
-      zathura = {
+      # gui
+      ghostty = {
+        package = (config.lib.nixGL.wrap pkgs.ghostty);
         enable = cfg.gui.enable;
-        options = {
-          recolor = true;
-          recolor-keephue = true;
-        };
+        settings = { window-decoration = false; };
       };
 
       wofi = {
@@ -365,15 +363,17 @@ in
         package = (config.lib.nixGL.wrap pkgs.wofi);
       };
 
-      ghostty = {
-        package = (config.lib.nixGL.wrap pkgs.ghostty);
-        enable = cfg.gui.enable;
-        settings = { window-decoration = false; };
-      };
-
       mpv = {
         package = (config.lib.nixGL.wrap pkgs.mpv);
         enable = cfg.gui.enable;
+      };
+
+      zathura = {
+        enable = cfg.gui.enable;
+        options = {
+          recolor = true;
+          recolor-keephue = true;
+        };
       };
 
     };
