@@ -45,6 +45,8 @@ let
       (builtins.readFile ./local/bin/${file})
   );
 
+  fzfCommonOptions = " --hidden " + concatMapStringsSep " " (dir: " --exclude ${dir}") [ ".git" ];
+
 in
 {
   options = {
@@ -328,7 +330,7 @@ in
         oh-my-zsh = {
           enable = true;
           theme = "af-magic";
-          plugins = [ "vi-mode" "fzf" "zoxide" "command-not-found" ];
+          plugins = [ "vi-mode" "command-not-found" ];
           extraConfig = ''
             DISABLE_UNTRACKED_FILES_DIRTY="true"
           '';
@@ -338,6 +340,9 @@ in
       fzf = {
         enable = cfg.shell-tools;
         enableZshIntegration = true;
+        changeDirWidgetCommand = "fd --type d" + fzfCommonOptions;
+        defaultCommand = "fd --type f" + fzfCommonOptions;
+        fileWidgetCommand = "fd --type f" + fzfCommonOptions;
       };
 
       zoxide = {
