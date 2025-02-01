@@ -33,13 +33,21 @@ let
 
   guiModule = types.submodule ({ config, ... }: {
     options = {
-      enable = mkEnableOption "Add tools which require graphics backend";
+      enable = mkEnableOption "tools which require graphics backend";
+      desktopEnvironment = {
+        enable = mkEnableOption "desktop environment";
+        modifier = mkOption {
+          default = "Mod4";
+          description = "Include ${language} tools";
+          type = types.enum [ "Mod2" "Mod3" "Mod4" "Mod5" ];
+        };
+      };
     }
     // mkToolsOption "3d"
     // mkToolsOption "2d";
   });
 
-  shellScriptFromFile = file: (
+  shellScriptFromLocalBin = file: (
     pkgs.writeShellScriptBin
       "${file}"
       (builtins.readFile ./local/bin/${file})
@@ -47,6 +55,32 @@ let
 
   fzfCommonOptions = " --hidden " + concatMapStringsSep " " (dir: " --exclude ${dir}") [ ".git" ];
 
+  swayVariables =
+    rec {
+      mod = cfg.gui.desktopEnvironment.modifier;
+      windowMod = mod;
+      commandMod = mod + "+Control";
+      launchMod = mod + "+Alt";
+      terminal = "ghostty";
+      left = "h";
+      down = "j";
+      up = "k";
+      right = "l";
+
+      homeMonitor = "Samsung Electric Company U28E590 HTPJ907067";
+
+      switchWs = key: ws: {
+        "${windowMod}+${toString key}" = "workspace number ${toString ws}";
+      };
+
+      moveContainerToWs = key: ws: {
+        "${windowMod}+Shift+${toString key}" = "move container to workspace number ${toString ws}";
+      };
+
+      modeToString = mode: builtins.toJSON config.wayland.windowManager.sway.config.modes."${mode}";
+
+      switchMode = mode: ''mode ${mode}; exec notify-send "Activated sway mode" "$(echo "${modeToString mode}" | jq)"'';
+    };
 in
 {
   options = {
@@ -96,16 +130,18 @@ in
           # view images in terminal, good quality if kitty graphics protocol
           # is supported by the terminal
           viu
+          # json processing
+          jq
 
-          (shellScriptFromFile "git-change-branch")
-          (shellScriptFromFile "git-clean-branches")
-          (shellScriptFromFile "git-commit-fuzzy-fixup")
-          (shellScriptFromFile "git-fetch-and-checkout-head")
-          (shellScriptFromFile "git-first-branch-commit")
-          (shellScriptFromFile "git-rebase-select-branch")
-          (shellScriptFromFile "git-rebase-squash")
-          (shellScriptFromFile "git-select-branch")
-          (shellScriptFromFile "git-select-commit")
+          (shellScriptFromLocalBin "git-change-branch")
+          (shellScriptFromLocalBin "git-clean-branches")
+          (shellScriptFromLocalBin "git-commit-fuzzy-fixup")
+          (shellScriptFromLocalBin "git-fetch-and-checkout-head")
+          (shellScriptFromLocalBin "git-first-branch-commit")
+          (shellScriptFromLocalBin "git-rebase-select-branch")
+          (shellScriptFromLocalBin "git-rebase-squash")
+          (shellScriptFromLocalBin "git-select-branch")
+          (shellScriptFromLocalBin "git-select-commit")
         ]
         ++ optionals cfg.neovim.enable (
           [ tree-sitter ]
@@ -165,7 +201,7 @@ in
           inotify-tools
           vim # for rvim
         ]
-        ++ optionals cfg.gui.enable (
+        ++ optionals cfg.gui.desktopEnvironment.enable (
           [
             # taskbar
             (config.lib.nixGL.wrap waybar)
@@ -173,9 +209,19 @@ in
             (config.lib.nixGL.wrap grim)
             (config.lib.nixGL.wrap slurp)
             (config.lib.nixGL.wrap swappy)
+            # polkit agent
+            (config.lib.nixGL.wrap kdePackages.polkit-kde-agent-1)
             # notification
+            libnotify
             # clipboard
             wl-clipboard
+
+            (shellScriptFromLocalBin "wm-exit")
+            (shellScriptFromLocalBin "wm-screenshot-select-area")
+            (shellScriptFromLocalBin "wm-screenshot-window")
+            (shellScriptFromLocalBin "single-output-per-monitor")
+          ]
+          ++ [
             # browser
             (config.lib.nixGL.wrap pkgs.qutebrowser)
             # fonts
@@ -210,20 +256,14 @@ in
       source = ./config/nvim;
     };
 
-    xdg.configFile.sway = {
-      enable = cfg.gui.enable;
-      recursive = true;
-      source = ./config/sway;
-    };
-
     xdg.configFile.swappy = {
-      enable = cfg.gui.enable;
+      enable = cfg.gui.desktopEnvironment.enable;
       recursive = true;
       source = ./config/swappy;
     };
 
     xdg.configFile.waybar = {
-      enable = cfg.gui.enable;
+      enable = cfg.gui.desktopEnvironment.enable;
       recursive = true;
       source = ./config/waybar;
     };
@@ -364,8 +404,13 @@ in
       };
 
       wofi = {
-        enable = cfg.gui.enable;
+        enable = cfg.gui.desktopEnvironment.enable;
         package = (config.lib.nixGL.wrap pkgs.wofi);
+      };
+
+      waybar = {
+        enable = false; # We start it explicitly
+        package = (config.lib.nixGL.wrap pkgs.waybar);
       };
 
       mpv = {
@@ -385,7 +430,7 @@ in
 
     services = {
       dunst = {
-        enable = cfg.gui.enable;
+        enable = cfg.gui.desktopEnvironment.enable;
         settings = {
           global = {
             markup = true;
@@ -394,10 +439,35 @@ in
           };
         };
       };
+
+      swayidle = {
+        enable = cfg.gui.desktopEnvironment.enable;
+        timeouts = [
+          {
+            timeout = 300;
+            command = "swaymsg output \"*\" power off";
+            resumeCommand = "swaymsg output \"*\" power on";
+          }
+          {
+            timeout = 310;
+            command = "wm-exit lock";
+          }
+        ];
+        events = [
+          {
+            event = "before-sleep";
+            command = "wm-exit lock";
+          }
+          {
+            event = "lock";
+            command = "wm-exit lock";
+          }
+        ];
+      };
     };
 
     xdg.portal = {
-      enable = cfg.gui.enable;
+      enable = cfg.gui.desktopEnvironment.enable;
       config = {
         common = {
           default = [
@@ -416,11 +486,174 @@ in
     fonts.fontconfig.enable = cfg.gui.enable;
 
     # window manager
-    wayland.windowManager.sway = {
-      package = (config.lib.nixGL.wrap pkgs.sway);
-      enable = cfg.gui.enable;
-      systemd.enable = true;
-      systemd.xdgAutostart = true;
+    wayland = {
+      windowManager.sway = {
+        package = (config.lib.nixGL.wrap pkgs.sway);
+        enable = cfg.gui.desktopEnvironment.enable;
+        checkConfig = true;
+        config = {
+          modifier = cfg.gui.desktopEnvironment.modifier;
+
+          defaultWorkspace = "workspace number 1";
+          workspaceLayout = "default";
+          workspaceAutoBackAndForth = true;
+
+          input."*"."xkb_layout" = "gb";
+
+          output."${swayVariables.homeMonitor}".scale = "1.20";
+
+          window = {
+            border = 1;
+            titlebar = false;
+            hideEdgeBorders = "none";
+            commands = [
+              {
+                command = "inhibit_idle focus";
+                criteria = {
+                  class = "discord";
+                };
+              }
+            ];
+          };
+
+          floating = {
+            border = 1;
+            titlebar = false;
+            modifier = swayVariables.mod;
+          };
+
+          focus = {
+            wrapping = "no";
+            followMouse = true;
+            newWindow = "urgent";
+            mouseWarping = "output";
+          };
+
+          colors = {
+            focused = {
+              border = "#02bedd";
+              background = "#333333";
+              text = "#ffffff";
+              indicator = "#ffffff";
+              childBorder = "#02bedd";
+            };
+            focusedInactive = {
+              border = "#000000";
+              background = "#333333";
+              text = "#ffffff";
+              indicator = "#000000";
+              childBorder = "#000000";
+            };
+          };
+
+
+          startup = [
+            {
+              command = "single-output-per-monitor";
+              always = true;
+            }
+            {
+              command = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
+            }
+            {
+              command = "${config.programs.waybar.package}/bin/waybar";
+            }
+          ];
+
+          modes = {
+            resize = {
+              "h" = "resize grow height 2 ppt";
+              "Shift+h" = "resize shrink height 2 ppt";
+              "w" = "resize grow width 2 ppt";
+              "Shift+w" = "resize shrink width 2 ppt";
+              "Escape" = "mode default";
+              "Return" = "mode default";
+            };
+
+            session = {
+              "l" = "exec --no-startup-id wm-exit lock, mode default";
+              "e" = "exec --no-startup-id wm-exit logout, mode default";
+              "s" = "exec --no-startup-id wm-exit suspend, mode default";
+              "h" = "exec --no-startup-id wm-exit hibernate, mode default";
+              "r" = "exec --no-startup-id wm-exit reboot, mode default";
+              "p" = "exec --no-startup-id wm-exit poweroff, mode default";
+              "Escape" = "mode default";
+              "Return" = "mode default";
+            };
+          };
+
+          keybindings = with swayVariables;
+            (switchWs 1 1) //
+            (switchWs 2 2) //
+            (switchWs 3 3) //
+            (switchWs 4 4) //
+            (switchWs 5 5) //
+            (switchWs 6 6) //
+            (switchWs 7 7) //
+            (switchWs 8 8) //
+            (switchWs 9 9) //
+            (switchWs 0 10) //
+            {
+              "${windowMod}+Minus" = "scratchpad show";
+            } //
+            (moveContainerToWs 1 1) //
+            (moveContainerToWs 2 2) //
+            (moveContainerToWs 3 3) //
+            (moveContainerToWs 4 4) //
+            (moveContainerToWs 5 5) //
+            (moveContainerToWs 6 6) //
+            (moveContainerToWs 7 7) //
+            (moveContainerToWs 8 8) //
+            (moveContainerToWs 9 9) //
+            (moveContainerToWs 0 10) //
+            { "${windowMod}+Shift+Minus" = "move scratchpad"; } //
+            {
+              "${windowMod}+${left}" = "focus left";
+              "${windowMod}+${down}" = "focus down";
+              "${windowMod}+${up}" = "focus up";
+              "${windowMod}+${right}" = "focus right";
+              "${windowMod}+a" = "focus parent";
+              "${windowMod}+Shift+Space" = "focus mode_toggle";
+            } //
+            {
+              "${windowMod}+Shift+${left}" = "move left";
+              "${windowMod}+Shift+${down}" = "move down";
+              "${windowMod}+Shift+${up}" = "move up";
+              "${windowMod}+Shift+${right}" = "move right";
+            } //
+            {
+              "${windowMod}+q" = "kill";
+              "${windowMod}+f" = "fullscreen toggle";
+              "${windowMod}+t" = "floating toggle";
+              "${windowMod}+r" = switchMode "resize";
+            } //
+            {
+              "${windowMod}+s" = "layout stacking";
+              "${windowMod}+w" = "layout tabbed";
+              "${windowMod}+x" = "split vertical;exec notify-send 'tile vertically'";
+              "${windowMod}+v" = "split horizontal;exec notify-send 'tile horizontally'";
+            } //
+            {
+              "${commandMod}+r" = "reload";
+              "${commandMod}+Shift+r" = "restart";
+              "${commandMod}+p" = "exec --no-startup-id wm-screenshot-select-area";
+              "${commandMod}+Shift+p" = "exec --no-startup-id wm-screenshot-window";
+              "${commandMod}+s" = "output \"${homeMonitor}\" scale 1.20";
+              "${commandMod}+Shift+s" = "output \"${homeMonitor}\" scale 2.25";
+              "${commandMod}+e" = switchMode "session";
+            } //
+            {
+              "${launchMod}+Space" = "exec --no-startup-id wofi --show=drun --insensitive --allow-images";
+              "${launchMod}+d" = "exec --no-startup-id discord";
+              "${launchMod}+s" = "exec --no-startup-id spotify-launcher";
+              "${launchMod}+q" = "exec --no-startup-id qutebrowser";
+              "${launchMod}+i" = "exec --no-startup-id qutebrowser --temp-basedir";
+              "${launchMod}+Return" = "exec --no-startup-id ${terminal}";
+            };
+
+          bars = [ ];
+        };
+      };
     };
   };
 }

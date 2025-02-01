@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 area=$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')
-grim -g "$area" - | swappy -f -
+grim -g "$area" - | swappy --file -
