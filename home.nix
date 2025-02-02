@@ -99,6 +99,12 @@ in
         type = types.bool;
       };
 
+      ssh = mkOption {
+        default = false;
+        description = "Include ssh-agent config";
+        type = types.bool;
+      };
+
       neovim = mkOption {
         default = { };
         description = "Options related to neovim language dependencies";
@@ -385,6 +391,22 @@ in
         enableZshIntegration = true;
       };
 
+      ssh = {
+        enable = cfg.ssh;
+        addKeysToAgent = "yes";
+        matchBlocks = {
+          "github.com" =
+            {
+              identityFile = "~/.ssh/github";
+              identitiesOnly = true;
+            };
+          "bitbucket.org" = {
+            identityFile = "~/.ssh/bitbucket";
+            identitiesOnly = true;
+          };
+        };
+      };
+
       # IDE
       neovim = mkIf cfg.neovim.enable {
         enable = cfg.neovim.enable;
@@ -424,6 +446,8 @@ in
     };
 
     services = {
+      ssh-agent.enable = cfg.ssh;
+
       dunst = {
         enable = cfg.gui.desktopEnvironment.enable;
         settings = {
