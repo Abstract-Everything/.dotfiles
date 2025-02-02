@@ -359,7 +359,6 @@ in
         '';
         shellAliases = {
           g = "git";
-          dg = "git --git-dir=$HOME/dotfiles/";
           updatedb = "updatedb --require-visibility 0 -o $HOME/.cache/locate.db";
           locate = "locate --database=$HOME/.cache/locate.db";
         };
