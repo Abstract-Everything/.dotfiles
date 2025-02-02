@@ -256,34 +256,34 @@ in
       };
     };
 
-    xdg.configFile.nvim = {
-      enable = cfg.neovim.enable;
+    xdg.configFile.nvim = mkIf cfg.neovim.enable {
+      enable = true;
       recursive = true;
       source = ./config/nvim;
     };
 
-    xdg.configFile.swappy = {
-      enable = cfg.gui.desktopEnvironment.enable;
+    xdg.configFile.swappy = mkIf cfg.gui.desktopEnvironment.enable {
+      enable = true;
       recursive = true;
       source = ./config/swappy;
     };
 
-    xdg.configFile.waybar = {
-      enable = cfg.gui.desktopEnvironment.enable;
+    xdg.configFile.waybar = mkIf cfg.gui.desktopEnvironment.enable {
+      enable = true;
       recursive = true;
       source = ./config/waybar;
     };
 
-    xdg.configFile.qutebrowser = {
-      enable = cfg.gui.enable;
+    xdg.configFile.qutebrowser = mkIf cfg.gui.enable {
+      enable = true;
       recursive = true;
       source = ./config/qutebrowser;
     };
 
     programs = {
       # shell
-      git = {
-        enable = cfg.shell-tools;
+      git = mkIf cfg.shell-tools {
+        enable = true;
         userEmail = cfg.email;
         userName = "Jonathan Camilleri";
         aliases = {
@@ -341,8 +341,8 @@ in
         };
       };
 
-      zsh = {
-        enable = cfg.shell-tools;
+      zsh = mkIf cfg.shell-tools {
+        enable = true;
         dotDir = ".config/zsh";
         syntaxHighlighting.enable = true;
         autosuggestion.enable = true;
@@ -378,21 +378,21 @@ in
         };
       };
 
-      fzf = {
-        enable = cfg.shell-tools;
+      fzf = mkIf cfg.shell-tools {
+        enable = true;
         enableZshIntegration = true;
         changeDirWidgetCommand = "fd --type d" + fzfCommonOptions;
         defaultCommand = "fd --type f" + fzfCommonOptions;
         fileWidgetCommand = "fd --type f" + fzfCommonOptions;
       };
 
-      zoxide = {
-        enable = cfg.shell-tools;
+      zoxide = mkIf cfg.shell-tools {
+        enable = true;
         enableZshIntegration = true;
       };
 
-      ssh = {
-        enable = cfg.ssh;
+      ssh = mkIf cfg.ssh {
+        enable = true;
         addKeysToAgent = "yes";
         matchBlocks = {
           "github.com" =
@@ -409,34 +409,34 @@ in
 
       # IDE
       neovim = mkIf cfg.neovim.enable {
-        enable = cfg.neovim.enable;
+        enable = true;
         defaultEditor = true;
       };
 
       # gui
-      ghostty = {
+      ghostty = mkIf cfg.gui.enable {
+        enable = true;
         package = (config.lib.nixGL.wrap pkgs.ghostty);
-        enable = cfg.gui.enable;
         settings = { window-decoration = false; };
       };
 
-      wofi = {
-        enable = cfg.gui.desktopEnvironment.enable;
+      wofi = mkIf cfg.gui.desktopEnvironment.enable {
+        enable = true;
         package = (config.lib.nixGL.wrap pkgs.wofi);
       };
 
-      waybar = {
+      waybar = mkIf cfg.gui.desktopEnvironment.enable {
         enable = false; # We start it explicitly
         package = (config.lib.nixGL.wrap pkgs.waybar);
       };
 
-      mpv = {
+      mpv = mkIf cfg.gui.enable {
+        enable = true;
         package = (config.lib.nixGL.wrap pkgs.mpv);
-        enable = cfg.gui.enable;
       };
 
-      zathura = {
-        enable = cfg.gui.enable;
+      zathura = mkIf cfg.gui.enable {
+        enable = true;
         options = {
           recolor = true;
           recolor-keephue = true;
@@ -446,10 +446,12 @@ in
     };
 
     services = {
-      ssh-agent.enable = cfg.ssh;
+      ssh-agent = mkIf cfg.ssh {
+        enable = true;
+      };
 
-      dunst = {
-        enable = cfg.gui.desktopEnvironment.enable;
+      dunst = mkIf cfg.gui.desktopEnvironment.enable {
+        enable = true;
         settings = {
           global = {
             markup = true;
@@ -459,8 +461,8 @@ in
         };
       };
 
-      swayidle = {
-        enable = cfg.gui.desktopEnvironment.enable;
+      swayidle = mkIf cfg.gui.desktopEnvironment.enable {
+        enable = true;
         timeouts = [
           {
             timeout = 300;
@@ -485,8 +487,8 @@ in
       };
     };
 
-    xdg.portal = {
-      enable = cfg.gui.desktopEnvironment.enable;
+    xdg.portal = mkIf cfg.gui.desktopEnvironment.enable {
+      enable = true;
       config = {
         common = {
           default = [
@@ -502,13 +504,15 @@ in
       ];
     };
 
-    fonts.fontconfig.enable = cfg.gui.enable;
+    fonts = mkIf cfg.gui.enable {
+      fontconfig.enable = true;
+    };
 
     # window manager
     wayland = {
-      windowManager.sway = {
+      windowManager.sway = mkIf cfg.gui.desktopEnvironment.enable {
+        enable = true;
         package = (config.lib.nixGL.wrap pkgs.sway);
-        enable = cfg.gui.desktopEnvironment.enable;
         checkConfig = true;
         config = {
           modifier = cfg.gui.desktopEnvironment.modifier;
