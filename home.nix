@@ -79,7 +79,7 @@ let
 
       modeToString = mode: builtins.toJSON config.wayland.windowManager.sway.config.modes."${mode}";
 
-      switchMode = mode: ''mode ${mode}; exec notify-send "Activated sway mode" "$(echo "${modeToString mode}" | jq)"'';
+      switchMode = mode: ''mode ${mode}; exec notify-send "Activated sway mode" "$(echo '${modeToString mode}' | jq)"'';
     };
 in
 {
