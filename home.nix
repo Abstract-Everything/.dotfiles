@@ -674,6 +674,11 @@ in
               "${launchMod}+Return" = "exec --no-startup-id ${terminal}";
             };
 
+          assigns = {
+            "8" = [{ class = "^discord$"; }];
+            "9" = [{ class = "^Spotify$"; }];
+          };
+
           bars = [ ];
         };
       };
