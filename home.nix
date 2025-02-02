@@ -244,7 +244,7 @@ in
       sessionVariables = {
         VISUAL = mkIf cfg.neovim.enable "nvim";
         PAGER = mkIf cfg.neovim.enable "nvim -R";
-        MANPAGER = mkIf cfg.neovim.enable "nvim -R +Man!";
+        MANPAGER = mkIf cfg.neovim.enable "nvim -c :Man!";
         SUDO_EDITOR = "rvim";
         BROWSER = mkIf cfg.gui.enable "qutebrowser";
       };
@@ -323,10 +323,6 @@ in
           stl = "stash list";
         };
         extraConfig = {
-          core = {
-            editor = "nvim";
-            pager = "nvim -R";
-          };
           color = {
             pager = "no";
           };
