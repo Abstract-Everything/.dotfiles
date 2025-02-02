@@ -5,20 +5,6 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
     },
-    keys = {
-      {
-        "<leader>go",
-        "<cmd>DiffviewOpen<cr>",
-      },
-      {
-        "<leader>gl",
-        "<cmd>DiffviewFileHistory<cr>",
-      },
-      {
-        "<leader>gq",
-        "<cmd>DiffviewClose<cr>",
-      },
-    },
   },
   {
     "neogitOrg/neogit",
