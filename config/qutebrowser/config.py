@@ -38,6 +38,9 @@ config.set("content.javascript.enabled", True, "qute://*/*")
 config.set("content.javascript.clipboard", "access")
 config.set("content.prefers_reduced_motion", True)
 
+config.bind(",m", "spawn mpv {url}")
+config.bind(",M", "hint links spawn mpv {hint-url}")
+
 c.auto_save.session = True
 c.scrolling.smooth = True
 c.colors.webpage.preferred_color_scheme = "dark"
