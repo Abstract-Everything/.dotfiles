@@ -291,6 +291,13 @@ in
 
     programs = {
       # shell
+      direnv = mkIf cfg.shell-tools {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+      };
+
       git = mkIf cfg.shell-tools {
         enable = true;
         userEmail = cfg.email;
