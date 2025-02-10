@@ -216,6 +216,8 @@ in
             (config.lib.nixGL.wrap grim)
             (config.lib.nixGL.wrap slurp)
             (config.lib.nixGL.wrap swappy)
+            # screen recording
+            wf-recorder
             # polkit agent
             (config.lib.nixGL.wrap kdePackages.polkit-kde-agent-1)
             # notification
