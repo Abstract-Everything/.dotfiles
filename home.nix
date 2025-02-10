@@ -249,6 +249,9 @@ in
       );
 
       sessionVariables = {
+        LANG = "en_GB.UTF-8";
+        LC_ALL = "en_GB.UTF-8";
+
         VISUAL = mkIf cfg.neovim.enable "nvim";
         PAGER = mkIf cfg.neovim.enable "nvim -R";
         MANPAGER = mkIf cfg.neovim.enable "nvim -c :Man!";
