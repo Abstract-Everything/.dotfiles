@@ -222,6 +222,8 @@ in
             libnotify
             # clipboard
             wl-clipboard
+            # screen power on/ off
+            swayidle
 
             (shellScriptFromLocalBin "wm-exit")
             (shellScriptFromLocalBin "wm-screenshot-select-area")
@@ -459,6 +461,9 @@ in
         };
       };
 
+      swaylock = mkIf cfg.gui.desktopEnvironment.enable {
+        enable = true;
+      };
     };
 
     services = {
