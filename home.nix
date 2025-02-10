@@ -121,7 +121,7 @@ in
 
   config = mkIf cfg.enable {
     home = {
-      packages = with pkgs;
+      packages = (with pkgs;
         optionals cfg.shell-tools [
           # modern grep
           ripgrep
@@ -245,7 +245,8 @@ in
           ++ optionals cfg.gui."2d" [
             (config.lib.nixGL.wrap krita)
           ]
-        );
+        )
+      );
 
       sessionVariables = {
         VISUAL = mkIf cfg.neovim.enable "nvim";
