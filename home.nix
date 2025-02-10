@@ -44,7 +44,8 @@ let
       };
     }
     // mkToolsOption "3d"
-    // mkToolsOption "2d";
+    // mkToolsOption "2d"
+    // mkToolsOption "social";
   });
 
   shellScriptFromLocalBin = file: (
@@ -244,6 +245,10 @@ in
           ]
           ++ optionals cfg.gui."2d" [
             (config.lib.nixGL.wrap krita)
+          ]
+          ++ optionals cfg.gui.social [
+            (config.lib.nixGL.wrap signal-desktop)
+            (config.lib.nixGL.wrap discord)
           ]
         )
       );
