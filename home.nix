@@ -560,6 +560,12 @@ in
                   class = "discord";
                 };
               }
+              {
+                command = "floating off";
+                criteria = {
+                  title = "Blender File View";
+                };
+              }
             ];
           };
 
