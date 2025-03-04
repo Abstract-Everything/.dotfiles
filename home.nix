@@ -705,6 +705,7 @@ in
             };
 
           assigns = {
+            "2" = [{ app_id = "^looking-glass-client$"; }];
             "8" = [{ class = "^discord$"; }];
             "9" = [{ class = "^Spotify$"; }];
           };
