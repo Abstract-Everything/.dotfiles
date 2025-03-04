@@ -157,6 +157,7 @@ in
             shfmt
           ]
           ++ optionals cfg.neovim.cmake [
+            cmake
             cmake-lint
             neocmakelsp
           ]
