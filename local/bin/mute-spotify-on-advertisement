@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -eu
+
+debug=0
+
+function debug_print {
+	message=$1
+	if [[ $debug = 1 ]]; then
+		echo "$message"
+	fi
+}
+
+function mute-spotify-on-advertisement {
+	while read -r sway_message; do
+		debug_print "Received sway message: $sway_message"
+
+		spotify_title=$(echo "$sway_message" | jq '. | select(.change == "title") | select(.container.window_properties.class == "Spotify") | .container.name')
+		if [[ -z $spotify_title ]]; then
+			debug_print "Message is not related to spotify"
+			continue
+		fi
+
+		is_advertisement=0
+		if [[ "$spotify_title" == "\"Advertisement\"" ]]; then
+			is_advertisement=1
+		fi
+		debug_print "Received spotify title: $spotify_title; is Advertisement: $is_advertisement"
+
+		spotify_sink=$(pactl --format=json list sink-inputs | jq '.[] | select(.properties."node.name" == "spotify") | .index')
+		debug_print "Spotify sink index: $spotify_sink"
+		pactl set-sink-input-mute "$spotify_sink" "$is_advertisement"
+	done
+}
+
+swaymsg -t subscribe -m '["window"]' | mute-spotify-on-advertisement

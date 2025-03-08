@@ -232,6 +232,8 @@ in
             (shellScriptFromLocalBin "wm-screenshot-select-area")
             (shellScriptFromLocalBin "wm-screenshot-window")
             (shellScriptFromLocalBin "single-output-per-monitor")
+            (shellScriptFromLocalBin "mute-spotify-on-advertisement")
+
           ]
           ++ [
             # browser
@@ -599,10 +601,13 @@ in
             };
           };
 
-
           startup = [
             {
               command = "single-output-per-monitor";
+              always = true;
+            }
+            {
+              command = "mute-spotify-on-advertisement";
               always = true;
             }
             {
