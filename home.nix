@@ -710,9 +710,16 @@ in
             };
 
           assigns = {
-            "2" = [{ app_id = "^looking-glass-client$"; }];
-            "8" = [{ class = "^discord$"; }];
-            "9" = [{ class = "^Spotify$"; }];
+            "2" = [
+              { app_id = "^looking-glass-client$"; }
+            ];
+            "8" = [
+              { class = "^discord$"; }
+              { class = "^Signal$"; }
+            ];
+            "9" = [
+              { class = "^Spotify$"; }
+            ];
           };
 
           bars = [ ];
