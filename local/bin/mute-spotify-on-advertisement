@@ -28,6 +28,11 @@ function mute-spotify-on-advertisement {
 		debug_print "Received spotify title: $spotify_title; is Advertisement: $is_advertisement"
 
 		spotify_sink=$(pactl --format=json list sink-inputs | jq '.[] | select(.properties."node.name" == "spotify") | .index')
+		if [[ -z $spotify_sink ]]; then
+			debug_print "Unable to find spotify sink, this can happen when just starting up"
+			continue
+		fi
+
 		debug_print "Spotify sink index: $spotify_sink"
 		pactl set-sink-input-mute "$spotify_sink" "$is_advertisement"
 	done
