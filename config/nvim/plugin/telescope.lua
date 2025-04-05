@@ -7,14 +7,15 @@ vim.keymap.set("n", "<leader>:", "<cmd>Telescope command_history<cr>")
 
 --#region Search
 --#region Text
-vim.keymap.set("n", "<leader>/", Config.telescope "live_grep")
+vim.keymap.set("n", "<leader>/", Config.telescope "live_grep", {})
 vim.keymap.set(
   "n",
   "<leader>?",
-  Config.telescope("live_grep", { "n", cwd = Config.root { only_git_root = true } })
+  Config.telescope("live_grep", { "n", cwd = Config.root { only_git_root = true } }),
+  {}
 )
-vim.keymap.set("n", "<leader>sw", Config.telescope("grep_string", { word_match = "-w" }))
-vim.keymap.set("v", "<leader>sw", Config.telescope "grep_string")
+vim.keymap.set("n", "<leader>sw", Config.telescope("grep_string", { word_match = "-w" }), {})
+vim.keymap.set("v", "<leader>sw", Config.telescope "grep_string", {})
 --#endregion
 
 --#region Diagnostics
@@ -40,13 +41,14 @@ vim.keymap.set("n", "<leader>sQ", "<cmd>Telescope quickfixhistory<cr>")
 --#endregion
 
 --#region Files
-vim.keymap.set("n", "<leader>ff", Config.telescope "files")
+vim.keymap.set("n", "<leader>ff", Config.telescope "files", {})
 vim.keymap.set(
   "n",
   "<leader>fF",
-  Config.telescope("files", { no_ignore = true, no_ignore_parent = true })
+  Config.telescope("files", { no_ignore = true, no_ignore_parent = true }),
+  {}
 )
-vim.keymap.set("n", "<leader>fg", Config.telescope "git_files")
+vim.keymap.set("n", "<leader>fg", Config.telescope "git_files", {})
 vim.keymap.set("n", "<leader>fc", "<cmd>Configuration<cr>")
 --#endregion
 

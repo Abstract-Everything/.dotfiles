@@ -73,7 +73,7 @@ local function update_venv()
   local client = vim.lsp.get_clients({ name = "pyright" })[1]
   if client then
     client.settings.python.pythonPath = python_path
-    client.notify "workspace/didChangeConfiguration"
+    client.notify("workspace/didChangeConfiguration", {})
   else
     vim.notify "pyright is not active"
   end

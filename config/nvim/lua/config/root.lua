@@ -7,7 +7,7 @@ local LazyUtil = require "lazy.core.util"
 ---@field lsp_client_ids? number[]
 
 ---@class config.Root
----@overload fun(): string
+---@overload fun(config.root.Options?): string
 local M = setmetatable({}, {
   ---@param m config.Root
   ---@param options? config.root.Options

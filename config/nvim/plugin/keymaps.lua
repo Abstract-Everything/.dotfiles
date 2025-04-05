@@ -45,10 +45,18 @@ vim.keymap.set("n", "<leader>e", function()
   vim.diagnostic.open_float()
 end, Config.keymaps.silent_noremap)
 vim.keymap.set("n", "]d", function()
-  vim.diagnostic.goto_next()
+  vim.diagnostic.jump {
+    count = 1,
+    severity = vim.diagnostic.severity.ERROR,
+    float = true,
+  }
 end, Config.keymaps.silent_noremap)
 vim.keymap.set("n", "[d", function()
-  vim.diagnostic.goto_prev()
+  vim.diagnostic.jump {
+    count = -1,
+    severity = vim.diagnostic.severity.ERROR,
+    float = true,
+  }
 end, Config.keymaps.silent_noremap)
 
 vim.keymap.set("n", "<C-n>", ":cnext<return>zv", Config.keymaps.silent_noremap)
