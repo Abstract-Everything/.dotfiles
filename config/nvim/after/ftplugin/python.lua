@@ -23,7 +23,14 @@ local function find_venv(buffer_path)
   })
 
   if #venv_dir > 0 then
+    -- vim.notify("Using venv from parent directory" .. buffer_path, vim.log.levels.DEBUG)
     return venv_dir[1]
+  end
+
+  local virtual_env = vim.env.VIRTUAL_ENV
+  if vim.uv.fs_stat(virtual_env) then
+    -- vim.notify("Using venv from previously set VIRTUAL_ENV" .. buffer_path, vim.log.levels.DEBUG)
+    return virtual_env
   end
 
   return nil
