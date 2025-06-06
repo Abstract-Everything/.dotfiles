@@ -371,21 +371,23 @@ in
         autosuggestion.enable = true;
         autocd = true;
         enableCompletion = true;
-        initExtraBeforeCompInit = ''
-          HYPHEN_INSENSITIVE="true"
-          COMPLETION_WAITING_DOTS="true"
-        '';
-        initExtra = ''
-          bindkey '^ ' autosuggest-accept
+        initContent = lib.mkMerge [
+          (lib.mkOrder 500 ''
+            HYPHEN_INSENSITIVE="true"
+            COMPLETION_WAITING_DOTS="true"
+          '')
+          (lib.mkOrder 1000 ''
+            bindkey '^ ' autosuggest-accept
 
-          # Allows fuzzy matching of completions in the presence of typos
-          zstyle ':completion:*' completer _complete _match _approximate
-          zstyle ':completion:*:match:*' original only
-          zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+            # Allows fuzzy matching of completions in the presence of typos
+            zstyle ':completion:*' completer _complete _match _approximate
+            zstyle ':completion:*:match:*' original only
+            zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
 
-          # Do not suggest the ./ and ../$(current-directory)
-          zstyle ':completion:*:cd:*' ignore-parents parent pwd
-        '';
+            # Do not suggest the ./ and ../$(current-directory)
+            zstyle ':completion:*:cd:*' ignore-parents parent pwd
+          '')
+        ];
         shellAliases = {
           g = "git";
           updatedb = "updatedb --require-visibility 0 -o $HOME/.cache/locate.db";
