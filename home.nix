@@ -474,6 +474,12 @@ in
     };
 
     services = {
+      home-manager.autoExpire = {
+        enable = true;
+        frequency = "monthly";
+        store.cleanup = true;
+      };
+
       ssh-agent = mkIf cfg.ssh {
         enable = true;
       };
