@@ -28,7 +28,7 @@ local function find_venv(buffer_path)
   end
 
   local virtual_env = vim.env.VIRTUAL_ENV
-  if vim.uv.fs_stat(virtual_env) then
+  if virtual_env and vim.uv.fs_stat(virtual_env) then
     -- vim.notify("Using venv from previously set VIRTUAL_ENV" .. buffer_path, vim.log.levels.DEBUG)
     return virtual_env
   end
