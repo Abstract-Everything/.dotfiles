@@ -336,7 +336,7 @@ in
           los = "log origin..HEAD --oneline";
           ls = "log --oneline";
           mc = "merge --continue";
-          pcb = "push -u origin HEAD";
+          pcb = "push --set-upstream origin HEAD";
           r = "reset";
           rb = "rebase";
           rbb = "!sh git-rebase-select-branch";
