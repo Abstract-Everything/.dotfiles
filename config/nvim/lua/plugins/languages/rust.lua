@@ -6,6 +6,11 @@ return {
     lazy = false,
     on_attach = function(client, buffer) end,
     opts = {
+      tools = {
+        float_win_config = {
+          border = "rounded",
+        },
+      },
       -- TODO: Setting these using vim.lsp.config does not seem to work
       default_settings = {
         ["rust-analyzer"] = {
