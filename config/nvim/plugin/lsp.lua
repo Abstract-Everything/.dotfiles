@@ -41,8 +41,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
       require("telescope.builtin").lsp_references()
     end)
 
-    vim.keymap.set("n", "K", function() vim.lsp.buf.hover({ border = _border, }) end)
-    vim.keymap.set({ "n", "i" }, "<C-k>", function() vim.lsp.buf.signature_help({ border = _border, }) end)
+    vim.keymap.set("n", "K", function()
+      vim.lsp.buf.hover { border = _border }
+    end)
+    vim.keymap.set({ "n", "i" }, "<C-k>", function()
+      vim.lsp.buf.signature_help { border = _border }
+    end)
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
     vim.keymap.set("n", "<leader>f", Config.formatting.format_file)
