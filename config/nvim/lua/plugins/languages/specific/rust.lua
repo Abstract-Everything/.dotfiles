@@ -19,7 +19,6 @@ return {
     lazy = false,
     opts = {
       server = {
-        -- on_attach = function(_, buffer) end,
         default_settings = {
           ["rust-analyzer"] = {
             cargo = {
