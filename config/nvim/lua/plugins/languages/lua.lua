@@ -5,7 +5,6 @@ return {
       local nls = require "null-ls"
       options.sources = vim.list_extend(options.sources or {}, {
         nls.builtins.formatting.stylua,
-        nls.builtins.diagnostics.selene,
       })
     end,
   },
