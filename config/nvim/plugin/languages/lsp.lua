@@ -25,9 +25,18 @@ vim.diagnostic.config { float = { border = _border } }
 -- Autoformat
 local augroup_name = "LspFormatting"
 local augroup = vim.api.nvim_create_augroup(augroup_name, { clear = true })
+local autoformat_enabled = true
+
+vim.api.nvim_create_user_command("ToggleAutoFormat", function()
+  autoformat_enabled = not autoformat_enabled
+end, {})
 
 vim.api.nvim_create_user_command(augroup_name, function()
-  Config.formatting.format_file(false)
+  if autoformat_enabled then
+    Config.formatting.format_file(false)
+  else
+    vim.notify("Autoformatting is disabled", vim.log.levels.TRACE)
+  end
 end, {})
 
 vim.api.nvim_clear_autocmds { group = augroup }
