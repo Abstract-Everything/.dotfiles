@@ -1,14 +1,6 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "p00f/clangd_extensions.nvim",
-    },
-    opts = {
-      servers = {
-        clangd = {},
-      },
-    },
+    "p00f/clangd_extensions.nvim",
   },
   {
     "hrsh7th/nvim-cmp",

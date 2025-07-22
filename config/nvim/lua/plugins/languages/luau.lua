@@ -10,22 +10,13 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
+    "lopi-py/luau-lsp.nvim",
     opts = {
       servers = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              runtime = {
-                version = "LuaJIT",
-              },
-              workspace = {
-                checkThirdParty = false,
-              },
-              telemetry = {
-                enable = false,
-              },
-            },
+        luau_lsp = {
+          fflags = {
+            -- enable_by_default = true,
+            -- enable_new_solver = true,
           },
         },
       },

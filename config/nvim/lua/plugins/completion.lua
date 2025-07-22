@@ -2,6 +2,9 @@ local Config = require "config"
 
 return {
   {
+    "b0o/SchemaStore.nvim",
+  },
+  {
     "L3MON4D3/LuaSnip",
     build = "make install_jsregexp",
     dependencies = {

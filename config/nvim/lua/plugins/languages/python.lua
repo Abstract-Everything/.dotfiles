@@ -9,15 +9,6 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        pyright = {},
-        ruff = {},
-      },
-    },
-  },
-  {
     "mfussenegger/nvim-dap-python",
     dependencies = {
       "mfussenegger/nvim-dap",

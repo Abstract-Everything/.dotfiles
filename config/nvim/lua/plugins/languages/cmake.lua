@@ -4,16 +4,8 @@ return {
     opts = function(_, options)
       local nls = require "null-ls"
       options.sources = vim.list_extend(options.sources or {}, {
-        nls.builtins.formatting.prettierd,
+        nls.builtins.diagnostics.cmake_lint,
       })
     end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        ts_ls = {},
-      },
-    },
   },
 }

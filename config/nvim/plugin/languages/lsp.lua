@@ -1,5 +1,22 @@
 local Config = require "config"
 
+-- Client config
+vim.lsp.config("*", {
+  capabilities = {
+    textDocument = {
+      foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      },
+    },
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    },
+  },
+})
+
 -- UI
 local _border = "rounded"
 
