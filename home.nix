@@ -437,6 +437,7 @@ in
       neovim = mkIf cfg.neovim.enable {
         enable = true;
         defaultEditor = true;
+        withNodeJs = true;
       };
 
       # gui
