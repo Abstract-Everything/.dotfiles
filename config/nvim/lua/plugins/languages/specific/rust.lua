@@ -27,11 +27,7 @@ return {
               loadOutDirsFromCheck = true,
               runBuildScripts = true,
             },
-            checkOnSave = {
-              allFeatures = true,
-              command = "clippy",
-              extraArgs = { "--no-deps" },
-            },
+            checkOnSave = true,
             procMacro = {
               enable = true,
             },
