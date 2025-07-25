@@ -43,6 +43,7 @@ let
         };
       };
     }
+    // mkToolsOption "useUsrSwayInstallation"
     // mkToolsOption "3d"
     // mkToolsOption "2d"
     // mkToolsOption "social";
@@ -82,6 +83,9 @@ let
 
       switchMode = mode: ''mode ${mode}; exec notify-send "Activated sway mode" "$(echo '${modeToString mode}' | jq)"'';
     };
+
+  swayCommand = if cfg.gui.useUsrSwayInstallation then "/usr/bin/sway" else "sway";
+  loginCommand = if cfg.gui.desktopEnvironment.enable then "${swayCommand} -d" else "";
 in
 {
   options = {
@@ -386,6 +390,10 @@ in
 
           # Do not suggest the ./ and ../$(current-directory)
           zstyle ':completion:*:cd:*' ignore-parents parent pwd
+        '';
+        loginExtra = ''
+          # HACK: Need to use Archlinux version of sway instead of nix due to some issues
+          ${loginCommand}
         '';
         shellAliases = {
           g = "git";
