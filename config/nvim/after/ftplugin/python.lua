@@ -90,5 +90,5 @@ vim.api.nvim_create_autocmd({ "BufEnter", "LspAttach" }, {
   callback = update_venv,
 })
 
-vim.keymap.set("n", "<leader>dT", require("dap-python").test_method, Config.keymaps.silent_noremap)
-vim.keymap.set("n", "<leader>dC", require("dap-python").test_class, Config.keymaps.silent_noremap)
+vim.keymap.set("n", "<leader>dT", require("dap-python").test_method, Config.keymaps.buffer)
+vim.keymap.set("n", "<leader>dC", require("dap-python").test_class, Config.keymaps.buffer)

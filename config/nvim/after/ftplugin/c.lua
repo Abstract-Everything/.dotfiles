@@ -1,11 +1,6 @@
 local Config = require "config"
 
-vim.keymap.set(
-  "n",
-  "<leader>ls",
-  "<cmd>ClangdSwitchSourceHeader<cr>",
-  Config.keymaps.silent_noremap
-)
+vim.keymap.set("n", "<leader>ls", "<cmd>ClangdSwitchSourceHeader<cr>", Config.keymaps.buffer)
 
 local dap = require "dap"
 if not dap.adapters["codelldb"] then

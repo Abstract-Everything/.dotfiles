@@ -2,6 +2,7 @@
 local M = setmetatable({}, {})
 
 M.expr = { expr = true }
-M.silent_noremap = { silent = true, noremap = true }
+M.silent = { silent = true }
+M.buffer = { buffer = true }
 
 return M

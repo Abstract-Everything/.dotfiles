@@ -43,33 +43,35 @@ vim.keymap.set("o", "N", "'nN'[v:searchforward]", Config.keymaps.expr)
 
 vim.keymap.set("n", "<leader>e", function()
   vim.diagnostic.open_float()
-end, Config.keymaps.silent_noremap)
+end, Config.keymaps.silent)
+
 vim.keymap.set("n", "]d", function()
   vim.diagnostic.jump {
     count = 1,
     severity = vim.diagnostic.severity.ERROR,
     float = true,
   }
-end, Config.keymaps.silent_noremap)
+end, Config.keymaps.silent)
+
 vim.keymap.set("n", "[d", function()
   vim.diagnostic.jump {
     count = -1,
     severity = vim.diagnostic.severity.ERROR,
     float = true,
   }
-end, Config.keymaps.silent_noremap)
+end, Config.keymaps.silent)
 
-vim.keymap.set("n", "<C-n>", ":cnext<return>zv", Config.keymaps.silent_noremap)
-vim.keymap.set("n", "<C-p>", ":cprev<return>zv", Config.keymaps.silent_noremap)
+vim.keymap.set("n", "<C-n>", ":cnext<return>zv", Config.keymaps.silent)
+vim.keymap.set("n", "<C-p>", ":cprev<return>zv", Config.keymaps.silent)
 
-vim.keymap.set({ "n", "x" }, "<leader>y", [["+y]], Config.keymaps.silent_noremap)
-vim.keymap.set({ "n", "x" }, "<leader>Y", [["*y]], Config.keymaps.silent_noremap)
-vim.keymap.set({ "n", "x" }, "<leader>p", [["+p]], Config.keymaps.silent_noremap)
-vim.keymap.set({ "n", "x" }, "<leader>P", [["*p]], Config.keymaps.silent_noremap)
-vim.keymap.set({ "n", "x" }, "<leader>d", [["_d]], Config.keymaps.silent_noremap)
+vim.keymap.set({ "n", "x" }, "<leader>y", [["+y]], Config.keymaps.silent)
+vim.keymap.set({ "n", "x" }, "<leader>Y", [["*y]], Config.keymaps.silent)
+vim.keymap.set({ "n", "x" }, "<leader>p", [["+p]], Config.keymaps.silent)
+vim.keymap.set({ "n", "x" }, "<leader>P", [["*p]], Config.keymaps.silent)
+vim.keymap.set({ "n", "x" }, "<leader>d", [["_d]], Config.keymaps.silent)
 vim.keymap.set("x", "<leader>d", [["_dP]])
 
-vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-N>", Config.keymaps.silent_noremap)
+vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-N>", Config.keymaps.silent)
 
 vim.api.nvim_create_user_command("Configuration", function()
   local command =
@@ -77,7 +79,7 @@ vim.api.nvim_create_user_command("Configuration", function()
   command()
 end, { nargs = 0 })
 
-vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>", Config.keymaps.silent_noremap)
+vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>", Config.keymaps.silent)
 
 vim.api.nvim_create_user_command("BufferRootPath", function()
   Config.root.info()

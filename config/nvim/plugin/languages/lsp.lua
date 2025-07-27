@@ -53,28 +53,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function()
     vim.keymap.set("n", "gd", function()
       require("telescope.builtin").lsp_definitions { reuse_win = true }
-    end, Config.keymaps.silent_noremap)
+    end, Config.keymaps.buffer)
 
     vim.keymap.set("n", "gD", function()
       require("telescope.builtin").lsp_type_definitions { reuse_win = true }
-    end, Config.keymaps.silent_noremap)
+    end, Config.keymaps.buffer)
 
     vim.keymap.set("n", "gi", function()
       require("telescope.builtin").lsp_implementations { reuse_win = true }
-    end)
+    end, Config.keymaps.buffer)
 
-    vim.keymap.set("n", "gr", function()
-      require("telescope.builtin").lsp_references()
-    end)
+    vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, Config.keymaps.buffer)
 
     vim.keymap.set("n", "K", function()
       vim.lsp.buf.hover { border = _border }
-    end)
+    end, Config.keymaps.buffer)
+
     vim.keymap.set({ "n", "i" }, "<C-k>", function()
       vim.lsp.buf.signature_help { border = _border }
-    end)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
-    vim.keymap.set("n", "<leader>f", Config.formatting.format_file)
+    end, Config.keymaps.buffer)
+
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, Config.keymaps.buffer)
+
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, Config.keymaps.buffer)
+
+    vim.keymap.set("n", "<leader>f", Config.formatting.format_file, Config.keymaps.buffer)
   end,
 })
