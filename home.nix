@@ -43,7 +43,6 @@ let
         };
       };
     }
-    // mkToolsOption "useUsrSwayInstallation"
     // mkToolsOption "3d"
     // mkToolsOption "2d"
     // mkToolsOption "social";
@@ -83,9 +82,6 @@ let
 
       switchMode = mode: ''mode ${mode}; exec notify-send "Activated sway mode" "$(echo '${modeToString mode}' | jq)"'';
     };
-
-  swayCommand = if cfg.gui.useUsrSwayInstallation then "/usr/bin/sway" else "sway";
-  loginCommand = if cfg.gui.desktopEnvironment.enable then "${swayCommand} -d" else "";
 in
 {
   options = {
@@ -394,7 +390,7 @@ in
         loginExtra = ''
           # HACK: Need to use Archlinux version of sway instead of nix due to some issues
           if [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ] ; then
-                exec ${loginCommand}
+                exec sway -d
           fi
         '';
         shellAliases = {
@@ -533,16 +529,8 @@ in
 
     xdg.portal = mkIf cfg.gui.desktopEnvironment.enable {
       enable = true;
-      config = {
-        common = {
-          default = [
-            "wlr"
-            "gtk"
-          ];
-        };
-      };
+      config.sway.default = [ "gtk" "wlr" ];
       extraPortals = [
-        pkgs.xdg-desktop-portal
         pkgs.xdg-desktop-portal-wlr
         pkgs.xdg-desktop-portal-gtk
       ];
