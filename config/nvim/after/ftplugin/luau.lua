@@ -9,7 +9,6 @@ local rojo_project_file = vim.fs.find("default.project.json", {
 local project_root = vim.fs.dirname(rojo_project_file)
 
 if not rojo_project_file or not project_root then
-  vim.notify("rojo project file not found: " .. buffer_path)
   return
 end
 
