@@ -3,7 +3,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
   },
-  "nvim-treesitter/nvim-treesitter-context",
   "nvim-treesitter/playground",
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
@@ -75,5 +74,12 @@ return {
     config = function(_, options)
       require("nvim-treesitter.configs").setup(options)
     end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    opts = {
+      enable = true,
+    },
   },
 }
