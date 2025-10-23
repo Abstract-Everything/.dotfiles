@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-outputs=$(swaymsg -t get_outputs)
-filtered=$(echo "${outputs}" | jq 'group_by(.model)[] | .[1:] | .[].name')
-echo "${filtered}" | xargs -I{} sh -c "notify-send \"disabling output '{}'\"; swaymsg output \"{}\" disable"
+outputs=$(swaymsg -t get_outputs | jq '.[] | select(.model == "U28E590") | .name' | wc -l)
+if [[ $outputs -gt 1 ]]; then
+	notify-send "disabling output 'DP-4'"
+	swaymsg output "DP-4" disable
+fi
