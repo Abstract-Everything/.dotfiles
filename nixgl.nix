@@ -1,8 +1,11 @@
 { nixgl, ... }:
 
 {
-  nixGL.packages = nixgl.packages;
-  nixGL.defaultWrapper = "mesa";
-  nixGL.offloadWrapper = "mesa";
-  nixGL.installScripts = [ "mesa" ];
+  nixGL = {
+    vulkan.enable = true;
+    packages = nixgl.packages;
+    defaultWrapper = "mesa";
+    offloadWrapper = "mesa";
+    installScripts = [ "mesa" ];
+  };
 }
