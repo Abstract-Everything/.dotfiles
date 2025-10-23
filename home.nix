@@ -310,6 +310,7 @@ in
         enable = true;
         userEmail = cfg.email;
         userName = "Jonathan Camilleri";
+        ignores = [ ".direnv" ];
         aliases = {
           a = "add";
           ap = "add --patch";
