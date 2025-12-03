@@ -132,6 +132,7 @@ in
           # help about various commands and linux concepts
           man
           man-pages
+          man-pages-posix
           # locate directories and files around the file system
           plocate
           # view images in terminal, good quality if kitty graphics protocol
