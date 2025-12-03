@@ -722,10 +722,10 @@ in
             ];
             "8" = [
               { class = "^discord$"; }
-              { class = "^Signal$"; }
+              { app_id = "^signal$"; }
             ];
             "9" = [
-              { class = "^Spotify$"; }
+              { app_id = "^spotify$"; }
             ];
           };
 
