@@ -308,61 +308,58 @@ in
 
       git = mkIf cfg.shell-tools {
         enable = true;
-        userEmail = cfg.email;
-        userName = "Jonathan Camilleri";
+        lfs.enable = true;
         ignores = [ ".direnv" ];
-        aliases = {
-          a = "add";
-          ap = "add --patch";
-          b = "branch";
-          c = "commit";
-          ca = "commit --amend";
-          capp = "commit --amend --no-edit";
-          cb = "!sh git-change-branch";
-          cf = "!sh git-commit-fuzzy-fixup";
-          clean-branches = "!sh git-clean-branches";
-          co = "checkout";
-          com = "!sh git-fetch-and-checkout-head";
-          cop = "checkout --patch";
-          cp = "cherry-pick";
-          cpc = "cherry-pick --continue";
-          d = "diff";
-          da = "diff --staged";
-          das = "diff --staged --stat";
-          db = "diff origin...HEAD";
-          dc = "show";
-          ds = "diff --stat";
-          dst = "diff stash@{0}";
-          l = "log";
-          lo = "log origin..HEAD";
-          los = "log origin..HEAD --oneline";
-          ls = "log --oneline";
-          mc = "merge --continue";
-          pcb = "push --set-upstream origin HEAD";
-          r = "reset";
-          rb = "rebase";
-          rbb = "!sh git-rebase-select-branch";
-          rbc = "rebase --continue";
-          rbm = "rebase --interactive origin/HEAD";
-          rbs = "!sh git-rebase-squash";
-          rc = "reset --soft HEAD~";
-          rp = "reset --patch";
-          s = "status";
-          st = "stash";
-          stc = "stash show --patch";
-          std = "stash drop";
-          stl = "stash list";
-        };
-        extraConfig = {
-          color = {
-            pager = "no";
+        settings = {
+          user = {
+            email = cfg.email;
+            name = "Jonathan Camilleri";
           };
-          rebase = {
-            autostash = true;
+          alias = {
+            a = "add";
+            ap = "add --patch";
+            b = "branch";
+            c = "commit";
+            ca = "commit --amend";
+            capp = "commit --amend --no-edit";
+            cb = "!sh git-change-branch";
+            cf = "!sh git-commit-fuzzy-fixup";
+            clean-branches = "!sh git-clean-branches";
+            co = "checkout";
+            com = "!sh git-fetch-and-checkout-head";
+            cop = "checkout --patch";
+            cp = "cherry-pick";
+            cpc = "cherry-pick --continue";
+            d = "diff";
+            da = "diff --staged";
+            das = "diff --staged --stat";
+            db = "diff origin...HEAD";
+            dc = "show";
+            ds = "diff --stat";
+            dst = "diff stash@{0}";
+            l = "log";
+            lo = "log origin..HEAD";
+            los = "log origin..HEAD --oneline";
+            ls = "log --oneline";
+            mc = "merge --continue";
+            pcb = "push --set-upstream origin HEAD";
+            r = "reset";
+            rb = "rebase";
+            rbb = "!sh git-rebase-select-branch";
+            rbc = "rebase --continue";
+            rbm = "rebase --interactive origin/HEAD";
+            rbs = "!sh git-rebase-squash";
+            rc = "reset --soft HEAD~";
+            rp = "reset --patch";
+            s = "status";
+            st = "stash";
+            stc = "stash show --patch";
+            std = "stash drop";
+            stl = "stash list";
           };
-          advice = {
-            detatchedHead = false;
-          };
+          color.pager = "no";
+          rebase.autoStash = true;
+          advice.detatchedHead = false;
         };
       };
 
@@ -424,16 +421,18 @@ in
 
       ssh = mkIf cfg.ssh {
         enable = true;
-        addKeysToAgent = "yes";
+        enableDefaultConfig = false;
         matchBlocks = {
           "github.com" =
             {
               identityFile = "~/.ssh/github";
               identitiesOnly = true;
+              addKeysToAgent = "yes";
             };
           "bitbucket.org" = {
             identityFile = "~/.ssh/bitbucket";
             identitiesOnly = true;
+            addKeysToAgent = "yes";
           };
         };
       };
