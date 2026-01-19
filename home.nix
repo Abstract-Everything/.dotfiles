@@ -468,8 +468,10 @@ in
       zathura = mkIf cfg.gui.enable {
         enable = true;
         options = {
+          database = "sqlite";
           recolor = true;
           recolor-keephue = true;
+          recolor-reverse-video = true;
         };
       };
 
