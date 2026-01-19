@@ -45,3 +45,9 @@ end)
 vim.keymap.set("n", "<M-k>", function()
   dap.step_out()
 end)
+
+dap.adapters.lldb = {
+  type = "executable",
+  command = "lldb-dap",
+  name = "lldb",
+}

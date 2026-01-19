@@ -163,8 +163,6 @@ in
             neocmakelsp
           ]
           ++ optionals cfg.neovim.c_cpp [ clang-tools ]
-          ++ optionals (cfg.neovim.c_cpp || cfg.neovim.rust || cfg.neovim.zig)
-            [ vscode-extensions.vadimcn.vscode-lldb ]
           ++ optionals cfg.neovim.rust [
             rust-analyzer
           ]
