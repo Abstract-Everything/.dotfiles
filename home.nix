@@ -248,7 +248,7 @@ in
             nerd-fonts.noto
           ]
           ++ optionals cfg.gui."3d" [
-            (config.lib.nixGL.wrap blender-hip)
+            (config.lib.nixGL.wrap blender)
           ]
           ++ optionals cfg.gui."2d" [
             (config.lib.nixGL.wrap krita)
