@@ -17,11 +17,6 @@ vim.lsp.config("*", {
   },
 })
 
--- UI
-local _border = "rounded"
-
-vim.diagnostic.config { float = { border = _border } }
-
 -- Autoformat
 local augroup_name = "LspFormatting"
 local augroup = vim.api.nvim_create_augroup(augroup_name, { clear = true })
@@ -65,13 +60,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, Config.keymaps.buffer)
 
-    vim.keymap.set("n", "K", function()
-      vim.lsp.buf.hover { border = _border }
-    end, Config.keymaps.buffer)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, Config.keymaps.buffer)
 
-    vim.keymap.set({ "n", "i" }, "<C-k>", function()
-      vim.lsp.buf.signature_help { border = _border }
-    end, Config.keymaps.buffer)
+    vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, Config.keymaps.buffer)
 
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, Config.keymaps.buffer)
 

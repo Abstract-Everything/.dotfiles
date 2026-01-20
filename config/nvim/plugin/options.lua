@@ -36,6 +36,7 @@ vim.o.breakindent = true
 vim.o.colorcolumn = "81"
 vim.o.cursorline = true
 vim.o.updatetime = 250
+vim.o.winborder = "rounded"
 vim.opt.wildmode = { "longest", "full" }
 vim.opt.completeopt = { "menuone", "noselect", "noinsert" }
 vim.opt.diffopt =
