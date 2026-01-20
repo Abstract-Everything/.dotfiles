@@ -45,7 +45,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp_attach", { clear = true }),
-  callback = function()
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
     vim.keymap.set("n", "gd", function()
       require("telescope.builtin").lsp_definitions { reuse_win = true }
     end, Config.keymaps.buffer)
@@ -60,9 +62,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, Config.keymaps.buffer)
 
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, Config.keymaps.buffer)
+    if client ~= nil and client.name == "rust-analyzer" then
+      vim.keymap.set("n", "K", function()
+        vim.cmd.RustLsp { "hover", "actions" }
+      end, Config.keymaps.buffer)
 
-    vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, Config.keymaps.buffer)
+      vim.keymap.set("n", "<leader>ca", function()
+        vim.cmd.RustLsp "codeAction"
+      end, Config.keymaps.buffer)
+    else
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, Config.keymaps.buffer)
+
+      vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, Config.keymaps.buffer)
+    end
 
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, Config.keymaps.buffer)
 
