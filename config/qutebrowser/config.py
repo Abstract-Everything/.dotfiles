@@ -41,6 +41,8 @@ config.set("content.prefers_reduced_motion", True)
 config.bind(",m", "spawn --detach mpv {url}")
 config.bind(",M", "hint links spawn --detach mpv {hint-url}")
 
+config.bind(",z", "hint links userscript zathura.sh")
+
 c.auto_save.session = True
 c.scrolling.smooth = True
 c.colors.webpage.preferred_color_scheme = "dark"
