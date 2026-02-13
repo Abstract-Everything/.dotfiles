@@ -4,7 +4,7 @@ current=$(git branch --show-current)
 others=$(
 	git branch --all --no-contains "${current}" |
 		grep -v -e '->' |
-		grep -v "$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}')"
+		grep -v "$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)"
 )
 commits=$(git rev-list HEAD --not ${others} --)
 echo "${commits}" | tail -n 1

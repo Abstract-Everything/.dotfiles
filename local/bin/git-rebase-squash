@@ -2,4 +2,8 @@
 
 commit=$(git first-branch-commit)
 [[ -z $commit ]] && echo 'Invalid commit returned, aborting.' && exit
-git rebase --interactive --autosquash "$commit~"
+if git show --oneline "${commit}~" &>/dev/null; then
+	git rebase --interactive --autosquash "$commit~"
+else
+	git rebase --interactive --autosquash --root
+fi

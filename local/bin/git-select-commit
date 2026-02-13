@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
 first=$(git-first-branch-commit)
-commit=$(git log "${first}~"..HEAD --oneline | fzf)
+[[ -z $first ]] && echo 'Invalid commit returned, aborting.' && exit
+if git show --oneline "${first}~" &>/dev/null; then
+	commit=$(git log "${first}~"..HEAD --oneline | fzf)
+else
+	commit=$(git log --root --oneline | fzf)
+fi
 echo "${commit}" | cut -d' ' -f1
