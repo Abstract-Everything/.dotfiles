@@ -24,8 +24,8 @@ vim.keymap.set("n", "<leader>sD", "<cmd>Telescope diagnostics<cr>")
 --#endregion
 
 --#region Lsp symbols
-vim.keymap.set("n", "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>")
-vim.keymap.set("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>")
+vim.keymap.set("n", "<leader>ss", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>")
+vim.keymap.set("n", "<leader>sS", "<cmd>Telescope lsp_workspace_symbols<cr>")
 --#endregion
 
 vim.keymap.set("n", "<leader>sk", "<cmd>Telescope keymaps<cr>")
