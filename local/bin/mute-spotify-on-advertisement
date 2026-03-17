@@ -25,6 +25,9 @@ function mute-spotify-on-advertisement {
 		if [[ "$spotify_title" == "\"Advertisement\"" ]]; then
 			is_advertisement=1
 		fi
+		if [[ "$spotify_title" == "\"Listen to music, ad-free\"" ]]; then
+			is_advertisement=1
+		fi
 		debug_print "Received spotify title: $spotify_title; is Advertisement: $is_advertisement"
 
 		spotify_sink=$(pactl --format=json list sink-inputs | jq '.[] | select(.properties."node.name" == "spotify") | .index')
