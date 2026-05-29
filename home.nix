@@ -706,7 +706,7 @@ in
             {
               "${launchMod}+Space" = "exec --no-startup-id wofi --show=drun --insensitive --allow-images";
               "${launchMod}+d" = "exec --no-startup-id discord";
-              "${launchMod}+s" = "exec --no-startup-id spotify-launcher";
+              "${launchMod}+s" = "exec --no-startup-id spotify-launcher --skip-update";
               "${launchMod}+q" = "exec --no-startup-id qutebrowser";
               "${launchMod}+i" = "exec --no-startup-id qutebrowser --temp-basedir";
               "${launchMod}+Return" = "exec --no-startup-id ${terminal}";
