@@ -185,10 +185,6 @@ in
             selene
             stylua
           ]
-          ++ optionals cfg.neovim.luau [
-            rojo
-            luau-lsp
-          ]
           ++ optionals cfg.neovim.python [
             mypy
             pyright
