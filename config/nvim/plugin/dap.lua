@@ -26,6 +26,14 @@ vim.keymap.set("n", "<M-b>", function()
   dap.toggle_breakpoint()
 end)
 
+vim.keymap.set("n", "<M-B>", function()
+  dap.set_breakpoint(vim.fn.input "Condition: ")
+end)
+
+vim.keymap.set("n", "<M-C-b>", function()
+  dap.set_breakpoint(nil, nil, vim.fn.input "Log point message: ")
+end)
+
 vim.keymap.set("n", "<M-h>", function()
   dap.run_to_cursor()
 end)
