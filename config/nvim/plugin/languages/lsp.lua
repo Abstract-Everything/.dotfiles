@@ -36,7 +36,7 @@ end, {})
 
 vim.api.nvim_clear_autocmds { group = augroup }
 
-vim.api.nvim_create_autocmd("BufWritePre", {
+vim.api.nvim_create_autocmd("InsertLeave", {
   group = augroup,
   command = "undojoin | " .. augroup_name,
 })
