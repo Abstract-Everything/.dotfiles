@@ -173,7 +173,7 @@ in
             gdtoolkit_4
           ]
           ++ optionals cfg.neovim.json [
-            nodePackages.vscode-json-languageserver
+            vscode-json-languageserver
           ]
           ++ optionals cfg.neovim.yaml [
             yaml-language-server
@@ -417,7 +417,7 @@ in
       ssh = mkIf cfg.ssh {
         enable = true;
         enableDefaultConfig = false;
-        matchBlocks = {
+        settings = {
           "github.com" =
             {
               identityFile = "~/.ssh/github";
@@ -436,6 +436,8 @@ in
       neovim = mkIf cfg.neovim.enable {
         enable = true;
         defaultEditor = true;
+        withPython3 = true;
+        withRuby = true;
         withNodeJs = true;
       };
 
