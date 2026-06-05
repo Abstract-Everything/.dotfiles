@@ -355,6 +355,11 @@ in
           color.pager = "no";
           rebase.autoStash = true;
           advice.detatchedHead = false;
+          safe = {
+            directory = [
+              "/usr/local/src/*"
+            ];
+          };
         };
       };
 
