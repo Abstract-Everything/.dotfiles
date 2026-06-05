@@ -5,10 +5,10 @@ with lib;
 let
   cfg = config.dotfiles;
 
-  mkToolsOption = language: {
-    ${language} = mkOption {
+  mkToolsOption = tool: {
+    ${tool} = mkOption {
       default = false;
-      description = "Include ${language} tools";
+      description = "Include ${tool} tools";
       type = types.bool;
     };
   };
@@ -28,7 +28,16 @@ let
       // mkToolsOption "luau"
       // mkToolsOption "python"
       // mkToolsOption "nix"
-      // mkToolsOption "javascript_typescript";
+      // mkToolsOption "javascript_typescript"
+    ;
+  });
+
+  shellToolsModule = types.submodule ({ config, ... }: {
+    options =
+      { enable = mkEnableOption "Add various cli tools"; }
+      // mkToolsOption "opencode"
+      // mkToolsOption "codex"
+    ;
   });
 
   guiModule = types.submodule ({ config, ... }: {
@@ -97,7 +106,7 @@ in
       shell-tools = mkOption {
         default = false;
         description = "Include tools mostly used from the terminal";
-        type = types.bool;
+        type = shellToolsModule;
       };
 
       ssh = mkOption {
@@ -123,34 +132,49 @@ in
   config = mkIf cfg.enable {
     home = {
       packages = (with pkgs;
-        optionals cfg.shell-tools [
-          # modern grep
-          ripgrep
-          # modern find
-          fd
-          unzip
-          # help about various commands and linux concepts
-          man
-          man-pages
-          man-pages-posix
-          # locate directories and files around the file system
-          plocate
-          # view images in terminal, good quality if kitty graphics protocol
-          # is supported by the terminal
-          viu
-          # json processing
-          jq
+        optionals cfg.shell-tools.enable
+          (
+            [
+              # modern grep
+              ripgrep
 
-          (shellScriptFromLocalBin "git-change-branch")
-          (shellScriptFromLocalBin "git-clean-branches")
-          (shellScriptFromLocalBin "git-commit-fuzzy-fixup")
-          (shellScriptFromLocalBin "git-fetch-and-checkout-head")
-          (shellScriptFromLocalBin "git-first-branch-commit")
-          (shellScriptFromLocalBin "git-rebase-select-branch")
-          (shellScriptFromLocalBin "git-rebase-squash")
-          (shellScriptFromLocalBin "git-select-branch")
-          (shellScriptFromLocalBin "git-select-commit")
-        ]
+              # modern find
+              fd
+
+              unzip
+
+              # help about various commands and linux concepts
+              man
+              man-pages
+              man-pages-posix
+
+              # locate directories and files around the file system
+              plocate
+
+              # view images in terminal, good quality if kitty graphics protocol
+              # is supported by the terminal
+              viu
+
+              # json processing
+              jq
+
+              (shellScriptFromLocalBin "git-change-branch")
+              (shellScriptFromLocalBin "git-clean-branches")
+              (shellScriptFromLocalBin "git-commit-fuzzy-fixup")
+              (shellScriptFromLocalBin "git-fetch-and-checkout-head")
+              (shellScriptFromLocalBin "git-first-branch-commit")
+              (shellScriptFromLocalBin "git-rebase-select-branch")
+              (shellScriptFromLocalBin "git-rebase-squash")
+              (shellScriptFromLocalBin "git-select-branch")
+              (shellScriptFromLocalBin "git-select-commit")
+            ]
+            ++ optionals cfg.shell-tools.opencode [
+              opencode
+            ]
+            ++ optionals cfg.shell-tools.codex [
+              codex
+            ]
+          )
         ++ optionals cfg.neovim.enable (
           [ tree-sitter ]
           ++ optionals cfg.neovim.bash [
@@ -294,14 +318,14 @@ in
 
     programs = {
       # shell
-      direnv = mkIf cfg.shell-tools {
+      direnv = mkIf cfg.shell-tools.enable {
         enable = true;
         enableBashIntegration = true;
         enableZshIntegration = true;
         nix-direnv.enable = true;
       };
 
-      git = mkIf cfg.shell-tools {
+      git = mkIf cfg.shell-tools.enable {
         enable = true;
         lfs.enable = true;
         ignores = [ ".direnv" ];
@@ -363,7 +387,7 @@ in
         };
       };
 
-      zsh = mkIf cfg.shell-tools {
+      zsh = mkIf cfg.shell-tools.enable {
         enable = true;
         dotDir = "${config.xdg.configHome}/zsh";
         syntaxHighlighting.enable = true;
@@ -406,7 +430,7 @@ in
         };
       };
 
-      fzf = mkIf cfg.shell-tools {
+      fzf = mkIf cfg.shell-tools.enable {
         enable = true;
         enableZshIntegration = true;
         changeDirWidgetCommand = "fd --type d" + fzfCommonOptions;
@@ -414,7 +438,7 @@ in
         fileWidgetCommand = "fd --type f" + fzfCommonOptions;
       };
 
-      zoxide = mkIf cfg.shell-tools {
+      zoxide = mkIf cfg.shell-tools.enable {
         enable = true;
         enableZshIntegration = true;
       };
