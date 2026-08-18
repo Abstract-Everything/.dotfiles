@@ -299,6 +299,12 @@ in
       source = ./config/nvim;
     };
 
+    xdg.configFile.mpv = mkIf cfg.gui.enable {
+      enable = true;
+      recursive = true;
+      source = ./config/mpv;
+    };
+
     xdg.configFile.swappy = mkIf cfg.gui.desktopEnvironment.enable {
       enable = true;
       recursive = true;
