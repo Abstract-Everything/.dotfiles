@@ -158,6 +158,7 @@ in
               # json processing
               jq
 
+              (shellScriptFromLocalBin "dotfiles-debug-log")
               (shellScriptFromLocalBin "git-change-branch")
               (shellScriptFromLocalBin "git-clean-branches")
               (shellScriptFromLocalBin "git-commit-fuzzy-fixup")

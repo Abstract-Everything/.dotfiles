@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if [[ -v $DOTFILES_DEBUG ]]; then
+	echo "$1" >&2
+fi

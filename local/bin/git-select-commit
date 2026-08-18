@@ -2,9 +2,13 @@
 
 first=$(git-first-branch-commit)
 [[ -z $first ]] && echo 'Invalid commit returned, aborting.' && exit
+dotfiles-debug-log "first branch commit: ${first}"
+
 if git show --oneline "${first}~" &>/dev/null; then
-	commit=$(git log "${first}~"..HEAD --oneline | fzf)
+	commits=$(git log "${first}~"..HEAD --oneline)
 else
-	commit=$(git log --root --oneline | fzf)
+	commits=$(git log --root --oneline)
 fi
-echo "${commit}" | cut -d' ' -f1
+dotfiles-debug-log "commits: ${commits}"
+
+echo "${commits}" | fzf | cut -d' ' -f1

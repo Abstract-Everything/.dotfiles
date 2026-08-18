@@ -1,10 +1,24 @@
 #!/usr/bin/env bash
 
 current=$(git branch --show-current)
+dotfiles-debug-log "Current branch: ${current}"
+
+current_remote=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)
+
 others=$(
 	git branch --all --no-contains "${current}" |
 		grep -v -e '->' |
-		grep -v "$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)"
+		sed 's/^+ //'
 )
+
+# If we current_remote is empty, grep -v "" would reject all strings
+if [[ -n "${current_remote}" ]]; then
+	dotfiles-debug-log "Current remote branch: ${current_remote}"
+	others=$($others | grep -v "${current_remote}")
+fi
+dotfiles-debug-log "other branches: ${others}"
+
 commits=$(git rev-list HEAD --not ${others} --)
+dotfiles-debug-log "commits: ${commits}"
+
 echo "${commits}" | tail -n 1
